@@ -12012,7 +12012,7 @@ var _HARDCODED_FB_CFG = {
 // Firebase config: hardcoded config use karo (localStorage override bhi allowed)
 function getFbConfig(){
   try{
-    var lc = JSON.parse(localStorage.getItem('fbConfig')||'null');
+    var lc = JSON.parse(localStorage.getItem('fbConfig_examprep_v7')||'null');
     if(lc && lc.apiKey && lc.projectId) return lc;
   }catch(e){}
   return _HARDCODED_FB_CFG;
@@ -12031,7 +12031,7 @@ function saveFbConfig(){
       errEl.classList.add('show');
       return;
     }
-    localStorage.setItem('fbConfig', JSON.stringify(cfg));
+    localStorage.setItem('fbConfig_examprep_v7', JSON.stringify(cfg));
     closeModal('fbConfigModal');
     showToast('Firebase config save ho gaya! App reload ho raha hai...','success');
     setTimeout(()=>location.reload(), 1200);
