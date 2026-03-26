@@ -8298,6 +8298,11 @@ async function checkImportCodeAndRestore(event){
     restoreData(event);
     return;
   }
+  // Owner ko import code nahi maangna — seedha restore
+  if(_currentUser && _currentUser.uid === OWNER_UID){
+    restoreData(event);
+    return;
+  }
   _pendingRestoreEvent = event;
   // Show import code modal
   document.getElementById('importCodeInput').value = '';
