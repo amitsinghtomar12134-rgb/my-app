@@ -12392,7 +12392,10 @@ function showPendingScreen(){
 async function checkUserAccessStatus(user){
   if(!_db){ showPendingScreen(); return; }
   try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
+    // Always read from server so latest key assignments are visible
+    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
+      ()=> _db.collection('app_config').doc('security').get()
+    );
     if(!cfgDoc.exists){
       // No config yet — show pending
       showPendingScreen();
@@ -12433,16 +12436,19 @@ async function submitSecurityKey(){
   const btn = document.getElementById('securityKeyBtn');
   btn.disabled = true; btn.textContent = '⏳ Verify ho raha hai...';
   try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
+    // Force server read — bypass Firestore offline cache
+    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
+      ()=> _db.collection('app_config').doc('security').get() // fallback to cache if offline
+    );
     if(!cfgDoc.exists){ errEl.textContent = '❌ Config nahi mila! Admin se bolo.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
     const cfg = cfgDoc.data();
     const memberKeys = cfg.member_keys || {};
     const assignedKey = memberKeys[_currentUser.uid];
     if(!assignedKey){ errEl.textContent = '❌ Aapke liye abhi key set nahi hui! Admin se maango.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
-    if(key === assignedKey){
+    if(key === assignedKey || key.toUpperCase() === assignedKey.toUpperCase()){
       _secKeyVerified = true;
-      // Log last login
-      await _db.collection('app_config').doc('security').update({
+      // Log last login (non-blocking — don't let this fail the login)
+      _db.collection('app_config').doc('security').update({
         ['member_lastlogin.' + _currentUser.uid]: firebase.firestore.FieldValue.serverTimestamp()
       }).catch(()=>{});
       hideAllOverlayScreens();
@@ -12601,22 +12607,29 @@ async function adminSetMemberKey(){
   if(key.length < 4){ statusEl.innerHTML = '❌ Key kam se kam 4 characters ki honi chahiye!'; return; }
   statusEl.innerHTML = '⏳ Save ho raha hai...';
   try{
-    const updateData = {
-      ['member_keys.' + uid]: key
-    };
+    // First ensure document exists
+    const docRef = _db.collection('app_config').doc('security');
+    const existing = await docRef.get();
+    if(!existing.exists){
+      await docRef.set({ member_keys:{}, member_names:{}, revoked_uids:[], pending_uids:[], approved_uids:[] });
+    }
+    // Update key and name using dot notation (Firestore nested map update)
+    const updateData = {};
+    updateData['member_keys.' + uid] = key;
     if(name) updateData['member_names.' + uid] = name;
-    // Remove from revoked if present
-    await _db.collection('app_config').doc('security').set(updateData, {merge:true});
-    // Also remove from pending if present
-    await _db.collection('app_config').doc('security').update({
-      pending_uids: firebase.firestore.FieldValue.arrayRemove(uid)
-    }).catch(()=>{});
+    // Remove from revoked + pending, add to approved
+    await docRef.update(updateData);
+    await docRef.update({
+      pending_uids: firebase.firestore.FieldValue.arrayRemove(uid),
+      revoked_uids: firebase.firestore.FieldValue.arrayRemove(uid),
+      approved_uids: firebase.firestore.FieldValue.arrayUnion(uid)
+    });
     statusEl.innerHTML = '✅ Key save ho gayi! Member ab login kar sakta hai.';
     document.getElementById('adminKeyUid').value = '';
     document.getElementById('adminKeyName').value = '';
     document.getElementById('adminKeyValue').value = '';
-    adminLoadMembers();
-    adminLoadPending();
+    // Small delay so Firestore write propagates before re-read
+    setTimeout(()=>{ adminLoadMembers(); adminLoadPending(); }, 800);
   }catch(e){
     statusEl.innerHTML = '❌ Error: ' + e.message;
   }
