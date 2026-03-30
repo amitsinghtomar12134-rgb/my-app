@@ -3802,58 +3802,97 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 <!-- ══════════════════════════════════════════ -->
 <!-- MODE SELECT SCREEN (Shared / Personal)     -->
 <!-- ══════════════════════════════════════════ -->
-<div id="modeSelectScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9998;align-items:center;justify-content:center;padding:20px;">
+<!-- ══════════════════════════════════════════ -->
+<!-- SECURITY KEY SCREEN (new user — after login) -->
+<!-- ══════════════════════════════════════════ -->
+<div id="securityKeyScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9999;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
-    <div style="font-size:2.5rem;margin-bottom:8px;">📚</div>
-    <div style="font-size:1.3rem;font-weight:800;color:#0d2644;margin-bottom:6px;">Kahan jaana hai?</div>
-    <div style="font-size:0.82rem;color:#555;margin-bottom:28px;">Apna space chunno</div>
-
-    <!-- Shared Notes -->
-    <button onclick="chooseSharedMode()" style="width:100%;padding:18px 16px;border:2px solid #1565c0;border-radius:14px;background:linear-gradient(135deg,#e8f0fe,#dbeafe);cursor:pointer;margin-bottom:14px;text-align:left;display:flex;align-items:center;gap:14px;">
-      <span style="font-size:2rem;">📖</span>
-      <div>
-        <div style="font-weight:800;color:#1565c0;font-size:1rem;">Shared Notes</div>
-        <div style="font-size:0.75rem;color:#555;margin-top:2px;">Owner ke notes padho (Read Only)</div>
-      </div>
+    <div style="font-size:2.8rem;margin-bottom:8px;">🔑</div>
+    <div style="font-size:1.2rem;font-weight:800;color:#0d2644;margin-bottom:6px;">Security Key Daalo</div>
+    <div style="font-size:0.8rem;color:#555;margin-bottom:6px;line-height:1.5;">Admin (Tomar bhai) se apni personal key maango.<br>Pehli baar enter karne ke baad yaad rakh li jaayegi.</div>
+    <div id="secKeyUserEmail" style="font-size:0.72rem;color:#888;margin-bottom:16px;font-weight:600;"></div>
+    <div id="securityKeyError" style="color:#c62828;font-size:0.8rem;margin-bottom:8px;min-height:18px;"></div>
+    <input id="securityKeyInput" type="password" placeholder="Security key..." autocomplete="off"
+      style="width:100%;padding:13px 16px;border:2px solid #ddd;border-radius:10px;font-size:1rem;text-align:center;letter-spacing:4px;font-weight:700;margin-bottom:14px;outline:none;font-family:monospace;"
+      onkeydown="if(event.key==='Enter')submitSecurityKey()" />
+    <button id="securityKeyBtn" onclick="submitSecurityKey()"
+      style="width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
+      🔓 Verify Karo
     </button>
+    <button onclick="logoutUser()"
+      style="width:100%;padding:11px;background:none;border:1px solid #ddd;border-radius:10px;font-size:0.85rem;color:#777;cursor:pointer;">
+      🚪 Logout
+    </button>
+  </div>
+</div>
 
-    <!-- Personal Space -->
-    <button onclick="choosePersonalMode()" style="width:100%;padding:18px 16px;border:2px solid #2e7d32;border-radius:14px;background:linear-gradient(135deg,#e8f5e9,#d0f0d0);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;">
+<!-- ══════════════════════════════════════════ -->
+<!-- PENDING APPROVAL SCREEN                    -->
+<!-- ══════════════════════════════════════════ -->
+<div id="pendingScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#1a237e,#283593);z-index:9998;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
+    <div style="font-size:3rem;margin-bottom:10px;">⏳</div>
+    <div style="font-size:1.2rem;font-weight:800;color:#1a237e;margin-bottom:8px;">Approval Pending</div>
+    <div style="font-size:0.84rem;color:#555;margin-bottom:20px;line-height:1.6;">Aapka account abhi approved nahi hai.<br>Admin (Tomar bhai) se contact karo aur apni Security Key maango.</div>
+    <div id="pendingUserEmail" style="font-size:0.75rem;background:#e8eaf6;border-radius:8px;padding:8px 12px;margin-bottom:20px;color:#3949ab;font-weight:700;word-break:break-all;"></div>
+    <button onclick="showSecurityKeyScreen()"
+      style="width:100%;padding:13px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
+      🔑 Key Mil Gayi? Daalo
+    </button>
+    <button onclick="logoutUser()"
+      style="width:100%;padding:11px;background:none;border:1px solid #ddd;border-radius:10px;font-size:0.85rem;color:#777;cursor:pointer;">
+      🚪 Logout
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════ -->
+<!-- MODE SELECT SCREEN                         -->
+<!-- ══════════════════════════════════════════ -->
+<div id="modeSelectScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9997;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
+    <div style="font-size:2.5rem;margin-bottom:6px;">📚</div>
+    <div id="modeWelcomeName" style="font-size:1.1rem;font-weight:800;color:#0d2644;margin-bottom:4px;">Welcome!</div>
+    <div style="font-size:0.8rem;color:#555;margin-bottom:24px;">Kya karna hai aaj?</div>
+
+    <!-- Personal Deck -->
+    <button onclick="choosePersonalMode()" style="width:100%;padding:16px;border:2px solid #2e7d32;border-radius:14px;background:linear-gradient(135deg,#e8f5e9,#d0f0d0);cursor:pointer;margin-bottom:12px;text-align:left;display:flex;align-items:center;gap:14px;font-family:inherit;">
       <span style="font-size:2rem;">👤</span>
       <div>
-        <div style="font-weight:800;color:#2e7d32;font-size:1rem;">Mera Space</div>
-        <div style="font-size:0.75rem;color:#555;margin-top:2px;">Apna personal data aur notes</div>
+        <div style="font-weight:800;color:#2e7d32;font-size:0.95rem;">Mera Deck</div>
+        <div style="font-size:0.72rem;color:#555;margin-top:2px;">Apne notes padhو, edit karo, quiz do</div>
       </div>
     </button>
 
-    <div style="margin-top:20px;padding-top:16px;border-top:1px solid #eee;">
+    <!-- Browse Members (Phase 2 — disabled for now) -->
+    <button onclick="chooseBrowseMode()" style="width:100%;padding:16px;border:2px solid #1565c0;border-radius:14px;background:linear-gradient(135deg,#e8f0fe,#dbeafe);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;font-family:inherit;">
+      <span style="font-size:2rem;">👥</span>
+      <div>
+        <div style="font-weight:800;color:#1565c0;font-size:0.95rem;">Sabke Notes</div>
+        <div style="font-size:0.72rem;color:#555;margin-top:2px;">Dusron ke notes padho, copy karo</div>
+      </div>
+    </button>
+
+    <div id="modeAdminBtn" style="display:none;margin-top:12px;">
+      <button onclick="chooseAdminMode()" style="width:100%;padding:14px;border:2px solid #e65100;border-radius:14px;background:linear-gradient(135deg,#fff3e0,#ffe0b2);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;font-family:inherit;">
+        <span style="font-size:1.8rem;">👑</span>
+        <div>
+          <div style="font-weight:800;color:#e65100;font-size:0.9rem;">Admin Panel</div>
+          <div style="font-size:0.72rem;color:#555;margin-top:2px;">Members manage karo, keys set karo</div>
+        </div>
+      </button>
+    </div>
+
+    <div style="margin-top:18px;padding-top:14px;border-top:1px solid #eee;">
       <button onclick="logoutUser()" style="background:none;border:none;color:#999;font-size:0.75rem;cursor:pointer;">🚪 Logout</button>
     </div>
   </div>
 </div>
 
 <!-- ══════════════════════════════════════════ -->
-<!-- SHARED ACCESS CODE SCREEN                  -->
+<!-- SHARED CODE SCREEN (kept for compatibility) -->
 <!-- ══════════════════════════════════════════ -->
-<div id="sharedCodeScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9997;align-items:center;justify-content:center;padding:20px;">
-  <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
-    <div style="font-size:2.5rem;margin-bottom:8px;">🔐</div>
-    <div style="font-size:1.2rem;font-weight:800;color:#0d2644;margin-bottom:6px;">Access Code Daalo</div>
-    <div style="font-size:0.82rem;color:#555;margin-bottom:20px;">Shared Notes dekhne ke liye owner se code maango</div>
-    <div id="sharedCodeError" style="color:#c62828;font-size:0.8rem;margin-bottom:8px;min-height:18px;"></div>
-    <input id="sharedCodeInput" type="text" placeholder="Access code..." autocomplete="off" autocapitalize="characters"
-      style="width:100%;padding:13px 16px;border:2px solid #ddd;border-radius:10px;font-size:1rem;text-align:center;letter-spacing:3px;font-weight:700;margin-bottom:14px;outline:none;"
-      onkeydown="if(event.key==='Enter')submitSharedCode()" />
-    <button id="sharedCodeBtn" onclick="submitSharedCode()"
-      style="width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;">
-      ✅ Submit
-    </button>
-    <button onclick="backToModeScreen()"
-      style="width:100%;padding:11px;background:none;border:1px solid #ddd;border-radius:10px;font-size:0.85rem;color:#777;cursor:pointer;">
-      ← Wapas
-    </button>
-  </div>
-</div>
+<div id="sharedCodeScreen" style="display:none;"></div>
 
 <!-- ══════════════════════════════════════════ -->
 <!-- ACCESS REVOKED SCREEN                      -->
@@ -3862,14 +3901,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.5);text-align:center;">
     <div style="font-size:3rem;margin-bottom:10px;">🚫</div>
     <div style="font-size:1.2rem;font-weight:800;color:#c62828;margin-bottom:8px;">Access Revoked</div>
-    <div style="font-size:0.85rem;color:#555;margin-bottom:24px;">Aapka Shared Notes access owner ne hata diya hai.<br>Dobara access chahiye to owner se bolo.</div>
-    <button onclick="choosePersonalMode();document.getElementById('revokedScreen').style.display='none';"
-      style="width:100%;padding:13px;background:linear-gradient(135deg,#2e7d32,#388e3c);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;margin-bottom:10px;">
-      👤 Mera Personal Space Kholo
-    </button>
+    <div style="font-size:0.85rem;color:#555;margin-bottom:24px;">Aapka access owner ne hata diya hai.<br>Dobara access chahiye to Admin (Tomar bhai) se nayi key maango.</div>
     <button onclick="logoutUser()"
-      style="width:100%;padding:11px;background:none;border:1px solid #ddd;border-radius:10px;font-size:0.85rem;color:#777;cursor:pointer;">
-      🚪 Logout
+      style="width:100%;padding:13px;background:linear-gradient(135deg,#c62828,#e53935);color:#fff;border:none;border-radius:10px;font-size:0.95rem;font-weight:700;cursor:pointer;margin-bottom:10px;">
+      🚪 Logout Karo
     </button>
   </div>
 </div>
@@ -3972,6 +4007,11 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     <div class="nav-item" onclick="showPage('settings',this)" data-page="settings">
       <span class="sb-icon">⚙️</span>
       <span class="sb-label">Settings</span>
+    </div>
+    <div class="nav-item" id="adminNavItem" style="display:none;" onclick="showPage('adminpanel',this)" data-page="adminpanel">
+      <span class="sb-icon">👑</span>
+      <span class="sb-label">Admin Panel</span>
+      <span class="nav-badge red" id="adminPendingBadge" style="display:none;">0</span>
     </div>
   </div>
 
@@ -4510,6 +4550,78 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         </div>
       </div>
     </div>
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- ADMIN PANEL PAGE                        -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="page-adminpanel" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">👑 Admin Panel</div>
+          <div class="page-subtitle">Members manage karo, security keys set karo</div>
+        </div>
+      </div>
+
+      <!-- Pending Approvals -->
+      <div class="card">
+        <div class="card-title">⏳ Pending Approvals</div>
+        <div id="adminPendingList" style="font-size:0.82rem;color:var(--text2);">Loading...</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="adminLoadPending()">🔄 Refresh</button>
+      </div>
+
+      <!-- Approved Members -->
+      <div class="card">
+        <div class="card-title">✅ Approved Members</div>
+        <div id="adminMemberList" style="font-size:0.82rem;color:var(--text2);">Loading...</div>
+        <button class="btn btn-outline btn-sm" style="margin-top:10px;" onclick="adminLoadMembers()">🔄 Refresh</button>
+      </div>
+
+      <!-- Set Security Key for Member -->
+      <div class="card">
+        <div class="card-title">🔑 Member Ko Key Do / Change Karo</div>
+        <div class="field-group">
+          <label class="field-label">Member UID:</label>
+          <input type="text" class="inp" id="adminKeyUid" placeholder="Member ka UID paste karo..." />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Member Name (pehchaan ke liye):</label>
+          <input type="text" class="inp" id="adminKeyName" placeholder="Jaise: Rahul, Priya..." />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Security Key:</label>
+          <input type="text" class="inp" id="adminKeyValue" placeholder="Key set karo (min 4 chars)..." />
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary btn-sm" onclick="adminSetMemberKey()">✅ Key Save Karo</button>
+          <button class="btn btn-outline btn-sm" onclick="adminGenerateKey()">🎲 Random Key</button>
+        </div>
+        <div id="adminKeyStatus" style="font-size:0.78rem;margin-top:8px;"></div>
+      </div>
+
+      <!-- Revoke Access -->
+      <div class="card">
+        <div class="card-title">🚫 Access Revoke Karo</div>
+        <div style="font-size:0.78rem;color:var(--text2);margin-bottom:10px;line-height:1.6;">Kisi member ka access hatao — woh dobara app use nahi kar payega jab tak tum naya key na do.</div>
+        <div class="field-group">
+          <label class="field-label">Member UID:</label>
+          <input type="text" class="inp" id="adminRevokeUid" placeholder="Member ka UID paste karo..." />
+        </div>
+        <button class="btn btn-danger btn-sm" onclick="adminRevokeMember()">🚫 Access Revoke Karo</button>
+        <div id="adminRevokeStatus" style="font-size:0.78rem;margin-top:8px;"></div>
+      </div>
+
+      <!-- Admin own key change -->
+      <div class="card">
+        <div class="card-title">🔐 Apni Key Change Karo (Admin)</div>
+        <div class="field-group">
+          <label class="field-label">Nayi Admin Key:</label>
+          <input type="password" class="inp" id="adminSelfKey" placeholder="Nayi key daalo..." />
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="adminSetSelfKey()">✅ Apni Key Update Karo</button>
+        <div id="adminSelfKeyStatus" style="font-size:0.78rem;margin-top:8px;"></div>
+      </div>
+
+    </div><!-- /page-adminpanel -->
 
   </div><!-- /page-area -->
 </div><!-- /main-content -->
@@ -6090,7 +6202,7 @@ function saveApiKey2(){
 function showApiStatus(m,t){document.getElementById('apiStatus').innerHTML=`<span style="font-size:0.76rem;padding:3px 9px;border-radius:20px;display:inline-block;background:${t==='saved'?'rgba(46,125,50,0.1)':'rgba(198,40,40,0.1)'};color:${t==='saved'?'var(--green)':'var(--red)'};">${m}</span>`;}
 
 // ==================== TABS ====================
-const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History'};
+const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History','adminpanel':'👑 Admin Panel'};
 function showPage(p,el,_skipHistory){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
@@ -6108,6 +6220,10 @@ function showPage(p,el,_skipHistory){
   if(p==='settings'){
     const area=document.getElementById('pwaInstallArea');
     if(area)area.innerHTML=showInstallOption();
+  }
+  if(p==='adminpanel'){
+    adminLoadPending();
+    adminLoadMembers();
   }
   if(window.innerWidth<=768){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('show');}
   if(!_skipHistory){history.pushState({type:'page',page:p},'');}
@@ -12003,6 +12119,7 @@ let _justRestored = false; // Restore ke baad Firebase overwrite rokne ke liye
 const OWNER_UID = 'Da8dQP5OeUYvmOAVV3JXVbUOCUY2'; // App owner (aap)
 let _appMode = null; // null | 'personal' | 'shared'
 let _sharedAccessGranted = false; // kya is user ko shared access hai
+let _secKeyVerified = false; // kya is session mein security key verify ho gayi
 
 // ── HARDCODED new Firebase config (exam-prep-testing project) ──
 var _HARDCODED_FB_CFG = {
@@ -12083,26 +12200,36 @@ function initFirebase(){
     _fbReady = true;
 
     // Auth state listener
-    _auth.onAuthStateChanged(user => {
+    _auth.onAuthStateChanged(async user => {
       if(user){
         _currentUser = user;
         updateUserUI(user);
-        // Owner directly personal space mein jaaye + shared data edit kar sake
+        hideLoginScreen();
+        // Owner: bypass security key, directly personal mode
         if(user.uid === OWNER_UID){
           _appMode = 'personal';
-          hideLoginScreen();
-          hideModeScreen();
+          hideAllOverlayScreens();
+          // Show admin button in mode select
+          const adminBtn = document.getElementById('adminNavItem');
+          if(adminBtn) adminBtn.style.display = 'flex'; // sidebar admin nav
           loadFromFirebase();
           showToast('Welcome back, Owner! 👑', 'success');
         } else {
-          // Normal user → mode selection screen dikhao
-          hideLoginScreen();
-          showModeScreen();
+          // Non-owner: check if security key already verified this session
+          if(_secKeyVerified){
+            hideAllOverlayScreens();
+            showModeScreen();
+          } else {
+            // Check if user is in approved list first
+            hideAllOverlayScreens();
+            await checkUserAccessStatus(user);
+          }
         }
       } else {
         _currentUser = null;
         _appMode = null;
-        hideModeScreen();
+        _secKeyVerified = false;
+        hideAllOverlayScreens();
         showLoginScreen();
         updateUserUI(null);
       }
@@ -12196,6 +12323,7 @@ function useWithoutLogin(){
 async function logoutUser(){
   if(!confirm('Logout karna hai?')) return;
   try{
+    _secKeyVerified = false;
     await _auth.signOut();
     showToast('Logout ho gaya!','success');
   }catch(e){
@@ -12208,157 +12336,170 @@ function showLoginScreen(){
   const ls = document.getElementById('loginScreen');
   if(ls) ls.style.display = 'flex';
 }
-
 function hideLoginScreen(){
   const ls = document.getElementById('loginScreen');
   if(ls) ls.style.display = 'none';
 }
-
-// ---- MODE SELECTION SCREEN ----
-function showModeScreen(){
-  const ms = document.getElementById('modeSelectScreen');
-  if(ms) ms.style.display = 'flex';
+function hideAllOverlayScreens(){
+  ['modeSelectScreen','securityKeyScreen','pendingScreen','revokedScreen'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
 }
-
+function showModeScreen(){
+  hideAllOverlayScreens();
+  const ms = document.getElementById('modeSelectScreen');
+  if(!ms) return;
+  // Update welcome name
+  if(_currentUser){
+    const name = _currentUser.displayName || _currentUser.email.split('@')[0];
+    const wn = document.getElementById('modeWelcomeName');
+    if(wn) wn.textContent = 'Welcome, ' + name.split(' ')[0] + '!';
+  }
+  // Admin button visibility
+  const adminBtn = document.getElementById('modeAdminBtn');
+  if(adminBtn) adminBtn.style.display = (_currentUser && _currentUser.uid === OWNER_UID) ? 'block' : 'none';
+  ms.style.display = 'flex';
+}
 function hideModeScreen(){
   const ms = document.getElementById('modeSelectScreen');
   if(ms) ms.style.display = 'none';
 }
-
-async function choosePersonalMode(){
-  _appMode = 'personal';
-  hideModeScreen();
-  loadFromFirebase();
-  showToast('Personal Space khul gaya! 👤', 'success');
+function showSecurityKeyScreen(){
+  hideAllOverlayScreens();
+  const sk = document.getElementById('securityKeyScreen');
+  if(sk) sk.style.display = 'flex';
+  if(_currentUser){
+    const el = document.getElementById('secKeyUserEmail');
+    if(el) el.textContent = _currentUser.email;
+  }
+  const inp = document.getElementById('securityKeyInput');
+  if(inp){ inp.value = ''; inp.focus(); }
+  const err = document.getElementById('securityKeyError');
+  if(err) err.textContent = '';
 }
-
-async function chooseSharedMode(){
-  if(!_db || !_currentUser){ showToast('Connection error!','error'); return; }
-  const uid = _currentUser.uid;
-
-  // Check karo kya pehle se approved hai
-  try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
-    if(!cfgDoc.exists){ showToast('Config nahi mila!','error'); return; }
-    const cfg = cfgDoc.data();
-    const approvedUids = cfg.approved_uids || [];
-
-    if(approvedUids.includes(uid)){
-      // Already approved
-      _appMode = 'shared';
-      _sharedAccessGranted = true;
-      hideModeScreen();
-      loadSharedData();
-      showToast('Shared Notes khul gaye! 📚', 'success');
-    } else {
-      // Code maango
-      document.getElementById('modeSelectScreen').style.display = 'none';
-      document.getElementById('sharedCodeScreen').style.display = 'flex';
-    }
-  }catch(e){
-    showToast('Error: '+e.message,'error');
+function showPendingScreen(){
+  hideAllOverlayScreens();
+  const ps = document.getElementById('pendingScreen');
+  if(ps) ps.style.display = 'flex';
+  if(_currentUser){
+    const el = document.getElementById('pendingUserEmail');
+    if(el) el.textContent = _currentUser.email + '\nUID: ' + _currentUser.uid;
   }
 }
 
-async function submitSharedCode(){
-  if(!_db || !_currentUser){ showToast('Connection error!','error'); return; }
-  const code = (document.getElementById('sharedCodeInput').value||'').trim();
-  const errEl = document.getElementById('sharedCodeError');
-  errEl.textContent = '';
-  if(!code){ errEl.textContent = '❌ Code daalo!'; return; }
-
-  const btn = document.getElementById('sharedCodeBtn');
-  btn.disabled = true; btn.textContent = '⏳ Check ho raha hai...';
-
+// ── NEW: Check user access status after login ──
+async function checkUserAccessStatus(user){
+  if(!_db){ showPendingScreen(); return; }
   try{
     const cfgDoc = await _db.collection('app_config').doc('security').get();
+    if(!cfgDoc.exists){
+      // No config yet — show pending
+      showPendingScreen();
+      return;
+    }
     const cfg = cfgDoc.data();
-    if(code === cfg.shared_access_code){
-      // Correct! UID approved list mein add karo
-      const uid = _currentUser.uid;
-      await _db.collection('app_config').doc('security').update({
-        approved_uids: firebase.firestore.FieldValue.arrayUnion(uid)
-      });
-      _appMode = 'shared';
-      _sharedAccessGranted = true;
-      document.getElementById('sharedCodeScreen').style.display = 'none';
-      loadSharedData();
-      showToast('Access mil gaya! Shared Notes khul gaye 🎉', 'success');
+    const memberKeys = cfg.member_keys || {};
+    const revokedUids = cfg.revoked_uids || [];
+    // Check if revoked
+    if(revokedUids.includes(user.uid)){
+      hideAllOverlayScreens();
+      const rs = document.getElementById('revokedScreen');
+      if(rs) rs.style.display = 'flex';
+      return;
+    }
+    // Check if user has a key assigned
+    if(memberKeys[user.uid]){
+      // Key assigned — ask for key
+      showSecurityKeyScreen();
     } else {
-      errEl.textContent = '❌ Galat code! Owner se sahi code maango.';
+      // No key yet — register as pending and show pending screen
+      await registerPendingUser(user);
+      showPendingScreen();
+    }
+  }catch(e){
+    console.error('checkUserAccessStatus error:', e);
+    showPendingScreen();
+  }
+}
+
+// ── NEW: Submit Security Key ──
+async function submitSecurityKey(){
+  if(!_db || !_currentUser){ showToast('Connection error!','error'); return; }
+  const key = (document.getElementById('securityKeyInput').value||'').trim();
+  const errEl = document.getElementById('securityKeyError');
+  errEl.textContent = '';
+  if(!key){ errEl.textContent = '❌ Key daalo!'; return; }
+  const btn = document.getElementById('securityKeyBtn');
+  btn.disabled = true; btn.textContent = '⏳ Verify ho raha hai...';
+  try{
+    const cfgDoc = await _db.collection('app_config').doc('security').get();
+    if(!cfgDoc.exists){ errEl.textContent = '❌ Config nahi mila! Admin se bolo.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
+    const cfg = cfgDoc.data();
+    const memberKeys = cfg.member_keys || {};
+    const assignedKey = memberKeys[_currentUser.uid];
+    if(!assignedKey){ errEl.textContent = '❌ Aapke liye abhi key set nahi hui! Admin se maango.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
+    if(key === assignedKey){
+      _secKeyVerified = true;
+      // Log last login
+      await _db.collection('app_config').doc('security').update({
+        ['member_lastlogin.' + _currentUser.uid]: firebase.firestore.FieldValue.serverTimestamp()
+      }).catch(()=>{});
+      hideAllOverlayScreens();
+      showModeScreen();
+      showToast('Key sahi hai! Welcome 🎉', 'success');
+    } else {
+      errEl.textContent = '❌ Galat key! Admin se sahi key maango.';
+      document.getElementById('securityKeyInput').value = '';
     }
   }catch(e){
     errEl.textContent = '❌ Error: ' + e.message;
   }
-  btn.disabled = false; btn.textContent = '✅ Submit';
+  btn.disabled = false; btn.textContent = '🔓 Verify Karo';
 }
 
-function backToModeScreen(){
-  document.getElementById('sharedCodeScreen').style.display = 'none';
-  document.getElementById('modeSelectScreen').style.display = 'flex';
-  document.getElementById('sharedCodeInput').value = '';
-  document.getElementById('sharedCodeError').textContent = '';
+// ── Mode choices ──
+async function choosePersonalMode(){
+  _appMode = 'personal';
+  hideModeScreen();
+  loadFromFirebase();
+  showToast('Mera Deck khul gaya! 👤', 'success');
 }
 
+async function chooseBrowseMode(){
+  // Phase 2 feature — abhi placeholder
+  showToast('Yeh feature jald aayega! (Phase 2) 🚧', 'info');
+}
+
+async function chooseAdminMode(){
+  if(!_currentUser || _currentUser.uid !== OWNER_UID) return;
+  _appMode = 'personal';
+  hideModeScreen();
+  loadFromFirebase();
+  setTimeout(()=>{
+    showPage('adminpanel', document.getElementById('adminNavItem'));
+  }, 500);
+}
+
+// ── Stub for backward compat ──
+async function chooseSharedMode(){ chooseBrowseMode(); }
+async function submitSharedCode(){ }
+function backToModeScreen(){ showModeScreen(); }
+
+// ── loadSharedData stub (browse mode — Phase 2) ──
 async function loadSharedData(){
-  if(!_db){ return; }
-  setSyncStatus('syncing');
-  try{
-    // Check revoked
-    const uid = _currentUser ? _currentUser.uid : null;
-    if(uid){
-      const cfgDoc = await _db.collection('app_config').doc('security').get();
-      const cfg = cfgDoc.data();
-      if(!(cfg.approved_uids||[]).includes(uid)){
-        // Access revoked!
-        showRevokedScreen();
-        setSyncStatus('error');
-        return;
-      }
-    }
-
-    // Load shared_data from Firestore
-    const subjectDocs = await _db.collection('shared_data').doc('subjects').get();
-    if(subjectDocs.exists){
-      const data = subjectDocs.data();
-      if(data && data.subjects){
-        S.subjects = data.subjects;
-        S.exams = data.exams || [];
-        S.activeExamId = data.activeExamId || '';
-        S.quizHistory = data.quizHistory || [];
-        S.stats = data.stats || {total:0,correct:0,wrong:0,topicStats:{}};
-        S.questionVault = data.questionVault || [];
-        S.savedQuestions = data.savedQuestions || [];
-        S.wrongedQuestions = data.wrongedQuestions || [];
-        try{ localStorage.setItem('epp5', JSON.stringify(S)); }catch(e){}
-        renderExamSwitcher(); renderLibrarySelects(); renderLibraryTree();
-        renderExamsList(); updateQuizSelects(); renderStats(); updateModePill();
-        updateHistBadge(); updateSavedBadge(); updateVaultBadge(); checkPausedQuiz();
-        showToast('Shared Notes load ho gaye! 📚 (Read Only)', 'success');
-      }
-    } else {
-      showToast('Shared Notes abhi khaali hain', 'info');
-    }
-    setSyncStatus('synced');
-    // Show read-only banner
-    showSharedBanner();
-  }catch(e){
-    setSyncStatus('error');
-    showToast('Shared data load error: '+e.message,'error');
-  }
+  showToast('Browse mode Phase 2 mein aayega!', 'info');
 }
 
 function showRevokedScreen(){
-  hideModeScreen();
+  hideAllOverlayScreens();
   const rs = document.getElementById('revokedScreen');
   if(rs) rs.style.display = 'flex';
 }
-
 function showSharedBanner(){
   const banner = document.getElementById('sharedReadOnlyBanner');
   if(banner) banner.style.display = 'flex';
 }
-
 function switchToPersonalFromShared(){
   const banner = document.getElementById('sharedReadOnlyBanner');
   if(banner) banner.style.display = 'none';
@@ -12367,6 +12508,214 @@ function switchToPersonalFromShared(){
   showToast('Personal Space mein aa gaye! 👤','success');
 }
 
+// ══════════════════════════════════════════
+// ADMIN PANEL FUNCTIONS
+// ══════════════════════════════════════════
+
+async function adminLoadPending(){
+  if(!_db || !_currentUser || _currentUser.uid !== OWNER_UID) return;
+  const el = document.getElementById('adminPendingList');
+  if(el) el.innerHTML = '⏳ Loading...';
+  try{
+    // Get all users who have logged in but have no key assigned yet
+    // We track this in app_config/security → pending_uids[]
+    const cfgDoc = await _db.collection('app_config').doc('security').get();
+    const cfg = cfgDoc.exists ? cfgDoc.data() : {};
+    const pending = cfg.pending_uids || [];
+    const memberKeys = cfg.member_keys || {};
+    const memberNames = cfg.member_names || {};
+    if(!el) return;
+    if(pending.length === 0){ el.innerHTML = '<div style="color:var(--green);font-weight:700;">✅ Koi pending nahi!</div>'; return; }
+    el.innerHTML = pending.map(uid=>{
+      const hasKey = !!memberKeys[uid];
+      return `<div style="background:var(--surface2);border-radius:8px;padding:10px 12px;margin-bottom:8px;border:1px solid var(--border);">
+        <div style="font-weight:700;font-size:0.82rem;color:var(--text);">${memberNames[uid]||'Unknown'}</div>
+        <div style="font-size:0.72rem;color:var(--text2);word-break:break-all;margin:3px 0;">${uid}</div>
+        <div style="font-size:0.72rem;margin-bottom:8px;">${hasKey ? '🔑 Key assigned' : '⚠️ Key nahi di gayi'}</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button onclick="adminQuickSetKey('${uid}')" class="btn btn-primary btn-sm" style="font-size:0.72rem;">🔑 Key Do</button>
+          <button onclick="adminDismissPending('${uid}')" class="btn btn-outline btn-sm" style="font-size:0.72rem;">✖ Dismiss</button>
+        </div>
+      </div>`;
+    }).join('');
+    // Update badge
+    const badge = document.getElementById('adminPendingBadge');
+    if(badge){ badge.style.display = pending.length > 0 ? 'inline-block' : 'none'; badge.textContent = pending.length; }
+  }catch(e){
+    if(el) el.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+async function adminLoadMembers(){
+  if(!_db || !_currentUser || _currentUser.uid !== OWNER_UID) return;
+  const el = document.getElementById('adminMemberList');
+  if(el) el.innerHTML = '⏳ Loading...';
+  try{
+    const cfgDoc = await _db.collection('app_config').doc('security').get();
+    const cfg = cfgDoc.exists ? cfgDoc.data() : {};
+    const memberKeys = cfg.member_keys || {};
+    const memberNames = cfg.member_names || {};
+    const revokedUids = cfg.revoked_uids || [];
+    const lastLogin = cfg.member_lastlogin || {};
+    const uids = Object.keys(memberKeys);
+    if(!el) return;
+    if(uids.length === 0){ el.innerHTML = '<div style="color:var(--text2);">Abhi koi approved member nahi.</div>'; return; }
+    el.innerHTML = uids.map(uid=>{
+      const isRevoked = revokedUids.includes(uid);
+      const isOwner = uid === OWNER_UID;
+      const ll = lastLogin[uid];
+      return `<div style="background:var(--surface2);border-radius:8px;padding:10px 12px;margin-bottom:8px;border:1.5px solid ${isRevoked?'rgba(198,40,40,0.3)':'var(--border)'};">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <div>
+            <div style="font-weight:700;font-size:0.82rem;">${isOwner?'👑 ':''}<span id="mn_${uid}">${memberNames[uid]||'No Name'}</span>${isRevoked?' <span style="color:var(--red);font-size:0.68rem;">(REVOKED)</span>':''}</div>
+            <div style="font-size:0.68rem;color:var(--text2);word-break:break-all;margin-top:2px;">${uid}</div>
+            <div style="font-size:0.68rem;color:var(--text2);">Key: <code>${memberKeys[uid]||'—'}</code></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;">
+            <button onclick="adminQuickSetKey('${uid}')" class="btn btn-primary btn-sm" style="font-size:0.68rem;padding:3px 8px;">🔑</button>
+            ${!isOwner && !isRevoked ? `<button onclick="adminRevokeDirect('${uid}')" class="btn btn-danger btn-sm" style="font-size:0.68rem;padding:3px 8px;">🚫</button>` : ''}
+            ${isRevoked ? `<button onclick="adminRestoreAccess('${uid}')" class="btn btn-green btn-sm" style="font-size:0.68rem;padding:3px 8px;">♻️</button>` : ''}
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }catch(e){
+    if(el) el.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+function adminQuickSetKey(uid){
+  document.getElementById('adminKeyUid').value = uid;
+  document.getElementById('adminKeyValue').value = '';
+  document.getElementById('adminKeyValue').focus();
+  showToast('UID fill ho gaya, ab key type karo 👇', 'success');
+}
+
+async function adminSetMemberKey(){
+  if(!_db || !_currentUser || _currentUser.uid !== OWNER_UID) return;
+  const uid = (document.getElementById('adminKeyUid').value||'').trim();
+  const name = (document.getElementById('adminKeyName').value||'').trim();
+  const key = (document.getElementById('adminKeyValue').value||'').trim();
+  const statusEl = document.getElementById('adminKeyStatus');
+  if(!uid){ statusEl.innerHTML = '❌ UID daalo!'; return; }
+  if(key.length < 4){ statusEl.innerHTML = '❌ Key kam se kam 4 characters ki honi chahiye!'; return; }
+  statusEl.innerHTML = '⏳ Save ho raha hai...';
+  try{
+    const updateData = {
+      ['member_keys.' + uid]: key
+    };
+    if(name) updateData['member_names.' + uid] = name;
+    // Remove from revoked if present
+    await _db.collection('app_config').doc('security').set(updateData, {merge:true});
+    // Also remove from pending if present
+    await _db.collection('app_config').doc('security').update({
+      pending_uids: firebase.firestore.FieldValue.arrayRemove(uid)
+    }).catch(()=>{});
+    statusEl.innerHTML = '✅ Key save ho gayi! Member ab login kar sakta hai.';
+    document.getElementById('adminKeyUid').value = '';
+    document.getElementById('adminKeyName').value = '';
+    document.getElementById('adminKeyValue').value = '';
+    adminLoadMembers();
+    adminLoadPending();
+  }catch(e){
+    statusEl.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+function adminGenerateKey(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let key = '';
+  for(let i=0; i<8; i++) key += chars[Math.floor(Math.random()*chars.length)];
+  document.getElementById('adminKeyValue').value = key;
+  showToast('Random key generate hui: ' + key, 'success');
+}
+
+async function adminRevokeMember(){
+  const uid = (document.getElementById('adminRevokeUid').value||'').trim();
+  const statusEl = document.getElementById('adminRevokeStatus');
+  if(!uid){ statusEl.innerHTML = '❌ UID daalo!'; return; }
+  if(!confirm('Pakka revoke karna hai? Member app use nahi kar payega.')){ return; }
+  statusEl.innerHTML = '⏳...';
+  try{
+    await _db.collection('app_config').doc('security').set({
+      revoked_uids: firebase.firestore.FieldValue.arrayUnion(uid)
+    }, {merge:true});
+    statusEl.innerHTML = '✅ Access revoke ho gaya!';
+    document.getElementById('adminRevokeUid').value = '';
+    adminLoadMembers();
+  }catch(e){
+    statusEl.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+async function adminRevokeDirect(uid){
+  if(!confirm('Pakka revoke karna hai?')) return;
+  try{
+    await _db.collection('app_config').doc('security').set({
+      revoked_uids: firebase.firestore.FieldValue.arrayUnion(uid)
+    }, {merge:true});
+    showToast('Access revoke ho gaya!', 'success');
+    adminLoadMembers();
+  }catch(e){
+    showToast('Error: '+e.message,'error');
+  }
+}
+
+async function adminRestoreAccess(uid){
+  try{
+    await _db.collection('app_config').doc('security').update({
+      revoked_uids: firebase.firestore.FieldValue.arrayRemove(uid)
+    });
+    showToast('Access restore ho gaya! ♻️', 'success');
+    adminLoadMembers();
+  }catch(e){
+    showToast('Error: '+e.message,'error');
+  }
+}
+
+async function adminDismissPending(uid){
+  try{
+    await _db.collection('app_config').doc('security').update({
+      pending_uids: firebase.firestore.FieldValue.arrayRemove(uid)
+    });
+    showToast('Pending list se hata diya!', 'success');
+    adminLoadPending();
+  }catch(e){
+    showToast('Error: '+e.message,'error');
+  }
+}
+
+async function adminSetSelfKey(){
+  if(!_currentUser || _currentUser.uid !== OWNER_UID) return;
+  const key = (document.getElementById('adminSelfKey').value||'').trim();
+  const statusEl = document.getElementById('adminSelfKeyStatus');
+  if(key.length < 4){ statusEl.innerHTML = '❌ Key kam se kam 4 characters ki honi chahiye!'; return; }
+  statusEl.innerHTML = '⏳...';
+  try{
+    await _db.collection('app_config').doc('security').set({
+      ['member_keys.' + OWNER_UID]: key,
+      ['member_names.' + OWNER_UID]: 'Admin (Tomar)'
+    }, {merge:true});
+    statusEl.innerHTML = '✅ Apni key update ho gayi!';
+    document.getElementById('adminSelfKey').value = '';
+  }catch(e){
+    statusEl.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+// ── Register pending user when they first show up ──
+async function registerPendingUser(user){
+  if(!_db) return;
+  try{
+    await _db.collection('app_config').doc('security').set({
+      pending_uids: firebase.firestore.FieldValue.arrayUnion(user.uid),
+      ['pending_emails.' + user.uid]: user.email || '',
+      ['member_names.' + user.uid]: user.displayName || user.email.split('@')[0]
+    }, {merge:true});
+  }catch(e){
+    console.error('registerPendingUser error:', e);
+  }
+}
 function updateUserUI(user){
   const pill = document.getElementById('userInfoPill');
   const avatar = document.getElementById('userAvatar');
