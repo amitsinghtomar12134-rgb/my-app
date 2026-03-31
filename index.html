@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Exam Prep">
 <meta name="description" content="Smart Exam Preparation App -- AI Quiz, Notes, Progress Tracking">
-<meta name="theme-color" content="#1565c0">
+<meta name="theme-color" content="#1b4332">
 <meta name="mobile-web-app-capable" content="yes">
 
 <!-- PDF.js for PDF text extraction -->
@@ -31,21 +31,40 @@
 <link rel="manifest" href="manifest.json">
 
 <!-- Apple Touch Icons (inline SVG fallback via data URI) -->
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231565c0'/%3E%3Ctext x='256' y='320' font-size='280' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231565c0'/%3E%3Ctext x='256' y='320' font-size='280' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231b4332'/%3E%3Crect width='512' height='512' rx='80' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231b4332'/%3E%3Cstop offset='1' stop-color='%230d2b18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='256' y='310' font-size='260' text-anchor='middle' fill='%23c9a14a'%3E🏛%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231b4332'/%3E%3Ctext x='256' y='310' font-size='260' text-anchor='middle' fill='%23c9a14a'%3E🏛%3C/text%3E%3C/svg%3E">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap');
 :root{
-  --bg:#eaf4fb;--bg2:#d4eaf7;--surface:#fff;--surface2:#f4f9fe;
-  --accent:#1565c0;--accent2:#e65100;--accent3:#1976d2;
-  --green:#2e7d32;--red:#c62828;--purple:#6a1b9a;--teal:#00695c;
-  --text:#0d1b2a;--text2:#37526d;--border:#bdd5ea;
-  --card:#fff;--shadow:0 2px 10px rgba(21,101,192,0.09);
-  --highlight:#fff8e1;--new-bg:#e8f5e9;--new-border:#a5d6a7;
-  --sidebar-w:220px;
-  --user-highlight:#fff3cd;
-  --user-highlight-border:#ffe69c;
-  --save-color:#6f42c1;
+  /* ── UPSC Dark Green + Gold Theme ── */
+  --bg:#f0f4f0;
+  --bg2:#e0ece0;
+  --surface:#ffffff;
+  --surface2:#f5f8f5;
+  --accent:#1b5e20;        /* Deep Forest Green */
+  --accent2:#b8860b;       /* Dark Gold */
+  --accent3:#2e7d32;       /* Medium Green */
+  --gold:#c9a14a;          /* Warm Gold */
+  --gold-light:#f0d080;    /* Light Gold */
+  --gold-dark:#8b6914;     /* Dark Gold */
+  --green:#2e7d32;
+  --green-light:#43a047;
+  --red:#b71c1c;
+  --purple:#4a148c;
+  --teal:#00695c;
+  --text:#1a2e1a;
+  --text2:#4a6741;
+  --border:#c8d8c0;
+  --card:#ffffff;
+  --shadow:0 2px 12px rgba(27,94,32,0.10);
+  --shadow-gold:0 2px 12px rgba(184,134,11,0.15);
+  --highlight:#fffde7;
+  --new-bg:#e8f5e9;
+  --new-border:#a5d6a7;
+  --sidebar-w:232px;
+  --user-highlight:#fff8e1;
+  --user-highlight-border:#ffd54f;
+  --save-color:#5d4037;
   --radius:12px;
   --radius-lg:18px;
   --transition:0.2s ease;
@@ -53,34 +72,39 @@
 
 /* ===== NIGHT MODE -- body.night-mode se sab kuch badalta hai ===== */
 body.night-mode {
-  --bg:#0f1117;
-  --bg2:#161b22;
-  --surface:#1c2128;
-  --surface2:#21262d;
-  --accent:#4a9eff;
-  --accent2:#ff8a50;
-  --accent3:#58a6ff;
-  --green:#3fb950;
-  --red:#f85149;
-  --purple:#bc8cff;
-  --teal:#39d353;
-  --text:#e6edf3;
-  --text2:#8b949e;
-  --border:#30363d;
-  --card:#1c2128;
-  --shadow:0 2px 10px rgba(0,0,0,0.4);
-  --highlight:rgba(255,248,225,0.08);
-  --new-bg:rgba(63,185,80,0.1);
-  --new-border:rgba(63,185,80,0.3);
-  --user-highlight:rgba(255,243,205,0.1);
-  --user-highlight-border:rgba(255,230,156,0.2);
-  --save-color:#bc8cff;
+  --bg:#0a110a;
+  --bg2:#0f1a0f;
+  --surface:#131f13;
+  --surface2:#192519;
+  --accent:#4caf50;
+  --accent2:#ffd54f;
+  --accent3:#66bb6a;
+  --gold:#ffc107;
+  --gold-light:#fff176;
+  --gold-dark:#f9a825;
+  --green:#66bb6a;
+  --green-light:#81c784;
+  --red:#ef5350;
+  --purple:#ce93d8;
+  --teal:#4db6ac;
+  --text:#e8f5e9;
+  --text2:#a5c8a0;
+  --border:#2a3f2a;
+  --card:#131f13;
+  --shadow:0 2px 10px rgba(0,0,0,0.5);
+  --shadow-gold:0 2px 10px rgba(255,193,7,0.08);
+  --highlight:rgba(255,253,231,0.07);
+  --new-bg:rgba(76,175,80,0.1);
+  --new-border:rgba(76,175,80,0.3);
+  --user-highlight:rgba(255,248,225,0.08);
+  --user-highlight-border:rgba(255,213,79,0.2);
+  --save-color:#a1887f;
   color-scheme: dark;
 }
 
 /* Night mode: sidebar darker */
 body.night-mode .sidebar {
-  background: linear-gradient(180deg,#020810 0%,#071525 60%,#0a1f38 100%);
+  background: linear-gradient(180deg,#020a02 0%,#061206 50%,#0a1a0a 100%);
 }
 body.night-mode .sb-night-btn { border-color:rgba(255,255,255,0.15); }
 body.night-mode .sb-exam-select { background:rgba(255,255,255,0.05); }
@@ -196,153 +220,166 @@ body{
 .app-shell{display:flex;flex:1;min-height:100vh;min-height:100dvh;}
 
 /* SIDEBAR */
-/* ===== SIDEBAR -- Professional v2 ===== */
+/* ===== SIDEBAR -- UPSC Professional Dark Green + Gold ===== */
 .sidebar{
   width:var(--sidebar-w);flex-shrink:0;
-  background:linear-gradient(180deg,#0a1929 0%,#0d2644 60%,#0f3460 100%);
+  background:linear-gradient(180deg,#0a1f0a 0%,#0d2b0d 55%,#102e10 100%);
   display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;
   transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
-  box-shadow:2px 0 20px rgba(0,0,0,0.25);
+  box-shadow:3px 0 24px rgba(0,0,0,0.32);
+  border-right:1px solid rgba(201,161,74,0.12);
 }
 
 /* Header */
 .sb-header{
   display:flex;align-items:center;justify-content:space-between;
-  padding:16px 14px 14px;
-  border-bottom:1px solid rgba(255,255,255,0.07);
+  padding:14px 14px 12px;
+  border-bottom:1px solid rgba(201,161,74,0.15);
+  background:linear-gradient(135deg,rgba(201,161,74,0.08),rgba(201,161,74,0.02));
 }
 .sb-logo-wrap{display:flex;align-items:center;gap:10px;}
 .sb-logo-icon{
-  width:36px;height:36px;border-radius:10px;
-  background:linear-gradient(135deg,#1976d2,#42a5f5);
+  width:38px;height:38px;border-radius:10px;
+  background:linear-gradient(135deg,#c9a14a,#8b6914);
   display:flex;align-items:center;justify-content:center;
-  font-size:1.1rem;flex-shrink:0;
-  box-shadow:0 2px 8px rgba(21,101,192,0.4);
+  font-size:1.2rem;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(201,161,74,0.4);
+  border:1px solid rgba(201,161,74,0.3);
 }
-.sb-app-name{font-family:'Baloo 2',sans-serif;font-size:0.95rem;font-weight:800;color:#fff;line-height:1.2;}
-.sb-app-sub{font-size:0.62rem;color:rgba(255,255,255,0.45);margin-top:1px;letter-spacing:0.3px;}
+.sb-app-name{font-family:'Baloo 2',sans-serif;font-size:0.95rem;font-weight:800;color:#f5d87a;line-height:1.2;letter-spacing:0.2px;}
+.sb-app-sub{font-size:0.6rem;color:rgba(201,161,74,0.55);margin-top:1px;letter-spacing:0.5px;text-transform:uppercase;}
 .sb-close-btn{
-  background:rgba(255,255,255,0.08);border:none;color:rgba(255,255,255,0.6);
+  background:rgba(201,161,74,0.1);border:1px solid rgba(201,161,74,0.2);color:rgba(201,161,74,0.7);
   border-radius:8px;width:30px;height:30px;font-size:0.9rem;cursor:pointer;
   display:flex;align-items:center;justify-content:center;flex-shrink:0;
   transition:all 0.15s;-webkit-tap-highlight-color:transparent;
 }
-.sb-close-btn:hover{background:rgba(255,255,255,0.15);color:#fff;}
+.sb-close-btn:hover{background:rgba(201,161,74,0.2);color:#f5d87a;}
 
 /* Exam Switcher */
-.sb-exam-box{padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.07);}
-.sb-exam-label{font-size:0.6rem;color:rgba(255,255,255,0.4);font-weight:700;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;}
+.sb-exam-box{padding:9px 12px;border-bottom:1px solid rgba(201,161,74,0.1);}
+.sb-exam-label{font-size:0.58rem;color:rgba(201,161,74,0.55);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px;}
 .sb-exam-select{
-  width:100%;background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.12);border-radius:8px;
-  padding:6px 10px;color:#fff;font-family:'Noto Sans Devanagari',sans-serif;
+  width:100%;background:rgba(201,161,74,0.08);
+  border:1px solid rgba(201,161,74,0.2);border-radius:8px;
+  padding:7px 10px;color:#e8d5a0;font-family:'Noto Sans Devanagari',sans-serif;
   font-size:0.78rem;font-weight:600;outline:none;cursor:pointer;
   appearance:none;-webkit-appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(255,255,255,0.4)'/%3E%3C/svg%3E");
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='rgba(201,161,74,0.5)'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
 }
-.sb-exam-select option{background:#0d2644;color:#fff;}
+.sb-exam-select option{background:#0d2b0d;color:#e8d5a0;}
 
 /* Nav Section */
 .nav-section{padding:8px 0;flex:1;overflow-y:auto;overflow-x:hidden;scrollbar-width:none;}
 .nav-section::-webkit-scrollbar{display:none;}
 
 .sb-group-title{
-  font-size:0.58rem;color:rgba(255,255,255,0.3);font-weight:800;
-  text-transform:uppercase;letter-spacing:1.2px;
+  font-size:0.56rem;color:rgba(201,161,74,0.5);font-weight:800;
+  text-transform:uppercase;letter-spacing:1.5px;
   padding:10px 16px 4px;
 }
 
 /* Nav Items */
 .nav-item{
   display:flex;align-items:center;gap:11px;
-  padding:9px 14px 9px 16px;
+  padding:8px 14px 8px 16px;
   cursor:pointer;transition:all 0.15s;
-  color:rgba(255,255,255,0.65);
-  font-size:0.82rem;font-weight:600;
+  color:rgba(220,220,200,0.65);
+  font-size:0.81rem;font-weight:600;
   border-left:3px solid transparent;
   text-decoration:none;
   -webkit-tap-highlight-color:transparent;
-  border-radius:0;
   margin:1px 8px 1px 0;
   border-radius:0 10px 10px 0;
 }
 .nav-item:hover{
-  background:rgba(255,255,255,0.08);
-  color:rgba(255,255,255,0.92);
-  border-left-color:rgba(144,202,249,0.4);
+  background:rgba(201,161,74,0.08);
+  color:rgba(245,216,122,0.9);
+  border-left-color:rgba(201,161,74,0.35);
 }
 .nav-item.active{
-  background:linear-gradient(90deg,rgba(25,118,210,0.35),rgba(25,118,210,0.1));
-  color:#fff;
-  border-left-color:#42a5f5;
+  background:linear-gradient(90deg,rgba(201,161,74,0.2),rgba(201,161,74,0.06));
+  color:#f5d87a;
+  border-left-color:#c9a14a;
 }
-.sb-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;opacity:0.85;}
+.sb-icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0;opacity:0.8;}
 .nav-item.active .sb-icon{opacity:1;}
 .sb-label{flex:1;line-height:1.2;}
 
 /* Badge */
 .nav-badge{
   margin-left:auto;
-  background:rgba(255,255,255,0.15);
+  background:rgba(201,161,74,0.18);
+  border:1px solid rgba(201,161,74,0.3);
   border-radius:20px;padding:2px 7px;
-  font-size:0.62rem;font-weight:800;color:rgba(255,255,255,0.9);
+  font-size:0.6rem;font-weight:800;color:#f5d87a;
   min-width:18px;text-align:center;
 }
-.nav-badge.red{background:#ef5350;color:#fff;}
+.nav-badge.red{background:#c62828;color:#fff;border-color:#c62828;}
 
 /* Study Coach special item */
 .sb-coach-item{
-  background:linear-gradient(90deg,rgba(255,111,0,0.12),transparent) !important;
-  border-left-color:rgba(255,111,0,0.6) !important;
-  color:rgba(255,183,77,0.9) !important;
+  background:linear-gradient(90deg,rgba(201,161,74,0.1),transparent) !important;
+  border-left-color:rgba(201,161,74,0.5) !important;
+  color:rgba(245,216,122,0.85) !important;
 }
 .sb-coach-item:hover{
-  background:linear-gradient(90deg,rgba(255,111,0,0.2),transparent) !important;
-  color:#ffb74d !important;
+  background:linear-gradient(90deg,rgba(201,161,74,0.18),transparent) !important;
+  color:#f5d87a !important;
 }
 .sb-coach-badge{
-  background:linear-gradient(135deg,#ff6f00,#ffa000);
+  background:linear-gradient(135deg,#c9a14a,#8b6914);
   color:#fff;border-radius:6px;padding:2px 6px;
-  font-size:0.58rem;font-weight:800;letter-spacing:0.3px;
+  font-size:0.56rem;font-weight:800;letter-spacing:0.3px;
+  box-shadow:0 1px 4px rgba(201,161,74,0.3);
 }
 
 /* Bottom section */
 .sb-bottom{
   padding:10px 12px;
-  border-top:1px solid rgba(255,255,255,0.07);
+  border-top:1px solid rgba(201,161,74,0.12);
   display:flex;flex-direction:column;gap:8px;
+  background:rgba(0,0,0,0.15);
 }
 .sb-night-btn{
   display:flex;align-items:center;gap:10px;
   width:100%;padding:9px 12px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(201,161,74,0.07);
+  border:1px solid rgba(201,161,74,0.15);
   border-radius:10px;cursor:pointer;
-  color:rgba(255,255,255,0.75);font-family:'Noto Sans Devanagari',sans-serif;
-  font-size:0.8rem;font-weight:700;
+  color:rgba(201,161,74,0.75);font-family:'Noto Sans Devanagari',sans-serif;
+  font-size:0.78rem;font-weight:700;
   transition:all 0.15s;-webkit-tap-highlight-color:transparent;
   text-align:left;
 }
-.sb-night-btn:hover{background:rgba(255,255,255,0.12);color:#fff;}
-.sb-night-btn.active{background:rgba(255,235,59,0.12);border-color:rgba(255,235,59,0.25);color:#fff9c4;}
+.sb-night-btn:hover{background:rgba(201,161,74,0.14);color:#f5d87a;}
+.sb-night-btn.active{background:rgba(201,161,74,0.15);border-color:rgba(201,161,74,0.3);color:#f5d87a;}
 #nightModeIcon{font-size:1rem;flex-shrink:0;}
 #nightModeLabel{flex:1;}
 
 .mode-pill{
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.1);
+  background:rgba(27,94,32,0.3);
+  border:1px solid rgba(201,161,74,0.2);
   border-radius:10px;padding:6px 12px;
-  text-align:center;font-size:0.72rem;font-weight:700;
-  color:rgba(144,202,249,0.8);letter-spacing:0.2px;
+  text-align:center;font-size:0.7rem;font-weight:700;
+  color:rgba(201,161,74,0.75);letter-spacing:0.3px;
 }
 
 /* MAIN CONTENT */
 .main-content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;height:100vh;height:100dvh;overscroll-behavior:none;overscroll-behavior-y:none;}
 
 /* TOP BAR */
-.topbar{background:var(--surface);border-bottom:1.5px solid var(--border);padding:10px 14px;padding-top:max(10px,env(safe-area-inset-top,10px));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:0 2px 10px rgba(21,101,192,0.08);}
-.topbar-title{font-size:0.95rem;font-weight:800;color:var(--accent);}
+.topbar{
+  background:var(--surface);
+  border-bottom:2px solid var(--border);
+  padding:10px 14px;
+  padding-top:max(10px,env(safe-area-inset-top,10px));
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 12px rgba(27,94,32,0.10);
+}
+.topbar-title{font-size:0.95rem;font-weight:800;color:var(--accent);letter-spacing:0.2px;}
 .topbar-right{display:flex;align-items:center;gap:8px;}
 .hamburger{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--accent);padding:6px;min-width:36px;min-height:36px;border-radius:8px;-webkit-tap-highlight-color:transparent;}
 
@@ -379,33 +416,33 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .field-label{display:block;font-size:0.76rem;color:var(--text2);font-weight:700;margin-bottom:4px;}
 
 /* BUTTONS */
-.btn{padding:8px 14px;border:none;border-radius:9px;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.18s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;box-shadow:0 2px 8px rgba(21,101,192,0.2);}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(21,101,192,0.3);}
+.btn{padding:8px 15px;border:none;border-radius:9px;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.18s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;box-shadow:0 2px 8px rgba(27,94,32,0.25);}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,94,32,0.35);}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
 .btn-green{background:linear-gradient(135deg,var(--green),#388e3c);color:#fff;}
 .btn-green:hover{transform:translateY(-1px);}
-.btn-orange{background:linear-gradient(135deg,var(--accent2),#bf360c);color:#fff;}
+.btn-orange{background:linear-gradient(135deg,#b8860b,#8b6914);color:#fff;}
 .btn-teal{background:linear-gradient(135deg,var(--teal),#00897b);color:#fff;}
-.btn-purple{background:linear-gradient(135deg,var(--purple),#7b1fa2);color:#fff;}
+.btn-purple{background:linear-gradient(135deg,var(--purple),#6a1b9a);color:#fff;}
 .btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text2);}
-.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(21,101,192,0.04);}
-.btn-danger{background:rgba(198,40,40,0.08);color:var(--red);border:1.5px solid rgba(198,40,40,0.18);}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(27,94,32,0.05);}
+.btn-danger{background:rgba(183,28,28,0.08);color:var(--red);border:1.5px solid rgba(183,28,28,0.18);}
 .btn-sm{padding:6px 11px;font-size:0.76rem;}
 .btn-xs{padding:3px 8px;font-size:0.7rem;}
 .btn-row{display:flex;gap:7px;flex-wrap:wrap;}
 
 /* HIERARCHY TREE */
 .subject-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow var(--transition);}
-.subject-header{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:linear-gradient(90deg,rgba(21,101,192,0.06),transparent);}
-.subject-header:hover{background:linear-gradient(90deg,rgba(21,101,192,0.1),transparent);}
+.subject-header{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:linear-gradient(90deg,rgba(27,94,32,0.06),transparent);}
+.subject-header:hover{background:linear-gradient(90deg,rgba(27,94,32,0.1),transparent);}
 .subj-name{font-weight:800;font-size:0.88rem;color:var(--accent);}
 .subj-meta{font-size:0.7rem;color:var(--text2);margin-top:1px;}
 .subject-body{padding:8px 12px;display:none;}
 .subject-body.open{display:block;}
 .section-block{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;margin-bottom:7px;overflow:hidden;}
 .section-header{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
-.section-header:hover{background:rgba(230,81,0,0.04);}
+.section-header:hover{background:rgba(184,134,11,0.05);}
 .sec-name{font-weight:700;font-size:0.82rem;color:var(--accent2);}
 .topic-list{padding:6px 10px;}
 .topic-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:10px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all var(--transition);}
@@ -435,7 +472,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* QUIZ */
 .progress-bar{background:var(--bg2);height:5px;border-radius:10px;margin-bottom:14px;overflow:hidden;}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:10px;transition:width 0.4s;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--green-light));border-radius:10px;transition:width 0.4s;}
 .q-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
 .question-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow);}
 .q-num{font-size:0.72rem;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
@@ -475,8 +512,8 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* PREV/NEXT NAV */
 .quiz-nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:10px;gap:8px;}
-.btn-prev{background:rgba(21,101,192,0.08);color:var(--accent);border:1.5px solid rgba(21,101,192,0.2);border-radius:9px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:0.8rem;font-family:'Noto Sans Devanagari',sans-serif;transition:all 0.15s;}
-.btn-prev:hover{background:rgba(21,101,192,0.15);}
+.btn-prev{background:rgba(27,94,32,0.08);color:var(--accent);border:1.5px solid rgba(27,94,32,0.2);border-radius:9px;padding:8px 14px;cursor:pointer;font-weight:700;font-size:0.8rem;font-family:'Noto Sans Devanagari',sans-serif;transition:all 0.15s;}
+.btn-prev:hover{background:rgba(27,94,32,0.15);}
 .btn-prev:disabled{opacity:0.35;cursor:not-allowed;}
 
 /* PROGRESS PANEL */
@@ -521,7 +558,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* EXAM CARD */
 .exam-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:14px;margin-bottom:10px;box-shadow:var(--shadow);transition:border 0.18s;}
-.exam-card.active-exam{border-color:var(--accent);background:rgba(21,101,192,0.03);}
+.exam-card.active-exam{border-color:var(--accent);background:rgba(27,94,32,0.03);}
 
 /* MODAL */
 
@@ -562,7 +599,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .tv-cat-name { font-size:0.82rem;font-weight:800;color:var(--text);font-family:'Baloo 2',sans-serif; }
 .tv-cat-sub  { font-size:0.62rem;color:var(--text2);margin-top:-3px; }
 .tv-cat-badge { position:absolute;top:9px;right:9px;background:var(--accent);color:#fff;border-radius:20px;padding:1px 7px;font-size:0.58rem;font-weight:800; }
-.tv-cat-card.cat-overview { border-color:rgba(21,101,192,0.22);background:rgba(21,101,192,0.03); }
+.tv-cat-card.cat-overview { border-color:rgba(27,94,32,0.22);background:rgba(27,94,32,0.03); }
 .tv-cat-card.cat-smart    { border-color:rgba(106,27,154,0.22);background:rgba(106,27,154,0.03); }
 .tv-cat-card.cat-final    { border-color:rgba(245,124,0,0.22); background:rgba(245,124,0,0.03); }
 .tv-cat-card.cat-master   { border-color:rgba(74,20,140,0.22); background:rgba(74,20,140,0.03); }
@@ -572,7 +609,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* ── Sub-screen header (Screen B) ── */
 .tv-sub-header { display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-bottom:1.5px solid var(--border);flex-shrink:0; }
-.tv-back-btn { width:32px;height:32px;border-radius:50%;background:rgba(21,101,192,0.1);border:none;color:var(--accent);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent; }
+.tv-back-btn { width:32px;height:32px;border-radius:50%;background:rgba(27,94,32,0.1);border:none;color:var(--accent);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent; }
 .tv-sub-title { flex:1;font-size:0.88rem;font-weight:800;color:var(--text);font-family:'Baloo 2',sans-serif; }
 
 /* ── Note item card (name + icons, no content) ── */
@@ -585,7 +622,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .tv-nbtn:active { transform:scale(0.9); }
 .tv-nbtn.primary { background:var(--accent);border-color:var(--accent);color:#fff; }
 .tv-nbtn.danger  { background:rgba(198,40,40,0.08);border-color:rgba(198,40,40,0.25);color:#c62828; }
-.tv-nbtn.copy    { background:rgba(21,101,192,0.08);border-color:rgba(21,101,192,0.2);color:var(--accent); }
+.tv-nbtn.copy    { background:rgba(27,94,32,0.08);border-color:rgba(27,94,32,0.2);color:var(--accent); }
 
 /* ── Single content card (smart/final/master) ── */
 .tv-content-wrap { padding:14px; }
@@ -620,7 +657,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:0.7rem;font-weight:700;}
 .badge-green{background:rgba(46,125,50,0.12);color:var(--green);}
 .badge-red{background:rgba(198,40,40,0.12);color:var(--red);}
-.badge-blue{background:rgba(21,101,192,0.12);color:var(--accent);}
+.badge-blue{background:rgba(27,94,32,0.12);color:var(--accent);}
 .badge-orange{background:rgba(230,81,0,0.12);color:var(--accent2);}
 .badge-new{background:var(--new-bg);color:var(--green);border:1px solid var(--new-border);}
 .badge-save{background:var(--save-color);color:#fff;}
@@ -642,8 +679,8 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .saved-fact-actions{display:flex;gap:6px;justify-content:flex-end;}
 
 /* ANSWER HIDE TOGGLE */
-.ans-hide-toggle{display:inline-flex;align-items:center;gap:5px;background:rgba(21,101,192,0.08);border:1.5px solid rgba(21,101,192,0.2);border-radius:20px;padding:3px 10px;font-size:0.72rem;font-weight:700;cursor:pointer;color:var(--accent);transition:all 0.15s;user-select:none;}
-.ans-hide-toggle:hover{background:rgba(21,101,192,0.14);}
+.ans-hide-toggle{display:inline-flex;align-items:center;gap:5px;background:rgba(27,94,32,0.08);border:1.5px solid rgba(27,94,32,0.2);border-radius:20px;padding:3px 10px;font-size:0.72rem;font-weight:700;cursor:pointer;color:var(--accent);transition:all 0.15s;user-select:none;}
+.ans-hide-toggle:hover{background:rgba(27,94,32,0.14);}
 .ans-hide-toggle.hiding{background:rgba(198,40,40,0.08);border-color:rgba(198,40,40,0.25);color:var(--red);}
 .ans-hidden-block{filter:blur(5px);transition:filter 0.3s;user-select:none;pointer-events:none;}
 .ans-hidden-block.revealed{filter:none;pointer-events:auto;}
@@ -708,7 +745,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
   z-index: 9999;
   width: 24px;
   height: 80px;
-  background: linear-gradient(180deg,#e65100,#1565c0);
+  background: linear-gradient(180deg,#e65100,var(--accent));
   border-radius: 10px 0 0 10px;
   display: none;
   align-items: center;
@@ -731,8 +768,8 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* Canvas drop zone active */
 #scCanvasWrap.ai-drop-active {
-  outline: 3px dashed rgba(21,101,192,0.6) !important;
-  background: rgba(21,101,192,0.04) !important;
+  outline: 3px dashed rgba(27,94,32,0.6) !important;
+  background: rgba(27,94,32,0.04) !important;
 }
 .ai-chat-panel{background:var(--surface);width:100%;max-width:720px;height:88vh;border-radius:24px 24px 0 0;display:flex;flex-direction:column;box-shadow:0 -6px 40px rgba(0,0,0,0.2);overflow:hidden;}
 .ai-chat-header{padding:12px 16px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -756,13 +793,13 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .ai-save-to-fact:hover{background:rgba(111,66,193,0.2);}
 
 /* PWA INSTALL BANNER */
-.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:10000;background:linear-gradient(135deg,#0d2644,#1565c0);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 -4px 20px rgba(0,0,0,0.25);transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);flex-wrap:wrap;}
+.pwa-banner{position:fixed;bottom:0;left:0;right:0;z-index:10000;background:linear-gradient(135deg,#0a1f0a,var(--accent));color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px;box-shadow:0 -4px 20px rgba(0,0,0,0.25);transform:translateY(100%);transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);flex-wrap:wrap;}
 .pwa-banner.show{transform:translateY(0);}
 .pwa-banner-text{flex:1;}
 .pwa-banner-title{font-weight:800;font-size:0.9rem;margin-bottom:2px;}
 .pwa-banner-sub{font-size:0.73rem;opacity:0.85;}
 .pwa-banner-btns{display:flex;gap:8px;flex-shrink:0;}
-.pwa-install-btn{background:#fff;color:#1565c0;border:none;border-radius:10px;padding:8px 16px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;}
+.pwa-install-btn{background:#fff;color:var(--accent);border:none;border-radius:10px;padding:8px 16px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;}
 .pwa-dismiss-btn{background:rgba(255,255,255,0.15);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:10px;padding:8px 12px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;}
 
 /* OFFLINE INDICATOR */
@@ -788,7 +825,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .reading-controls{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
 .rd-btn{padding:6px 10px;border-radius:8px;border:1.5px solid;cursor:pointer;font-size:0.76rem;font-weight:700;transition:all 0.15s;font-family:inherit;background:transparent;}
 .light .rd-btn{border-color:#ddd;color:#444;}
-.light .rd-btn:hover,.light .rd-btn.active{background:#1565c0;color:#fff;border-color:#1565c0;}
+.light .rd-btn:hover,.light .rd-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .dark .rd-btn{border-color:#444;color:#bbb;}
 .dark .rd-btn:hover,.dark .rd-btn.active{background:#4a9eff;color:#fff;border-color:#4a9eff;}
 .sepia .rd-btn{border-color:#c4a882;color:#5c3d2e;}
@@ -815,7 +852,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 
 /* Progress bar at top */
 .reading-progress{height:4px;background:rgba(128,128,128,0.15);flex-shrink:0;}
-.reading-progress-fill{height:100%;background:#1565c0;width:0%;transition:width 0.15s;}
+.reading-progress-fill{height:100%;background:var(--accent);width:0%;transition:width 0.15s;}
 .dark .reading-progress-fill{background:#4a9eff;}
 .sepia .reading-progress-fill{background:#8b5e3c;}
 
@@ -828,7 +865,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 /* Theme buttons */
 .rd-theme-btn{padding:5px 10px;border-radius:20px;border:1.5px solid transparent;cursor:pointer;font-size:0.74rem;font-weight:700;transition:all 0.15s;font-family:inherit;background:transparent;}
 .light .rd-theme-btn{color:#555;border-color:#ddd;}
-.light .rd-theme-btn.active,.light .rd-theme-btn:hover{background:#1565c0;color:#fff;border-color:#1565c0;}
+.light .rd-theme-btn.active,.light .rd-theme-btn:hover{background:var(--accent);color:#fff;border-color:var(--accent);}
 .dark .rd-theme-btn{color:#aaa;border-color:#444;}
 .dark .rd-theme-btn.active,.dark .rd-theme-btn:hover{background:#4a9eff;color:#fff;border-color:#4a9eff;}
 .sepia .rd-theme-btn{color:#6b4c35;border-color:#c4a882;}
@@ -841,33 +878,111 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .sepia .reading-bottombar{color:#9b7d5e;background:#f4ecd8;}
 
 /* ===== LOGIN SCREEN ===== */
-.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0a1f0a 0%,#1b4332 55%,#1b5e20 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-box{background:#fff;border-radius:20px;padding:32px 24px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;}
 .login-logo{font-size:3rem;margin-bottom:8px;}
 .login-title{font-family:'Baloo 2',sans-serif;font-size:1.5rem;font-weight:800;color:var(--accent);margin-bottom:4px;}
 .login-sub{font-size:0.78rem;color:var(--text2);margin-bottom:24px;line-height:1.5;}
 .login-btn-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:13px 16px;border:2px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;font-size:0.88rem;font-weight:700;color:var(--text);transition:all 0.2s;font-family:'Noto Sans Devanagari',sans-serif;margin-bottom:12px;}
-.login-btn-google:hover{border-color:var(--accent);background:rgba(21,101,192,0.04);transform:translateY(-1px);}
+.login-btn-google:hover{border-color:var(--accent);background:rgba(27,94,32,0.04);transform:translateY(-1px);}
 .login-btn-google img{width:22px;height:22px;}
 .login-divider{display:flex;align-items:center;gap:10px;margin:12px 0;color:var(--text2);font-size:0.74rem;}
 .login-divider::before,.login-divider::after{content:'';flex:1;height:1px;background:var(--border);}
 .login-inp{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:10px;font-size:0.84rem;margin-bottom:10px;outline:none;font-family:'Noto Sans Devanagari',sans-serif;color:var(--text);transition:border 0.2s;}
 .login-inp:focus{border-color:var(--accent);}
 .login-btn-primary{width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:12px;font-size:0.88rem;font-weight:700;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;margin-bottom:10px;transition:all 0.2s;}
-.login-btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(21,101,192,0.3);}
+.login-btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(27,94,32,0.3);}
 .login-btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
 .login-toggle{font-size:0.78rem;color:var(--text2);cursor:pointer;}
 .login-toggle span{color:var(--accent);font-weight:700;}
 .login-error{background:rgba(198,40,40,0.08);border:1px solid rgba(198,40,40,0.2);border-radius:8px;padding:8px 12px;font-size:0.76rem;color:var(--red);margin-bottom:10px;display:none;}
 .login-error.show{display:block;}
-/* User info topbar */
-.user-info-pill{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:0.74rem;cursor:pointer;}
+/* ===== SIDEBAR USER PROFILE SECTION ===== */
+.sb-profile-section{
+  padding:12px 12px 10px;
+  border-bottom:1px solid rgba(201,161,74,0.12);
+  background:rgba(201,161,74,0.04);
+  cursor:pointer;
+  transition:background 0.15s;
+  display:none;
+}
+.sb-profile-section:hover{background:rgba(201,161,74,0.09);}
+.sb-profile-inner{display:flex;align-items:center;gap:10px;}
+.sb-profile-avatar-wrap{position:relative;flex-shrink:0;}
+.sb-profile-avatar{
+  width:42px;height:42px;border-radius:50%;
+  background:linear-gradient(135deg,#c9a14a,#8b6914);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:1rem;font-weight:800;
+  border:2px solid rgba(201,161,74,0.5);
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(201,161,74,0.3);
+  object-fit:cover;
+}
+.sb-profile-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.sb-profile-edit-dot{
+  position:absolute;bottom:0;right:0;
+  width:13px;height:13px;border-radius:50%;
+  background:#c9a14a;border:2px solid #0d2b0d;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.45rem;color:#fff;
+}
+.sb-profile-info{flex:1;min-width:0;}
+.sb-profile-name{
+  font-size:0.82rem;font-weight:800;color:#f5d87a;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  line-height:1.2;
+}
+.sb-profile-email{
+  font-size:0.6rem;color:rgba(201,161,74,0.55);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  margin-top:2px;
+}
+.sb-profile-role-badge{
+  display:inline-block;
+  background:linear-gradient(135deg,rgba(201,161,74,0.25),rgba(201,161,74,0.12));
+  border:1px solid rgba(201,161,74,0.35);
+  color:#f5d87a;border-radius:4px;
+  padding:1px 6px;font-size:0.55rem;font-weight:800;
+  margin-top:3px;letter-spacing:0.3px;
+  text-transform:uppercase;
+}
+
+/* Profile Pic Upload Modal */
+.profile-upload-modal{
+  position:fixed;inset:0;z-index:2000;
+  display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,0.55);
+}
+.profile-upload-modal.show{display:flex;}
+.profile-upload-sheet{
+  background:var(--surface);
+  border-radius:20px 20px 0 0;
+  padding:24px 20px 32px;
+  width:100%;max-width:480px;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.2);
+  animation:slideUp 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.profile-upload-title{font-size:1rem;font-weight:800;color:var(--accent);margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.profile-pic-preview{
+  width:80px;height:80px;border-radius:50%;margin:0 auto 16px;
+  background:linear-gradient(135deg,#c9a14a,#8b6914);
+  border:3px solid rgba(201,161,74,0.4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;font-weight:800;color:#fff;
+  overflow:hidden;
+}
+.profile-pic-preview img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
+
 .user-avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;flex-shrink:0;}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;}
 
-/* ── Browse Page ── */
+/* User info topbar */
+.user-info-pill{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:0.74rem;cursor:pointer;}
 .browse-member-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.18s;}
-.browse-member-card:hover,.browse-member-card:active{border-color:var(--accent);background:rgba(21,101,192,0.04);transform:translateY(-1px);box-shadow:0 4px 14px rgba(21,101,192,0.1);}
+.browse-member-card:hover,.browse-member-card:active{border-color:var(--accent);background:rgba(27,94,32,0.04);transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,94,32,0.1);}
 .browse-member-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0;}
 .browse-member-name{font-weight:800;font-size:0.9rem;color:var(--text);}
 .browse-member-meta{font-size:0.72rem;color:var(--text2);margin-top:2px;}
@@ -875,9 +990,9 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .browse-subject-header{padding:11px 14px;font-weight:800;font-size:0.88rem;color:var(--accent);display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--surface2);}
 .browse-section-header{padding:8px 14px 8px 18px;font-weight:700;font-size:0.8rem;color:var(--text2);background:var(--surface);border-top:1px solid var(--border);}
 .browse-topic-row{padding:8px 14px 8px 24px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.04);cursor:pointer;transition:background 0.15s;}
-.browse-topic-row:hover{background:rgba(21,101,192,0.04);}
+.browse-topic-row:hover{background:rgba(27,94,32,0.04);}
 .browse-topic-name{font-size:0.82rem;color:var(--text);font-weight:600;flex:1;}
-.browse-copy-topic-btn{font-size:0.68rem;padding:3px 9px;background:rgba(21,101,192,0.1);border:1px solid rgba(21,101,192,0.25);border-radius:20px;color:var(--accent);cursor:pointer;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.browse-copy-topic-btn{font-size:0.68rem;padding:3px 9px;background:rgba(27,94,32,0.1);border:1px solid rgba(27,94,32,0.25);border-radius:20px;color:var(--accent);cursor:pointer;font-weight:700;white-space:nowrap;flex-shrink:0;}
 .browse-note-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:7px;}
 .browse-note-name{font-weight:700;font-size:0.82rem;color:var(--text);margin-bottom:5px;}
 .browse-note-content{font-size:0.8rem;line-height:1.75;color:var(--text);white-space:pre-wrap;word-break:break-word;user-select:text;-webkit-user-select:text;}
@@ -897,13 +1012,13 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .lq-rank-name{font-weight:700;font-size:0.82rem;flex:1;}
 .lq-rank-score{font-size:0.8rem;font-weight:800;color:var(--accent);}
 .lq-option{display:block;width:100%;padding:11px 14px;margin-bottom:8px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);text-align:left;cursor:pointer;font-size:0.84rem;color:var(--text);transition:all 0.15s;font-family:inherit;}
-.lq-option:hover{border-color:var(--accent);background:rgba(21,101,192,0.04);}
-.lq-option.selected{border-color:var(--accent);background:rgba(21,101,192,0.1);color:var(--accent);font-weight:700;}
+.lq-option:hover{border-color:var(--accent);background:rgba(27,94,32,0.04);}
+.lq-option.selected{border-color:var(--accent);background:rgba(27,94,32,0.1);color:var(--accent);font-weight:700;}
 .lq-option.correct{border-color:var(--green);background:rgba(46,125,50,0.1);color:var(--green);font-weight:700;}
 .lq-option.wrong{border-color:var(--red);background:rgba(198,40,40,0.08);color:var(--red);}
 /* ── Group Chat ── */
 .gc-thread-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer;transition:all 0.15s;}
-.gc-thread-card:hover{border-color:var(--accent);background:rgba(21,101,192,0.03);}
+.gc-thread-card:hover{border-color:var(--accent);background:rgba(27,94,32,0.03);}
 .gc-thread-title{font-weight:800;font-size:0.88rem;color:var(--text);margin-bottom:3px;}
 .gc-thread-meta{font-size:0.7rem;color:var(--text2);}
 .gc-thread-last{font-size:0.75rem;color:var(--text2);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -923,9 +1038,9 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .sync-dot.syncing{background:var(--accent2);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
 /* Firebase config modal */
-.fb-config-note{background:rgba(21,101,192,0.06);border:1.5px solid rgba(21,101,192,0.2);border-radius:10px;padding:10px 12px;font-size:0.75rem;color:var(--text2);line-height:1.6;margin-bottom:12px;}
+.fb-config-note{background:rgba(27,94,32,0.06);border:1.5px solid rgba(27,94,32,0.2);border-radius:10px;padding:10px 12px;font-size:0.75rem;color:var(--text2);line-height:1.6;margin-bottom:12px;}
 /* Quiz Director Chat */
-.qd-msg-user{background:rgba(21,101,192,0.1);border:1px solid rgba(21,101,192,0.2);border-radius:8px;padding:7px 10px;font-size:0.79rem;margin-bottom:6px;color:var(--text);text-align:right;}
+.qd-msg-user{background:rgba(27,94,32,0.1);border:1px solid rgba(27,94,32,0.2);border-radius:8px;padding:7px 10px;font-size:0.79rem;margin-bottom:6px;color:var(--text);text-align:right;}
 .qd-msg-bot{background:rgba(106,27,154,0.07);border:1px solid rgba(106,27,154,0.15);border-radius:8px;padding:7px 10px;font-size:0.79rem;margin-bottom:6px;color:var(--text);}
 /* Question count slider */
 input[type=range]{-webkit-appearance:none;height:5px;border-radius:5px;background:var(--bg2);}
@@ -947,7 +1062,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   max-height: 300px;
 }
 #neToolbarToggleBar:hover {
-  background: linear-gradient(90deg,rgba(21,101,192,0.13),rgba(21,101,192,0.06)) !important;
+  background: linear-gradient(90deg,rgba(27,94,32,0.13),rgba(27,94,32,0.06)) !important;
 }
 #neToolbarToggleBar.tools-open #neToolbarArrow {
   transform: rotate(180deg);
@@ -969,7 +1084,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   z-index: 1200;
   width: 22px;
   height: 72px;
-  background: linear-gradient(180deg,#6a1b9a,#1565c0);
+  background: linear-gradient(180deg,#6a1b9a,var(--accent));
   border-radius: 10px 0 0 10px;
   display: none; /* shown when notes editor open */
   align-items: center;
@@ -1086,8 +1201,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: rgba(21,101,192,0.22) !important;
-  border: 1.5px solid rgba(21,101,192,0.3) !important;
+  background: rgba(27,94,32,0.22) !important;
+  border: 1.5px solid rgba(27,94,32,0.3) !important;
   cursor: pointer;
   align-items: center;
   justify-content: center;
@@ -1119,7 +1234,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   font-weight: 700;
 }
 .sc-hbtn:hover { background: rgba(255,255,255,0.75); }
-.sc-hbtn.active { background: rgba(21,101,192,0.15); color: #1565c0; border-color: rgba(21,101,192,0.3); }
+.sc-hbtn.active { background: rgba(27,94,32,0.15); color: var(--accent); border-color: rgba(27,94,32,0.3); }
 
 /* ── Color palette row ── */
 #scBgRow {
@@ -1173,7 +1288,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   white-space: nowrap;
 }
 .sc-tbtn:hover { background: rgba(255,255,255,0.85); }
-.sc-tbtn.active { background: rgba(21,101,192,0.15); color: #1565c0; border-color: rgba(21,101,192,0.35); }
+.sc-tbtn.active { background: rgba(27,94,32,0.15); color: var(--accent); border-color: rgba(27,94,32,0.35); }
 .sc-tbtn.danger.active { background: rgba(198,40,40,0.12); color: #c62828; border-color: rgba(198,40,40,0.3); }
 .sc-sep { width:1px; height:20px; background:rgba(0,0,0,0.1); margin:0 2px; flex-shrink:0; }
 .sc-color-dot {
@@ -1205,9 +1320,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   letter-spacing: 0.2px;
 }
 .sc-mode-tab.active {
-  color: #1565c0;
-  border-bottom-color: #1565c0;
-  background: rgba(21,101,192,0.06);
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: rgba(27,94,32,0.06);
 }
 
 /* ── Canvas area ── */
@@ -1251,10 +1366,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 /* Selected — show border + handles */
 .sc-text-block.selected {
-  border-color: #1565c0;
+  border-color: var(--accent);
   border-style: dashed;
   background: rgba(255,255,255,0.7);
-  box-shadow: 0 0 0 2px rgba(21,101,192,0.15);
+  box-shadow: 0 0 0 2px rgba(27,94,32,0.15);
   cursor: move;
 }
 .sc-text-block.selected .sc-block-resize,
@@ -1263,10 +1378,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 /* Edit mode */
 .sc-text-block[contenteditable="true"] {
   cursor: text;
-  border-color: #1565c0;
+  border-color: var(--accent);
   border-style: solid;
   background: rgba(255,255,255,0.92);
-  box-shadow: 0 2px 12px rgba(21,101,192,0.15);
+  box-shadow: 0 2px 12px rgba(27,94,32,0.15);
   outline: none;
   user-select: text;
   -webkit-user-select: text;
@@ -1278,7 +1393,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   position: absolute;
   right: -5px; bottom: -5px;
   width: 14px; height: 14px;
-  background: #1565c0;
+  background: var(--accent);
   border-radius: 50%;
   cursor: se-resize;
   opacity: 0.75;
@@ -1319,7 +1434,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   -webkit-tap-highlight-color: transparent;
 }
 .sc-block-act-btn:hover { background: rgba(0,0,0,0.07); }
-.sc-block-act-btn.active { color: #1565c0; background: rgba(21,101,192,0.1); }
+.sc-block-act-btn.active { color: var(--accent); background: rgba(27,94,32,0.1); }
 
 /* ── QMap inside Study Canvas ── */
 #scQmCanvas {
@@ -1381,31 +1496,31 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 #scCanvasWrap.sc-drop-active::after {
   content: '📋 Yahan drop karo!';
   position: absolute; inset: 0;
-  background: rgba(21,101,192,0.1);
-  border: 3px dashed #1565c0;
+  background: rgba(27,94,32,0.1);
+  border: 3px dashed var(--accent);
   border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 1rem; font-weight: 800; color: #1565c0;
+  font-size: 1rem; font-weight: 800; color: var(--accent);
   pointer-events: none; z-index: 20;
 }
 
 /* ══ HIGHLIGHTS → CANVAS BUTTON ══ */
 @keyframes _hlBtnPulse {
-  0%,100% { box-shadow: 0 2px 10px rgba(21,101,192,0.3); }
-  50%      { box-shadow: 0 2px 18px rgba(106,27,154,0.55), 0 0 0 3px rgba(21,101,192,0.15); }
+  0%,100% { box-shadow: 0 2px 10px rgba(27,94,32,0.3); }
+  50%      { box-shadow: 0 2px 18px rgba(106,27,154,0.55), 0 0 0 3px rgba(27,94,32,0.15); }
 }
 /* ══ END HIGHLIGHTS BUTTON ══ */
 #_neCanvasTip {
   position: fixed;
   z-index: 29999;
-  background: linear-gradient(135deg,#1565c0,#6a1b9a);
+  background: linear-gradient(135deg,var(--accent),#6a1b9a);
   color: #fff;
   border-radius: 11px;
   padding: 6px 14px;
   font-size: 0.72rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 4px 18px rgba(21,101,192,0.35);
+  box-shadow: 0 4px 18px rgba(27,94,32,0.35);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -1427,7 +1542,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   cursor: grab !important;
 }
 #noteEditableArea.ne-drag-ready ::selection {
-  background: rgba(21,101,192,0.25);
+  background: rgba(27,94,32,0.25);
 }
 
 /* Canvas drop active — brighter when note drag */
@@ -1464,7 +1579,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 }
 
 @keyframes _hlBtnPulse {
-  0%,100% { box-shadow: 0 2px 10px rgba(21,101,192,0.3); }
+  0%,100% { box-shadow: 0 2px 10px rgba(27,94,32,0.3); }
   50%      { box-shadow: 0 2px 18px rgba(106,27,154,0.55); }
 }
 
@@ -1479,7 +1594,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 
 /* ── Drag-from-notes highlight ── */
 .sc-drag-source {
-  background: rgba(21,101,192,0.08) !important;
+  background: rgba(27,94,32,0.08) !important;
   cursor: grab !important;
 }
 /* Night mode */
@@ -1503,8 +1618,8 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
 }
 .sc-nav-btn:hover:not(:disabled) { background: rgba(255,255,255,0.85); }
 .sc-nav-btn:disabled { opacity: 0.3; cursor: default; }
-.sc-nav-btn.sc-nav-add { background: rgba(21,101,192,0.12); color: #1565c0; border-color: rgba(21,101,192,0.3); font-size: 1rem; }
-.sc-nav-btn.sc-nav-add:hover { background: rgba(21,101,192,0.22); }
+.sc-nav-btn.sc-nav-add { background: rgba(27,94,32,0.12); color: var(--accent); border-color: rgba(27,94,32,0.3); font-size: 1rem; }
+.sc-nav-btn.sc-nav-add:hover { background: rgba(27,94,32,0.22); }
 
 .sc-slide-dots {
   display: flex; align-items: center; gap: 5px;
@@ -1530,10 +1645,10 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
   border-radius: 8px;
 }
 .sc-slide-dot.active {
-  background: #1565c0;
+  background: var(--accent);
   width: 28px; border-radius: 6px;
-  border-color: #1565c0;
-  box-shadow: 0 1px 6px rgba(21,101,192,0.35);
+  border-color: var(--accent);
+  box-shadow: 0 1px 6px rgba(27,94,32,0.35);
 }
 .sc-slide-dot:hover:not(.active) { background: rgba(0,0,0,0.35); }
 
@@ -1593,7 +1708,7 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
   border-radius: 12px; padding: 10px 12px;
 }
 .sc-help-step[data-mode="text"]   { border-left: 3px solid #43a047; }
-.sc-help-step[data-mode="select"] { border-left: 3px solid #1565c0; }
+.sc-help-step[data-mode="select"] { border-left: 3px solid var(--accent); }
 .sc-help-step[data-mode="draw"]   { border-left: 3px solid #e65100; }
 .sc-help-step[data-mode="qmap"]   { border-left: 3px solid #6a1b9a; }
 .sc-help-icon {
@@ -1685,10 +1800,10 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
   width:165px;
   min-height:52px;
   background:#fff;
-  color:#1565c0;
-  border:2px solid #1565c0;
+  color:var(--accent);
+  border:2px solid var(--accent);
   border-radius:12px;
-  box-shadow:0 4px 20px rgba(21,101,192,0.25);
+  box-shadow:0 4px 20px rgba(27,94,32,0.25);
   pointer-events:none;
   z-index:9999;
   padding:6px 10px;
@@ -1830,7 +1945,7 @@ html, body {
   font-size: 1rem;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 3px 14px rgba(21,101,192,0.4);
+  box-shadow: 0 3px 14px rgba(27,94,32,0.4);
   display: none;
   align-items: center;
   justify-content: center;
@@ -2242,14 +2357,14 @@ body.night-mode .neqm-btn.sel { background: rgba(63,185,80,0.18); border-color: 
   -webkit-tap-highlight-color: transparent; flex-shrink: 0;
 }
 .neqm-bar-btn:hover, .neqm-bar-btn.sel {
-  background: rgba(21,101,192,0.12);
-  border-color: rgba(21,101,192,0.35);
-  color: #1565c0;
+  background: rgba(27,94,32,0.12);
+  border-color: rgba(27,94,32,0.35);
+  color: var(--accent);
 }
 .neqm-bar-btn.primary {
   background: rgba(21,101,192,0.10);
-  border-color: rgba(21,101,192,0.3);
-  color: #1565c0; font-weight: 800;
+  border-color: rgba(27,94,32,0.3);
+  color: var(--accent); font-weight: 800;
 }
 .neqm-bar-btn.danger {
   background: rgba(198,40,40,0.08);
@@ -2330,8 +2445,8 @@ body.night-mode #neWritePopup {
   transition: all 0.12s;
 }
 .nwp-style-btn.sel {
-  background: rgba(21,101,192,0.12);
-  border-color: #1565c0; color: #1565c0;
+  background: rgba(27,94,32,0.12);
+  border-color: var(--accent); color: var(--accent);
 }
 .nwp-style-btn:active { transform: scale(0.93); }
 /* Effect buttons */
@@ -2345,7 +2460,7 @@ body.night-mode #neWritePopup {
   transition: all 0.12s;
 }
 .nwp-effect-btn.sel {
-  background: rgba(21,101,192,0.1); border-color: #1565c0; color: #1565c0;
+  background: rgba(27,94,32,0.1); border-color: var(--accent); color: var(--accent);
 }
 /* Action row */
 .nwp-actions { display: flex; gap: 8px; }
@@ -2357,10 +2472,10 @@ body.night-mode #neWritePopup {
 }
 .nwp-ok {
   flex: 2; padding: 11px; border-radius: 12px;
-  border: none; background: linear-gradient(135deg,#1565c0,#1976d2);
+  border: none; background: linear-gradient(135deg,var(--accent),var(--accent3));
   color: #fff; font-size: 0.88rem; font-weight: 800;
   cursor: pointer; font-family: inherit;
-  box-shadow: 0 3px 12px rgba(21,101,192,0.3);
+  box-shadow: 0 3px 12px rgba(27,94,32,0.3);
 }
 
 /* ===== CANVAS TEXT OBJECTS — placed & draggable ===== */
@@ -2380,7 +2495,7 @@ body.night-mode #neWritePopup {
   border-radius: 50%; border: 2px solid #fff;
   cursor: pointer;
 }
-.nco-dot-resize { background: #1565c0; bottom: -7px; right: -7px; cursor: se-resize; }
+.nco-dot-resize { background: var(--accent); bottom: -7px; right: -7px; cursor: se-resize; }
 .nco-dot-rotate { background: #e65100; top: -22px; left: 50%; transform: translateX(-50%); cursor: grab; }
 .nco-dot-edit   { background: #2e7d32; top: -7px; left: -7px; cursor: pointer; }
 .nco-dot-del    { background: #c62828; top: -7px; right: -7px; cursor: pointer; }
@@ -2403,7 +2518,7 @@ body.night-mode #neWritePopup {
   border-radius: 6px;
   z-index: 9881;
   animation: nco-box-pulse 1.6s ease-in-out infinite;
-  background: rgba(21,101,192,0.04);
+  background: rgba(27,94,32,0.04);
 }
 .nco-adj-box.active-box {
   border-color: #e65100;
@@ -2417,7 +2532,7 @@ body.night-mode #neWritePopup {
   top: -14px; right: -14px;
   width: 26px; height: 26px;
   border-radius: 50%;
-  background: #1565c0;
+  background: var(--accent);
   border: 2px solid #fff;
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   display: flex; align-items: center; justify-content: center;
@@ -2458,7 +2573,7 @@ body.night-mode #neWritePopup {
   font-family: inherit;
 }
 .nco-ctx-item:last-child { border-bottom: none; }
-.nco-ctx-item:active { background: rgba(21,101,192,0.08); }
+.nco-ctx-item:active { background: rgba(27,94,32,0.08); }
 .nco-ctx-item.danger { color: #c62828; }
 
 /* ===== NOTES PAGE DRAW OVERLAY (Creator Studio on Notes) ===== */
@@ -2536,8 +2651,8 @@ body.night-mode #neDrawToolbar {
 .ndt-btn:active { transform: scale(0.88); }
 .ndt-btn.sel {
   background: rgba(21,101,192,0.18);
-  border-color: rgba(21,101,192,0.5);
-  color: #1565c0;
+  border-color: rgba(27,94,32,0.5);
+  color: var(--accent);
 }
 body.night-mode .ndt-btn { color: #e6edf3; }
 body.night-mode .ndt-btn.sel { background: rgba(74,158,255,0.2); border-color: rgba(74,158,255,0.5); color: #4a9eff; }
@@ -2576,8 +2691,8 @@ body.night-mode .ndt-sep { background: rgba(255,255,255,0.15); }
 body.night-mode .ndt-size { color: #e6edf3; border-color: rgba(255,255,255,0.2); }
 .ndt-size.sel {
   background: rgba(21,101,192,0.18);
-  border-color: rgba(21,101,192,0.5);
-  color: #1565c0;
+  border-color: rgba(27,94,32,0.5);
+  color: var(--accent);
 }
 body.night-mode .ndt-size.sel { color: #4a9eff; }
 
@@ -2944,7 +3059,7 @@ body.night-mode .qmap-canvas-wrap { background: #0f1117; }
 .qmap-pmenu-btn:active { background: var(--surface2); }
 .qmap-pmenu-sep { height: 1px; background: var(--border); margin: 2px 4px; }
 .qmap-pmenu-btn.red    { color: #c62828; }
-.qmap-pmenu-btn.blue   { color: #1565c0; }
+.qmap-pmenu-btn.blue   { color: var(--accent); }
 .qmap-pmenu-btn.orange { color: #e65100; }
 
 /* ── INLINE VIEWER (warm reading background) ── */
@@ -2994,9 +3109,9 @@ body.night-mode .qmap-inline-viewer-close { color: #f57c00; background: rgba(230
   -webkit-tap-highlight-color: transparent;
 }
 .qmap-ilv-btn.primary {
-  background: linear-gradient(135deg,#1565c0,#1976d2);
+  background: linear-gradient(135deg,var(--accent),var(--accent3));
   color: #fff; border-color: transparent;
-  box-shadow: 0 3px 12px rgba(21,101,192,0.3);
+  box-shadow: 0 3px 12px rgba(27,94,32,0.3);
 }
 
 
@@ -3226,7 +3341,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <button class="neqm-btn" id="neqmt-del" onclick="neQmDeleteSelected()" title="Delete" style="color:#c62828;">🗑</button>
   <div class="neqm-sep"></div>
   <div class="neqm-color sel" style="background:#e65100;" onclick="neQmSetColor('#e65100',this)" title="Orange"></div>
-  <div class="neqm-color" style="background:#1565c0;" onclick="neQmSetColor('#1565c0',this)" title="Blue"></div>
+  <div class="neqm-color" style="background:var(--accent);" onclick="neQmSetColor('var(--accent)',this)" title="Blue"></div>
   <div class="neqm-color" style="background:#2e7d32;" onclick="neQmSetColor('#2e7d32',this)" title="Green"></div>
   <div class="neqm-color" style="background:#c62828;" onclick="neQmSetColor('#c62828',this)" title="Red"></div>
   <div class="neqm-color" style="background:#6a1b9a;" onclick="neQmSetColor('#6a1b9a',this)" title="Purple"></div>
@@ -3245,7 +3360,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </svg>
   </button>
   <button class="neqm-btn" onclick="neQmAutoLayout()" title="Auto layout">✦</button>
-  <button class="neqm-btn" onclick="neQmSaveAndClose()" title="Save" style="color:#1565c0;">
+  <button class="neqm-btn" onclick="neQmSaveAndClose()" title="Save" style="color:var(--accent);">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
       <polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/>
@@ -3325,7 +3440,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div style="display:flex;gap:5px;align-items:center;">
     <span style="font-size:0.62rem;color:#37526d;font-weight:700;flex-shrink:0;">Border:</span>
     <div class="neqm-bar-color" style="background:#e65100;" onclick="neQmBarSetStroke('#e65100',this)"></div>
-    <div class="neqm-bar-color" style="background:#1565c0;" onclick="neQmBarSetStroke('#1565c0',this)"></div>
+    <div class="neqm-bar-color" style="background:var(--accent);" onclick="neQmBarSetStroke('var(--accent)',this)"></div>
     <div class="neqm-bar-color" style="background:#2e7d32;" onclick="neQmBarSetStroke('#2e7d32',this)"></div>
     <div class="neqm-bar-color" style="background:#c62828;" onclick="neQmBarSetStroke('#c62828',this)"></div>
     <div class="neqm-bar-color" style="background:#6a1b9a;" onclick="neQmBarSetStroke('#6a1b9a',this)"></div>
@@ -3369,7 +3484,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div class="ndt-sep"></div>
   <div class="ndt-color sel" id="ndtClrBlk" style="background:#000;" onclick="neDrawSetColor('#000000',this)" title="Black"></div>
   <div class="ndt-color" id="ndtClrRed" style="background:#e53935;" onclick="neDrawSetColor('#e53935',this)" title="Red"></div>
-  <div class="ndt-color" id="ndtClrBlue" style="background:#1565c0;" onclick="neDrawSetColor('#1565c0',this)" title="Blue"></div>
+  <div class="ndt-color" id="ndtClrBlue" style="background:var(--accent);" onclick="neDrawSetColor('var(--accent)',this)" title="Blue"></div>
   <div class="ndt-color" id="ndtClrGrn" style="background:#2e7d32;" onclick="neDrawSetColor('#2e7d32',this)" title="Green"></div>
   <div class="ndt-color" id="ndtClrOrg" style="background:#e65100;" onclick="neDrawSetColor('#e65100',this)" title="Orange"></div>
   <div class="ndt-color" style="background:#f9a825;" onclick="neDrawSetColor('rgba(249,168,37,0.45)',this)" title="Yellow"></div>
@@ -3393,7 +3508,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/>
     </svg>
   </button>
-  <button class="ndt-btn" id="ndtWrite" onclick="neWriteActivate()" title="Text likhein" style="color:#1565c0;">
+  <button class="ndt-btn" id="ndtWrite" onclick="neWriteActivate()" title="Text likhein" style="color:var(--accent);">
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/>
       <line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>
@@ -3513,7 +3628,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
           <div id="creatorModeMenu"
             style="display:none;position:absolute;top:110%;left:0;background:#fff;border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,0.25);z-index:9999;min-width:150px;overflow:hidden;">
             <div class="cmenu-item" onclick="switchCreatorTab('draw',null)">✏️ Draw</div>
-            <div class="cmenu-item" onclick="switchCreatorTab('write',null)" style="color:#1565c0;font-weight:800;">✍️ Write</div>
+            <div class="cmenu-item" onclick="switchCreatorTab('write',null)" style="color:var(--accent);font-weight:800;">✍️ Write</div>
             <div class="cmenu-item" onclick="switchCreatorTab('aidraw',null)" style="color:#6a1b9a;font-weight:800;">🤖 AI Draw</div>
             <div class="cmenu-item" onclick="switchCreatorTab('insert',null)">➕ Insert</div>
             <div class="cmenu-item" onclick="switchCreatorTab('tree',null)">🌿 Tree / Mind Map</div>
@@ -3546,7 +3661,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         <button class="draw-tool-btn" onclick="setStrokeSize(8)" style="font-size:0.9rem;font-weight:800;">L</button>
         <div class="ctb-sep"></div>
         <div onclick="setDrawColor('#000000')" class="ccolor-dot" style="background:#000;" id="dc-black"></div>
-        <div onclick="setDrawColor('#1565c0')" class="ccolor-dot" style="background:#1565c0;" id="dc-blue"></div>
+        <div onclick="setDrawColor('var(--accent)')" class="ccolor-dot" style="background:var(--accent);" id="dc-blue"></div>
         <div onclick="setDrawColor('#c62828')" class="ccolor-dot" style="background:#c62828;" id="dc-red"></div>
         <div onclick="setDrawColor('#2e7d32')" class="ccolor-dot" style="background:#2e7d32;" id="dc-green"></div>
         <div onclick="setDrawColor('#6a1b9a')" class="ccolor-dot" style="background:#6a1b9a;" id="dc-purple"></div>
@@ -3582,7 +3697,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <div id="dtoolbar-tree" style="display:none;align-items:center;gap:5px;flex-wrap:wrap;">
         <button class="itb-btn" onclick="treeAddRoot()">+ Root</button>
         <button class="itb-btn" onclick="resetTreeEditor()">🔄 Reset</button>
-        <button class="itb-btn" style="background:rgba(21,101,192,0.12);color:var(--accent);border-color:rgba(21,101,192,0.3);" onclick="insertTreeToNotes()">📝 Insert to Notes</button>
+        <button class="itb-btn" style="background:rgba(27,94,32,0.12);color:var(--accent);border-color:rgba(27,94,32,0.3);" onclick="insertTreeToNotes()">📝 Insert to Notes</button>
       </div>
 
       <!-- Table toolbar -->
@@ -3594,7 +3709,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         <input type="number" id="tableCols" value="3" min="1" max="10"
           style="width:48px;padding:4px 6px;border:1.5px solid var(--border);border-radius:7px;font-size:0.8rem;outline:none;font-family:inherit;">
         <button class="itb-btn" onclick="previewTable()">👁️ Preview</button>
-        <button class="itb-btn" style="background:rgba(21,101,192,0.12);color:var(--accent);border-color:rgba(21,101,192,0.3);" onclick="insertTableToNotes()">📝 Insert</button>
+        <button class="itb-btn" style="background:rgba(27,94,32,0.12);color:var(--accent);border-color:rgba(27,94,32,0.3);" onclick="insertTableToNotes()">📝 Insert</button>
       </div>
 
     </div><!-- /creatorToolbarPanel -->
@@ -3668,7 +3783,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
           <span style="font-size:0.68rem;color:var(--text2);">Color:</span>
           <div style="width:20px;height:20px;border-radius:50%;background:#000;cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('#000000',this)"></div>
-          <div style="width:20px;height:20px;border-radius:50%;background:#1565c0;cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('#1565c0',this)"></div>
+          <div style="width:20px;height:20px;border-radius:50%;background:var(--accent);cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('var(--accent)',this)"></div>
           <div style="width:20px;height:20px;border-radius:50%;background:#c62828;cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('#c62828',this)"></div>
           <div style="width:20px;height:20px;border-radius:50%;background:#2e7d32;cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('#2e7d32',this)"></div>
           <div style="width:20px;height:20px;border-radius:50%;background:#e65100;cursor:pointer;border:2px solid transparent;" onclick="_csSetColor('#e65100',this)"></div>
@@ -3687,7 +3802,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         <!-- Place button -->
         <button onclick="_csWritePlace()"
           id="csPlaceOnCanvasBtn"
-          style="padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-size:0.88rem;font-weight:800;cursor:pointer;font-family:inherit;">
+          style="padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-size:0.88rem;font-weight:800;cursor:pointer;font-family:inherit;">
           ✓ Place on Canvas
         </button>
         <div style="font-size:0.62rem;color:var(--text2);text-align:center;">Drag · 2-finger=Rotate+Resize · OK=Set · Adjust Mode=Edit later</div>
@@ -3861,7 +3976,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 <!-- ══════════════════════════════════════════ -->
 <!-- SECURITY KEY SCREEN (new user — after login) -->
 <!-- ══════════════════════════════════════════ -->
-<div id="securityKeyScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+<div id="securityKeyScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0a1f0a 0%,#1b4332 55%,#1b5e20 100%);z-index:9999;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
     <div style="font-size:2.8rem;margin-bottom:8px;">🔑</div>
     <div style="font-size:1.2rem;font-weight:800;color:#0d2644;margin-bottom:6px;">Security Key Daalo</div>
@@ -3872,7 +3987,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       style="width:100%;padding:13px 16px;border:2px solid #ddd;border-radius:10px;font-size:1rem;text-align:center;letter-spacing:4px;font-weight:700;margin-bottom:14px;outline:none;font-family:monospace;"
       onkeydown="if(event.key==='Enter')submitSecurityKey()" />
     <button id="securityKeyBtn" onclick="submitSecurityKey()"
-      style="width:100%;padding:14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
+      style="width:100%;padding:14px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
       🔓 Verify Karo
     </button>
     <button onclick="logoutUser()"
@@ -3892,7 +4007,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     <div style="font-size:0.84rem;color:#555;margin-bottom:20px;line-height:1.6;">Aapka account abhi approved nahi hai.<br>Admin (Tomar bhai) se contact karo aur apni Security Key maango.</div>
     <div id="pendingUserEmail" style="font-size:0.75rem;background:#e8eaf6;border-radius:8px;padding:8px 12px;margin-bottom:20px;color:#3949ab;font-weight:700;word-break:break-all;"></div>
     <button onclick="showSecurityKeyScreen()"
-      style="width:100%;padding:13px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
+      style="width:100%;padding:13px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-size:0.9rem;font-weight:700;cursor:pointer;margin-bottom:10px;font-family:inherit;">
       🔑 Key Mil Gayi? Daalo
     </button>
     <button onclick="logoutUser()"
@@ -3905,9 +4020,9 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 <!-- ══════════════════════════════════════════ -->
 <!-- MODE SELECT SCREEN                         -->
 <!-- ══════════════════════════════════════════ -->
-<div id="modeSelectScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0d2644 0%,#1565c0 60%,#1976d2 100%);z-index:9997;align-items:center;justify-content:center;padding:20px;">
+<div id="modeSelectScreen" style="display:none;position:fixed;inset:0;background:linear-gradient(135deg,#0a1f0a 0%,#1b4332 55%,#1b5e20 100%);z-index:9997;align-items:center;justify-content:center;padding:20px;">
   <div style="background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);text-align:center;">
-    <div style="font-size:2.5rem;margin-bottom:6px;">📚</div>
+    <div style="font-size:2.5rem;margin-bottom:6px;">🏛️</div>
     <div id="modeWelcomeName" style="font-size:1.1rem;font-weight:800;color:#0d2644;margin-bottom:4px;">Welcome!</div>
     <div style="font-size:0.8rem;color:#555;margin-bottom:24px;">Kya karna hai aaj?</div>
 
@@ -3921,10 +4036,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </button>
 
     <!-- Browse Members (Phase 2 — disabled for now) -->
-    <button onclick="chooseBrowseMode()" style="width:100%;padding:16px;border:2px solid #1565c0;border-radius:14px;background:linear-gradient(135deg,#e8f0fe,#dbeafe);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;font-family:inherit;">
+    <button onclick="chooseBrowseMode()" style="width:100%;padding:16px;border:2px solid var(--accent);border-radius:14px;background:linear-gradient(135deg,#e8f0fe,#dbeafe);cursor:pointer;text-align:left;display:flex;align-items:center;gap:14px;font-family:inherit;">
       <span style="font-size:2rem;">👥</span>
       <div>
-        <div style="font-weight:800;color:#1565c0;font-size:0.95rem;">Sabke Notes</div>
+        <div style="font-weight:800;color:var(--accent);font-size:0.95rem;">Sabke Notes</div>
         <div style="font-size:0.72rem;color:#555;margin-top:2px;">Dusron ke notes padho, copy karo</div>
       </div>
     </button>
@@ -3987,10 +4102,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <!-- HEADER: Logo + Close -->
   <div class="sb-header">
     <div class="sb-logo-wrap">
-      <div class="sb-logo-icon">📚</div>
+      <div class="sb-logo-icon">🏛️</div>
       <div>
         <div class="sb-app-name">Exam Prep Pro</div>
-        <div class="sb-app-sub">Smart Study + AI</div>
+        <div class="sb-app-sub">UPSC · Smart Study · AI</div>
       </div>
     </div>
     <button onclick="toggleSidebar()" class="sb-close-btn" title="Close">✕</button>
@@ -4004,12 +4119,27 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </select>
   </div>
 
+  <!-- USER PROFILE SECTION -->
+  <div class="sb-profile-section" id="sbProfileSection" onclick="openUserMenu()" style="display:none;">
+    <div class="sb-profile-inner">
+      <div class="sb-profile-avatar-wrap">
+        <div class="sb-profile-avatar" id="sbProfileAvatar">?</div>
+        <div class="sb-profile-edit-dot">✎</div>
+      </div>
+      <div class="sb-profile-info">
+        <div class="sb-profile-name" id="sbProfileName">—</div>
+        <div class="sb-profile-email" id="sbProfileEmail"></div>
+        <div class="sb-profile-role-badge" id="sbProfileRole">Member</div>
+      </div>
+    </div>
+  </div>
+
   <!-- NAV ITEMS -->
   <div class="nav-section">
 
-    <div class="sb-group-title">Study</div>
+    <div class="sb-group-title">📖 Study</div>
     <div class="nav-item active" onclick="showPage('library',this)" data-page="library">
-      <span class="sb-icon">📚</span>
+      <span class="sb-icon">🏛️</span>
       <span class="sb-label">Library</span>
     </div>
     <div class="nav-item" onclick="showPage('savedFacts',this)" data-page="savedFacts">
@@ -4023,15 +4153,20 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <span class="nav-badge red" id="smartBadge" style="display:none;">0</span>
     </div>
     <div class="nav-item" onclick="showPage('aichathistory',this)" data-page="aichathistory">
-      <span class="sb-icon">💬</span>
+      <span class="sb-icon">🤖</span>
       <span class="sb-label">AI Chat</span>
       <span class="nav-badge" id="aiChatBadge" style="display:none;">0</span>
     </div>
 
-    <div class="sb-group-title">Practice</div>
+    <div class="sb-group-title">⚔️ Practice</div>
     <div class="nav-item" onclick="showPage('quiz',this)" data-page="quiz">
-      <span class="sb-icon">❓</span>
+      <span class="sb-icon">📝</span>
       <span class="sb-label">Quiz</span>
+    </div>
+    <div class="nav-item" onclick="showPage('livequiz',this)" data-page="livequiz">
+      <span class="sb-icon">⚡</span>
+      <span class="sb-label">Live Quiz</span>
+      <span class="nav-badge red" id="liveQuizBadge" style="display:none;">LIVE</span>
     </div>
     <div class="nav-item" onclick="showPage('quizvault',this)" data-page="quizvault">
       <span class="sb-icon">🗄️</span>
@@ -4044,7 +4179,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <span class="nav-badge red" id="histBadge" style="display:none;">0</span>
     </div>
 
-    <div class="sb-group-title">Progress</div>
+    <div class="sb-group-title">📊 Progress</div>
     <div class="nav-item" onclick="showPage('stats',this)" data-page="stats">
       <span class="sb-icon">📊</span>
       <span class="sb-label">Stats</span>
@@ -4059,21 +4194,18 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <span class="sb-coach-badge">AI</span>
     </div>
 
-    <div class="sb-group-title">More</div>
+    <div class="sb-group-title">🌐 Community</div>
     <div class="nav-item" id="browseNavItem" onclick="showPage('browse',this)" data-page="browse">
       <span class="sb-icon">👥</span>
       <span class="sb-label">Sabke Notes</span>
-    </div>
-    <div class="nav-item" onclick="showPage('livequiz',this)" data-page="livequiz">
-      <span class="sb-icon">⚡</span>
-      <span class="sb-label">Live Quiz</span>
-      <span class="nav-badge red" id="liveQuizBadge" style="display:none;">LIVE</span>
     </div>
     <div class="nav-item" onclick="showPage('groupchat',this)" data-page="groupchat">
       <span class="sb-icon">💬</span>
       <span class="sb-label">Group Chat</span>
       <span class="nav-badge" id="gchatBadge" style="display:none;">0</span>
     </div>
+
+    <div class="sb-group-title">⚙️ Account</div>
     <div class="nav-item" onclick="showPage('settings',this)" data-page="settings">
       <span class="sb-icon">⚙️</span>
       <span class="sb-label">Settings</span>
@@ -4381,7 +4513,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
               <button class="btn btn-xs" style="background:rgba(106,27,154,0.1);color:var(--purple);border:1px solid rgba(106,27,154,0.25);border-radius:20px;" onclick="setQuizDirection('Easy aur basic level ke questions chahiye')">🟢 Easy/Basic</button>
               <button class="btn btn-xs" style="background:rgba(106,27,154,0.1);color:var(--purple);border:1px solid rgba(106,27,154,0.25);border-radius:20px;" onclick="setQuizDirection('Sirf important names aur personalities ke questions')">👤 Names</button>
               <button class="btn btn-xs" style="background:rgba(106,27,154,0.1);color:var(--purple);border:1px solid rgba(106,27,154,0.25);border-radius:20px;" onclick="setQuizDirection('PYQ pattern mein questions chahiye -- exam jaise')">📝 PYQ Style</button>
-              <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.25);border-radius:20px;" onclick="openQuizDirectorChat()">💬 AI se bat karo...</button>
+              <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.25);border-radius:20px;" onclick="openQuizDirectorChat()">💬 AI se bat karo...</button>
             </div>
             <div id="quizDirectionDisplay" style="display:none;background:rgba(106,27,154,0.06);border-radius:8px;padding:8px 10px;font-size:0.78rem;color:var(--purple);font-weight:600;margin-bottom:6px;">
               <span>🎯 Direction: </span><span id="quizDirectionText"></span>
@@ -4561,7 +4693,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <!-- Firebase Sync Card -->
       <div class="card" id="fbSyncCard">
         <div class="card-title">☁️ Cloud Sync (Firebase)</div>
-        <div id="fbSyncStatus" style="font-size:0.8rem;margin-bottom:10px;padding:8px 10px;border-radius:8px;background:rgba(21,101,192,0.06);border:1px solid rgba(21,101,192,0.15);">
+        <div id="fbSyncStatus" style="font-size:0.8rem;margin-bottom:10px;padding:8px 10px;border-radius:8px;background:rgba(27,94,32,0.06);border:1px solid rgba(27,94,32,0.15);">
           <span id="fbSyncStatusText">🔄 Checking...</span>
         </div>
         <div class="btn-row" id="fbLoggedInBtns" style="display:none;">
@@ -4724,7 +4856,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
         </div>
 
         <!-- Copy All Toast info -->
-        <div style="background:rgba(21,101,192,0.06);border:1.5px solid rgba(21,101,192,0.2);border-radius:10px;padding:9px 13px;margin-bottom:12px;font-size:0.77rem;color:var(--text2);line-height:1.6;">
+        <div style="background:rgba(27,94,32,0.06);border:1.5px solid rgba(27,94,32,0.2);border-radius:10px;padding:9px 13px;margin-bottom:12px;font-size:0.77rem;color:var(--text2);line-height:1.6;">
           💡 <strong>Copy karne ke 3 tarike:</strong><br>
           1️⃣ Note card pe <strong>"📋 Copy"</strong> button — poora note copy<br>
           2️⃣ Topic ke upar <strong>"📥 Topic Copy"</strong> — poora topic apne deck mein<br>
@@ -4773,7 +4905,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       </div>
 
       <!-- Upcoming Quiz countdown -->
-      <div id="lqUpcomingBanner" style="display:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+      <div id="lqUpcomingBanner" style="display:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
         <div style="font-weight:800;font-size:0.9rem;margin-bottom:4px;">⏰ Aane Wali Quiz</div>
         <div id="lqUpcomingName" style="font-size:0.82rem;margin-bottom:6px;"></div>
         <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -5154,10 +5286,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 
       <!-- AI Chat -->
       <button id="editorAiChatBtn" onclick="toggleEditorAiChat()" title="AI Chat"
-        style="width:32px;height:32px;border-radius:8px;border:1.5px solid rgba(21,101,192,0.3);
-        background:rgba(21,101,192,0.08);cursor:pointer;display:flex;align-items:center;
+        style="width:32px;height:32px;border-radius:8px;border:1.5px solid rgba(27,94,32,0.3);
+        background:rgba(27,94,32,0.08);cursor:pointer;display:flex;align-items:center;
         justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent;">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1565c0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
         </svg>
       </button>
@@ -5324,8 +5456,8 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
           style="width:34px;height:34px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;font-size:1rem;flex-shrink:0;-webkit-tap-highlight-color:transparent;">🌙</button>
 
         <button onclick="neToggleSidePanel()" title="More tools"
-          style="width:34px;height:34px;border-radius:9px;border:1.5px solid rgba(21,101,192,0.3);
-          background:rgba(21,101,192,0.06);cursor:pointer;display:flex;align-items:center;
+          style="width:34px;height:34px;border-radius:9px;border:1.5px solid rgba(27,94,32,0.3);
+          background:rgba(27,94,32,0.06);cursor:pointer;display:flex;align-items:center;
           justify-content:center;font-size:1.15rem;font-weight:900;color:var(--accent);
           flex-shrink:0;margin-left:auto;letter-spacing:1px;-webkit-tap-highlight-color:transparent;">⋯</button>
       </div>
@@ -5461,11 +5593,11 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 
       <!-- Highlights → Canvas -->
       <button id="neHlCanvasBtn" onclick="neSendAllHighlightsToCanvas()" title="Saare Highlights → Canvas"
-        style="width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(21,101,192,0.4);
-        background:linear-gradient(135deg,rgba(21,101,192,0.12),rgba(106,27,154,0.12));
+        style="width:36px;height:36px;border-radius:10px;border:1.5px solid rgba(27,94,32,0.4);
+        background:linear-gradient(135deg,rgba(27,94,32,0.12),rgba(106,27,154,0.12));
         cursor:pointer;display:flex;align-items:center;
         justify-content:center;flex-shrink:0;-webkit-tap-highlight-color:transparent;
-        position:relative;box-shadow:0 2px 10px rgba(21,101,192,0.15);">
+        position:relative;box-shadow:0 2px 10px rgba(27,94,32,0.15);">
         <span style="font-size:1rem;">🎨</span>
         <span id="neHlBadge" style="display:none;position:absolute;top:-4px;right:-4px;
           background:#c62828;color:#fff;border-radius:50%;width:14px;height:14px;
@@ -5569,7 +5701,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     <!-- EDITOR AI CHAT PANEL -->
     <div id="editorAiPanel" style="display:none;border-top:1.5px solid var(--border);background:#f4f9fe;flex-shrink:0;max-height:320px;flex-direction:column;">
       <div style="padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);">
-        <div style="font-size:0.8rem;font-weight:800;color:#1565c0;">🤖 AI Chat -- Notes ke baare mein poochho</div>
+        <div style="font-size:0.8rem;font-weight:800;color:var(--accent);">🤖 AI Chat -- Notes ke baare mein poochho</div>
         <button onclick="closeEditorAiChat()" style="background:none;border:none;cursor:pointer;font-size:1rem;color:#666;">✕</button>
       </div>
       <div id="editorAiMessages" style="flex:1;overflow-y:auto;padding:10px 14px;display:flex;flex-direction:column;gap:8px;max-height:200px;"></div>
@@ -5578,7 +5710,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
           style="flex:1;border:1.5px solid #bdd5ea;border-radius:8px;padding:8px 10px;font-size:0.82rem;font-family:inherit;outline:none;"
           onkeydown="if(event.key==='Enter')sendEditorAiMsg()">
         <button onclick="sendEditorAiMsg()" id="editorAiSendBtn"
-          style="padding:8px 14px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:inherit;">➤</button>
+          style="padding:8px 14px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:8px;font-weight:800;font-size:0.82rem;cursor:pointer;font-family:inherit;">➤</button>
       </div>
     </div>
 
@@ -5588,11 +5720,11 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       title="Saare Highlights → Canvas"
       style="display:none;position:fixed;bottom:56px;right:56px;z-index:9810;
         padding:6px 11px;border-radius:20px;
-        border:1.5px solid rgba(21,101,192,0.5);
-        background:linear-gradient(135deg,#1565c0,#6a1b9a);
+        border:1.5px solid rgba(27,94,32,0.5);
+        background:linear-gradient(135deg,var(--accent),#6a1b9a);
         color:#fff;font-size:0.66rem;font-weight:800;cursor:pointer;
         font-family:inherit;-webkit-tap-highlight-color:transparent;
-        box-shadow:0 2px 10px rgba(21,101,192,0.35);
+        box-shadow:0 2px 10px rgba(27,94,32,0.35);
         animation:_hlBtnPulse 2s ease-in-out infinite;
         align-items:center;gap:4px;white-space:nowrap;">
       🎨 HL→Canvas
@@ -5601,7 +5733,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     <button id="neBackFloatBtn" onclick="closeNotesEditor()" title="Back" style="
       position:fixed;bottom:14px;right:56px;z-index:9820;
       width:34px;height:34px;border-radius:50%;
-      background:rgba(21,101,192,0.22);border:1.5px solid rgba(21,101,192,0.3);
+      background:rgba(27,94,32,0.22);border:1.5px solid rgba(27,94,32,0.3);
       color:rgba(21,101,192,0.9);font-size:1rem;font-weight:800;
       cursor:pointer;display:none;align-items:center;justify-content:center;
       backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
@@ -5741,7 +5873,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   </div>
 
   <!-- QMap Select Actions Bar -->
-  <div id="scQmSelectBar" style="display:none;flex-direction:row;align-items:center;gap:4px;padding:4px 8px;background:rgba(21,101,192,0.06);border-bottom:1.5px solid rgba(21,101,192,0.18);overflow-x:auto;flex-wrap:nowrap;min-height:38px;-webkit-overflow-scrolling:touch;"></div>
+  <div id="scQmSelectBar" style="display:none;flex-direction:row;align-items:center;gap:4px;padding:4px 8px;background:rgba(27,94,32,0.06);border-bottom:1.5px solid rgba(21,101,192,0.18);overflow-x:auto;flex-wrap:nowrap;min-height:38px;-webkit-overflow-scrolling:touch;"></div>
 
   </div><!-- /scToolbarWrap -->
 
@@ -5749,7 +5881,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div id="scTbToggleBar" onclick="scToggleToolbar()" style="
     display:flex;align-items:center;justify-content:center;gap:6px;
     height:16px;background:rgba(21,101,192,0.10);
-    border-bottom:1px solid rgba(21,101,192,0.15);
+    border-bottom:1px solid rgba(27,94,32,0.15);
     cursor:pointer;flex-shrink:0;
     -webkit-tap-highlight-color:transparent;
     transition:background 0.15s;
@@ -5762,7 +5894,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div id="scGhostRestoreBtn" onclick="scExitFullRead()" title="Tools wapas dikhao" style="
     display:none;position:absolute;top:6px;left:6px;z-index:9999;
     width:26px;height:26px;border-radius:50%;
-    background:rgba(21,101,192,0.15);border:1.5px solid rgba(21,101,192,0.3);
+    background:rgba(27,94,32,0.15);border:1.5px solid rgba(27,94,32,0.3);
     cursor:pointer;align-items:center;justify-content:center;
     -webkit-tap-highlight-color:transparent;
     backdrop-filter:blur(4px);
@@ -5852,8 +5984,8 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     <!-- Read Mode toggle -->
     <button id="scReadModeBtn" onclick="scToggleReadMode()" title="Read Mode — sirf padho, koi editing nahi" style="
       height:28px;padding:0 8px;border-radius:8px;
-      border:1.5px solid rgba(21,101,192,0.3);
-      background:rgba(21,101,192,0.06);
+      border:1.5px solid rgba(27,94,32,0.3);
+      background:rgba(27,94,32,0.06);
       color:var(--accent);font-size:0.62rem;font-weight:800;
       cursor:pointer;flex-shrink:0;white-space:nowrap;
       -webkit-tap-highlight-color:transparent;
@@ -5875,7 +6007,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <div id="scHelpOverlay" style="display:none;position:absolute;inset:0;background:rgba(0,0,0,0.82);z-index:60;flex-direction:column;border-radius:inherit;overflow:hidden;">
 
     <!-- Help header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(135deg,#1565c0,#6a1b9a);flex-shrink:0;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:linear-gradient(135deg,var(--accent),#6a1b9a);flex-shrink:0;">
       <span style="color:#fff;font-size:0.88rem;font-weight:800;">📖 Study Canvas — Kaise Use Karein?</span>
       <button onclick="scHideHelp()" style="background:rgba(255,255,255,0.18);border:none;color:#fff;border-radius:8px;padding:4px 11px;cursor:pointer;font-size:0.82rem;font-weight:700;-webkit-tap-highlight-color:transparent;">✕</button>
     </div>
@@ -5967,7 +6099,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       </div>
 
       <!-- Quick reference card -->
-      <div style="background:rgba(21,101,192,0.12);border:1px solid rgba(21,101,192,0.25);border-radius:10px;padding:10px 12px;">
+      <div style="background:rgba(27,94,32,0.12);border:1px solid rgba(27,94,32,0.25);border-radius:10px;padding:10px 12px;">
         <div style="font-size:0.75rem;font-weight:800;color:#4a9eff;margin-bottom:6px;">⚡ Quick Reference</div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;">
           <div class="sc-qr">Single tap box</div><div class="sc-qr-val">Select</div>
@@ -5982,7 +6114,7 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       </div>
 
       <!-- Try it button -->
-      <button onclick="scHideHelp()" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#1565c0,#6a1b9a);color:#fff;font-size:0.88rem;font-weight:800;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:transparent;">
+      <button onclick="scHideHelp()" style="width:100%;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--accent),#6a1b9a);color:#fff;font-size:0.88rem;font-weight:800;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:transparent;">
         ✅ Samajh Gaya — Try Karta Hoon!
       </button>
 
@@ -6114,7 +6246,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 <div class="modal-overlay" id="userMenuModal">
   <div class="modal" style="max-width:360px;">
     <div style="text-align:center;padding:10px 0 16px;">
-      <div style="width:60px;height:60px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;margin:0 auto 10px;" id="userMenuAvatar">?</div>
+      <div style="position:relative;width:72px;margin:0 auto 10px;">
+        <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:800;overflow:hidden;border:3px solid var(--border);" id="userMenuAvatar">?</div>
+        <button onclick="openProfilePicUpload()" style="position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--accent2);border:2px solid var(--surface);color:#fff;font-size:0.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;" title="Change photo">📷</button>
+      </div>
       <div style="font-weight:800;font-size:1rem;color:var(--text);" id="userMenuName">User</div>
       <div style="font-size:0.76rem;color:var(--text2);margin-top:2px;" id="userMenuEmail"></div>
       <div style="margin-top:8px;display:flex;align-items:center;justify-content:center;gap:6px;">
@@ -6123,13 +6258,34 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       </div>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;">
-      <button class="btn btn-primary btn-sm" onclick="syncNow()">🔄 Abhi Sync Karo</button>
-      <button class="btn btn-green btn-sm" onclick="backupData()">📦 Backup Download (JSON)</button>
+      <button class="btn btn-primary btn-sm" onclick="openProfilePicUpload()">📷 Profile Photo Change Karo</button>
+      <button class="btn btn-green btn-sm" onclick="syncNow()">🔄 Abhi Sync Karo</button>
+      <button class="btn btn-outline btn-sm" onclick="backupData()">📦 Backup Download (JSON)</button>
       <button class="btn btn-outline btn-sm" onclick="closeModal('userMenuModal');openFbConfig()">⚙️ Firebase Config</button>
       <button class="btn btn-danger btn-sm" onclick="logoutUser()">🚪 Logout</button>
     </div>
     <div class="modal-actions">
-      <button class="btn btn-outline btn-sm" onclick="closeModal('userMenuModal')">✕</button>
+      <button class="btn btn-outline btn-sm" onclick="closeModal('userMenuModal')">✕ Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILE PIC UPLOAD MODAL -->
+<div class="profile-upload-modal" id="profileUploadModal" onclick="if(event.target===this)closeProfilePicUpload()">
+  <div class="profile-upload-sheet">
+    <div class="profile-upload-title">📷 Profile Photo</div>
+    <div class="profile-pic-preview" id="profilePicPreview">?</div>
+    <div style="text-align:center;margin-bottom:16px;">
+      <p style="font-size:0.78rem;color:var(--text2);margin-bottom:12px;">Photo upload karo (max 200KB, auto-compress hoga)</p>
+      <label style="display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;padding:10px 20px;border-radius:10px;cursor:pointer;font-weight:700;font-size:0.84rem;">
+        📂 Photo Chunno
+        <input type="file" id="profilePicInput" accept="image/*" style="display:none;" onchange="previewProfilePic(event)">
+      </label>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="saveProfilePic()">✅ Save Karo</button>
+      <button class="btn btn-danger btn-sm" onclick="removeProfilePic()">🗑️ Hatao</button>
+      <button class="btn btn-outline btn-sm" onclick="closeProfilePicUpload()">✕</button>
     </div>
   </div>
 </div>
@@ -7216,7 +7372,7 @@ function tvShowSub(catId, sid, secid, tid){
       var tagMap = {
         hard:   { bg:'rgba(198,40,40,0.1)',  border:'rgba(198,40,40,0.35)',  col:'#c62828', bar:'#c62828', lbl:'🔴 Hard'   },
         medium: { bg:'rgba(245,124,0,0.1)',  border:'rgba(245,124,0,0.35)',  col:'#e65100', bar:'#f57c00', lbl:'🟡 Medium' },
-        unseen: { bg:'rgba(33,150,243,0.08)',border:'rgba(33,150,243,0.25)', col:'#1565c0', bar:'#1976d2', lbl:'🔵 Unseen' },
+        unseen: { bg:'rgba(33,150,243,0.08)',border:'rgba(33,150,243,0.25)', col:'var(--accent)', bar:'var(--accent3)', lbl:'🔵 Unseen' },
         easy:   { bg:'rgba(46,125,50,0.08)', border:'rgba(46,125,50,0.25)', col:'#2e7d32', bar:'#2e7d32', lbl:'🟢 Easy'   }
       };
       var tag = tagMap[d]||tagMap.unseen;
@@ -7298,14 +7454,14 @@ function tvShowSub(catId, sid, secid, tid){
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
         <span style="font-size:0.72rem;font-weight:700;color:var(--text2);">📊 Total: <b>${cards.length}</b></span>
         <span style="background:rgba(198,40,40,0.1);color:#c62828;border:1px solid rgba(198,40,40,0.3);border-radius:20px;padding:2px 8px;font-size:0.65rem;font-weight:800;">🔴 ${hardCards.length} Hard</span>
-        <span style="background:rgba(33,150,243,0.08);color:#1565c0;border:1px solid rgba(33,150,243,0.2);border-radius:20px;padding:2px 8px;font-size:0.65rem;font-weight:800;">🔵 ${unseenCards.length} Unseen</span>
+        <span style="background:rgba(33,150,243,0.08);color:var(--accent);border:1px solid rgba(33,150,243,0.2);border-radius:20px;padding:2px 8px;font-size:0.65rem;font-weight:800;">🔵 ${unseenCards.length} Unseen</span>
         <span style="background:rgba(245,124,0,0.1);color:#e65100;border:1px solid rgba(245,124,0,0.3);border-radius:20px;padding:2px 8px;font-size:0.65rem;font-weight:800;">🟡 ${mediumCards.length} Medium</span>
         <span style="background:rgba(46,125,50,0.08);color:#2e7d32;border:1px solid rgba(46,125,50,0.25);border-radius:20px;padding:2px 8px;font-size:0.65rem;font-weight:800;">🟢 ${easyCards.length} Easy</span>
       </div>
       <!-- JSON Actions -->
       <div style="display:flex;gap:7px;margin-bottom:14px;">
         <button onclick="tvCopyFCJson(this)" data-json="${safeJson}"
-          style="flex:1;padding:8px;border-radius:9px;border:1.5px solid rgba(21,101,192,0.3);background:rgba(21,101,192,0.07);color:#1565c0;font-size:0.7rem;font-weight:800;cursor:pointer;font-family:inherit;">
+          style="flex:1;padding:8px;border-radius:9px;border:1.5px solid rgba(27,94,32,0.3);background:rgba(27,94,32,0.07);color:var(--accent);font-size:0.7rem;font-weight:800;cursor:pointer;font-family:inherit;">
           📋 JSON Copy
         </button>
         <button onclick="tvDownloadFCJson(this)" data-json="${safeJson}" data-topic="${_e(t.name)}"
@@ -8041,7 +8197,7 @@ function showResults(){
         <button class="btn btn-xs btn-outline" onclick="markResQ('${cq.qid}',${qIdx},'doubt')">🤔 Doubt</button>
         <button class="save-status-btn ${isSaved?'saved':'unsaved'}" id="rsave-${cq.qid}-${qIdx}" onclick="toggleResultSave('${cq.qid}',${qIdx},'${qKey}',this)">${isSaved?'📌 Saved ✓':'📌 Save'}</button>
         <button class="wrong-status-btn ${isWronged?'wronged':'not-wronged'}" id="rwrong-${cq.qid}-${qIdx}" onclick="toggleResultWrong('${cq.qid}',${qIdx},'${qKey}',this)">${isWronged?'✓ Wronged':'❌ Mark'}</button>
-        <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
+        <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
         <button class="btn btn-xs btn-report-q" onclick="openReportModalFromResult('${cq.qid}',${qIdx})">🚩 Report</button>
       </div>
     </div>`;
@@ -8420,7 +8576,7 @@ function renderVaultCard(q, i, quizId){
       </button>
       <button class="save-status-btn ${isSaved?'saved':'unsaved'}" onclick="toggleVaultSave('${quizId}',${i},'${qKey}',this)">${isSaved?'📌 Saved ✓':'📌 Save'}</button>
       <button class="wrong-status-btn ${isWronged?'wronged':'not-wronged'}" onclick="toggleVaultWrong('${quizId}',${i},'${qKey}',this)">${isWronged?'✓ Wronged':'❌ Mark'}</button>
-      <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options?.[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
+      <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options?.[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
     </div>
   </div>`;}
 
@@ -8609,7 +8765,7 @@ function showDetail(qid){
         <button class="btn btn-xs btn-outline" onclick="markResQ('${h.id}',${qi},'doubt');showDetail('${h.id}')">🤔 Doubt</button>
         <button class="save-status-btn ${isSaved?'saved':'unsaved'}" onclick="toggleResultSave('${h.id}',${qi},'${qKey}',this)">${isSaved?'📌 Saved ✓':'📌 Save'}</button>
         <button class="wrong-status-btn ${isWronged?'wronged':'not-wronged'}" onclick="toggleResultWrong('${h.id}',${qi},'${qKey}',this)">${isWronged?'✓ Wronged':'❌ Mark'}</button>
-        <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
+        <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
         <button class="btn btn-xs btn-danger" onclick="confirmDeleteHistQ('${h.id}',${qi})">🗑️</button>
         <button class="btn btn-xs btn-report-q" onclick="openReportModalFromResult('${h.id}',${qi})">🚩</button>
       </div>
@@ -9065,7 +9221,7 @@ function showTopicWrongBank(tid,e){
         <div class="res-q-actions">
           <button class="btn btn-xs btn-outline" onclick="markWrongBankQ(${tid},'${q.question.replace(/'/g,"\\'")}','easy')">😊 Easy -- Hata Do</button>
           <button class="save-status-btn ${isSaved?'saved':'unsaved'}" onclick="toggleVaultSaveByKey('${qKey}',this)">${isSaved?'📌 Saved ✓':'📌 Save'}</button>
-          <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options?.[q.correct]||q.correctAnswer||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
+          <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options?.[q.correct]||q.correctAnswer||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
           <button class="btn btn-xs btn-danger" onclick="deleteFromWrongBank(${tid},'${q.question.replace(/'/g,"\\'")}');closeModal('allQModal');">🗑️</button>
         </div>
       </div>`}).join('')
@@ -9437,7 +9593,7 @@ function _showContextPastChats(contextType, tid, sid, secid) {
   related.forEach(function(s) {
     const btn = document.createElement('button');
     btn.className = 'ai-chat-sug';
-    btn.style.cssText = 'background:rgba(21,101,192,0.06);border-color:rgba(21,101,192,0.2);font-size:0.68rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+    btn.style.cssText = 'background:rgba(27,94,32,0.06);border-color:rgba(27,94,32,0.2);font-size:0.68rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
     btn.title = s.title + ' (' + s.date + ')';
     btn.textContent = '💬 ' + s.title.substring(0, 20) + (s.title.length > 20 ? '…' : '');
     btn.onclick = function() {
@@ -9639,7 +9795,7 @@ function addChatMsg(role,text,id=null,showSave=false){
 
     // 📖 Edit & Highlight -- open this answer in notes editor
     const editBtn=document.createElement('button');
-    editBtn.style.cssText='padding:4px 9px;border-radius:8px;border:1.5px solid rgba(21,101,192,0.3);background:rgba(21,101,192,0.08);color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px;';
+    editBtn.style.cssText='padding:4px 9px;border-radius:8px;border:1.5px solid rgba(27,94,32,0.3);background:rgba(27,94,32,0.08);color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;display:inline-flex;align-items:center;gap:4px;';
     editBtn.innerHTML='✏️ Read/Edit';
     editBtn.title='Is answer ko editor mein kholo -- highlight, edit, save sab ho sakta hai';
     editBtn.onclick=()=>openAiAnswerInEditor(text, _aiChatContext);
@@ -9648,7 +9804,7 @@ function addChatMsg(role,text,id=null,showSave=false){
     // 💡 Explanation (question context)
     if(_aiChatContext&&_aiChatContext.type==='question'){
       const expBtn=document.createElement('button');
-      expBtn.style.cssText='padding:4px 9px;border-radius:8px;border:1.5px solid rgba(21,101,192,0.3);background:rgba(21,101,192,0.08);color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;';
+      expBtn.style.cssText='padding:4px 9px;border-radius:8px;border:1.5px solid rgba(27,94,32,0.3);background:rgba(27,94,32,0.08);color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;';
       expBtn.textContent='💡 Explanation mein';
       expBtn.onclick=()=>addToQuestionExplanation(text);
       actRow.appendChild(expBtn);
@@ -10203,7 +10359,7 @@ function neSetEditMode(on) {
   if(on) {
     area.contentEditable = 'true';
     area.style.cursor = 'text';
-    if(btn) { btn.setAttribute('title','Edit ON ✅'); btn.style.background='rgba(21,101,192,0.12)'; btn.style.borderColor='#1565c0'; }
+    if(btn) { btn.setAttribute('title','Edit ON ✅'); btn.style.background='rgba(27,94,32,0.12)'; btn.style.borderColor='var(--accent)'; }
     if(toolbar) toolbar.style.display = 'flex';
     neUpdateStatusBar('✏️ Edit Mode -- likhna shuru karo');
     area.focus();
@@ -11191,9 +11347,9 @@ function showMagnifierWord(x, y, word, charIdx) {
     mag.style.minHeight      = '52px';
     mag.style.padding        = '8px 12px';
     mag.style.background     = '#fff';
-    mag.style.border         = '2px solid #1565c0';
+    mag.style.border         = '2px solid var(--accent)';
     mag.style.borderRadius   = '14px';
-    mag.style.boxShadow      = '0 4px 18px rgba(21,101,192,0.3)';
+    mag.style.boxShadow      = '0 4px 18px rgba(27,94,32,0.3)';
     mag.style.gap            = '1px';
     _magVisible = true;
     _magMode    = 'char';
@@ -11214,7 +11370,7 @@ function showMagnifierWord(x, y, word, charIdx) {
         var ch = w[i];
         if(i === ci) {
           // Current char -- big, bold, blue
-          html += '<span style="font-size:2rem;font-weight:800;color:#1565c0;font-family:monospace;line-height:1;">' + ch + '</span>';
+          html += '<span style="font-size:2rem;font-weight:800;color:var(--accent);font-family:monospace;line-height:1;">' + ch + '</span>';
         } else {
           // Other chars -- small, grey
           html += '<span style="font-size:0.85rem;font-weight:500;color:#666;font-family:monospace;line-height:2.2;">' + ch + '</span>';
@@ -11379,7 +11535,7 @@ function printEditorContent() {
     <title>${title}</title>
     <style>
       body { font-family: 'Noto Sans', Arial, sans-serif; padding: 30px; max-width: 800px; margin: auto; line-height: 1.7; color: #111; }
-      h1 { font-size: 1.3rem; border-bottom: 2px solid #1565c0; padding-bottom: 8px; color: #1565c0; }
+      h1 { font-size: 1.3rem; border-bottom: 2px solid var(--accent); padding-bottom: 8px; color: var(--accent); }
       mark.user-hl { background: #fff176; padding: 1px 2px; border-radius: 2px; }
       mark.user-hl-pink { background: #f48fb1; padding: 1px 2px; border-radius: 2px; }
       mark.user-hl-green { background: #a5d6a7; padding: 1px 2px; border-radius: 2px; }
@@ -11418,7 +11574,7 @@ function closeEditorAiChat() {
   const panel = document.getElementById('editorAiPanel');
   const btn = document.getElementById('editorAiChatBtn');
   panel.style.display = 'none';
-  if(btn) { btn.style.background = 'linear-gradient(135deg,#1565c0,#1976d2)'; btn.style.borderColor = '#1565c0'; }
+  if(btn) { btn.style.background = 'linear-gradient(135deg,var(--accent),var(--accent3))'; btn.style.borderColor = 'var(--accent)'; }
 }
 
 function addEditorAiMessage(role, text) {
@@ -11430,7 +11586,7 @@ function addEditorAiMessage(role, text) {
     padding:8px 12px;border-radius:10px;font-size:0.8rem;line-height:1.6;max-width:90%;
     ${isAi
       ? 'background:#e8f4fd;color:#0d1b2a;align-self:flex-start;border-bottom-left-radius:3px;white-space:pre-wrap;'
-      : 'background:#1565c0;color:#fff;align-self:flex-end;border-bottom-right-radius:3px;margin-left:auto;'}
+      : 'background:var(--accent);color:#fff;align-self:flex-end;border-bottom-right-radius:3px;margin-left:auto;'}
   `;
   div.textContent = text;
   container.appendChild(div);
@@ -11511,7 +11667,7 @@ User notes padh raha/rahi hai aur tujhse poochh raha/rahi hai.
           // Agar edit mode nahi hai to ON karo
           if(area.contentEditable !== 'true') neSetEditMode(true);
           // Text append karo
-          area.innerHTML += '<br><br><span style="color:#1565c0;font-weight:700;">--- 🤖 AI Addition ---</span><br>' + reply.replace(/\n/g,'<br>');
+          area.innerHTML += '<br><br><span style="color:var(--accent);font-weight:700;">--- 🤖 AI Addition ---</span><br>' + reply.replace(/\n/g,'<br>');
           markModified();
           showToast('✅ AI response notes mein add ho gaya!', 'success');
           addBtn.remove();
@@ -11985,7 +12141,7 @@ function neToggleDropdown() {
   var panel = document.getElementById('neDropdownPanel');
   var btn   = document.getElementById('neDropdownToggleBtn');
   if(panel) panel.style.display = _neDropdownOpen ? 'block' : 'none';
-  if(btn)   btn.style.background = _neDropdownOpen ? 'rgba(21,101,192,0.1)' : 'var(--surface)';
+  if(btn)   btn.style.background = _neDropdownOpen ? 'rgba(27,94,32,0.1)' : 'var(--surface)';
   if(btn)   btn.style.color      = _neDropdownOpen ? 'var(--accent)' : 'var(--accent)';
   if(btn)   btn.textContent      = _neDropdownOpen ? '⌃' : '⌄';
 }
@@ -12279,7 +12435,7 @@ function showInstallOption(){
   if(installed){
     return '<div style="background:rgba(46,125,50,0.1);border-radius:8px;padding:10px;font-size:0.8rem;color:var(--green);font-weight:700;">✅ App already install hai!</div>';
   }
-  return `<div style="background:rgba(21,101,192,0.07);border:1.5px solid rgba(21,101,192,0.2);border-radius:10px;padding:12px;">
+  return `<div style="background:rgba(27,94,32,0.07);border:1.5px solid rgba(27,94,32,0.2);border-radius:10px;padding:12px;">
     <div style="font-weight:800;font-size:0.85rem;color:var(--accent);margin-bottom:6px;">📱 App Install Karo (Free)</div>
     <div style="font-size:0.78rem;color:var(--text2);margin-bottom:10px;line-height:1.6;">Home screen pe install karo -- bilkul native app jaisa kaam karega. Offline bhi!</div>
     <div class="btn-row">
@@ -12299,17 +12455,17 @@ function injectManifest(){
     display: "standalone",
     orientation: "portrait",
     background_color: "#eaf4fb",
-    theme_color: "#1565c0",
+    theme_color: "var(--accent)",
     lang: "hi",
     icons: [
       {
-        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231565c0'/%3E%3Ctext x='256' y='330' font-size='300' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E",
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231b4332'/%3E%3Ctext x='256' y='330' font-size='300' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E",
         sizes: "512x512",
         type: "image/svg+xml",
         purpose: "any maskable"
       },
       {
-        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='30' fill='%231565c0'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E",
+        src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='30' fill='%231b4332'/%3E%3Ctext x='96' y='130' font-size='110' text-anchor='middle' fill='white'%3E📚%3C/text%3E%3C/svg%3E",
         sizes: "192x192",
         type: "image/svg+xml",
         purpose: "any"
@@ -13515,7 +13671,7 @@ async function lqViewResult(quizId){
   const leaderHtml = board.length===0
     ? '<div style="color:var(--text2);text-align:center;padding:20px;">Abhi koi result nahi.</div>'
     : board.map((r,i)=>`
-      <div class="lq-rank-row${r.uid===myUid?' '+('background:rgba(21,101,192,0.08);border:1.5px solid rgba(21,101,192,0.3);'):''}">
+      <div class="lq-rank-row${r.uid===myUid?' '+('background:rgba(27,94,32,0.08);border:1.5px solid rgba(27,94,32,0.3);'):''}">
         <div class="lq-rank-medal">${medals[i]||'#'+(i+1)}</div>
         <div class="lq-rank-name">${r.name||'Member'}${r.uid===myUid?' (Tum)':''}</div>
         <div class="lq-rank-score">${r.score}% <span style="font-size:0.65rem;color:var(--text2);">${r.correct}/${r.total} • ${r.timeTaken}s</span></div>
@@ -13543,7 +13699,7 @@ async function lqViewResult(quizId){
   }
 
   body.innerHTML = `
-    ${myResult?`<div style="background:linear-gradient(135deg,rgba(21,101,192,0.1),rgba(25,118,210,0.05));border:1.5px solid rgba(21,101,192,0.25);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center;">
+    ${myResult?`<div style="background:linear-gradient(135deg,rgba(27,94,32,0.1),rgba(25,118,210,0.05));border:1.5px solid rgba(27,94,32,0.25);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center;">
       <div style="font-size:2rem;font-weight:800;">${myResult.score}%</div>
       <div style="font-size:0.82rem;color:var(--text2);">${myResult.correct}/${myResult.total} sahi • ${myResult.timeTaken}s • ${myRank>0?'Rank #'+myRank:'Re-attempt'}</div>
     </div>`:''}
@@ -13609,7 +13765,7 @@ async function lqGenQuestionsAI(){
   let topic = null;
   for(const s of S.subjects||[]){ for(const sec of s.sections||[]){ const t=sec.topics.find(x=>x.id==topicId); if(t){topic=t;break;} } if(topic) break; }
   if(!topic){ statusEl.textContent='❌ Topic nahi mila!'; return; }
-  const apiKey = S.apiKey || localStorage.getItem('groqApiKey2');
+  const apiKey = S.apiKey2 || localStorage.getItem('groqApiKey2');
   if(!apiKey){ statusEl.textContent='❌ Groq API Key nahi! Settings mein daalo.'; return; }
   statusEl.textContent='⏳ AI questions bana raha hai...';
   const notes = (topic.finalNotes||'') + (topic.notes||[]).map(n=>n.content||'').join('\n');
@@ -13719,7 +13875,7 @@ function gcRenderThreadList(){
     return `<div class="gc-thread-card" onclick="gcOpenThread('${t.id}','${(t.title||'').replace(/'/g,"\\'")}','${(t.category||'').replace(/'/g,"\\'")}')">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
         <div style="flex:1;min-width:0;">
-          <div class="gc-thread-title">${t.category?`<span style="font-size:0.65rem;background:rgba(21,101,192,0.1);color:var(--accent);padding:1px 7px;border-radius:10px;font-weight:700;margin-right:5px;">${t.category}</span>`:''}${t.title||'Discussion'}</div>
+          <div class="gc-thread-title">${t.category?`<span style="font-size:0.65rem;background:rgba(27,94,32,0.1);color:var(--accent);padding:1px 7px;border-radius:10px;font-weight:700;margin-right:5px;">${t.category}</span>`:''}${t.title||'Discussion'}</div>
           ${lastMsg?`<div class="gc-thread-last">${lastUser}: ${lastMsg}</div>`:''}
           <div class="gc-thread-meta">${msgCount} messages${lastAt?' • '+lastAt:''}</div>
         </div>
@@ -14150,17 +14306,63 @@ function updateUserUI(user){
   const fbLoggedOut = document.getElementById('fbLoggedOutBtns');
   const statusText = document.getElementById('fbSyncStatusText');
 
+  // Sidebar profile section elements
+  const sbSection = document.getElementById('sbProfileSection');
+  const sbAvatar = document.getElementById('sbProfileAvatar');
+  const sbName = document.getElementById('sbProfileName');
+  const sbEmail = document.getElementById('sbProfileEmail');
+  const sbRole = document.getElementById('sbProfileRole');
+
   if(user){
     if(pill) pill.style.display = 'flex';
     const name = user.displayName || user.email.split('@')[0];
     const initials = name.substring(0,2).toUpperCase();
-    if(avatar) avatar.textContent = initials;
+
+    // Check for saved profile pic
+    const savedPic = localStorage.getItem('profilePic_' + user.uid);
+
+    // Topbar avatar
+    if(avatar){
+      if(savedPic){
+        avatar.innerHTML = `<img src="${savedPic}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        avatar.textContent = initials;
+      }
+    }
     if(nameShort) nameShort.textContent = name.substring(0,12);
+
+    // Sidebar profile section
+    if(sbSection) sbSection.style.display = 'block';
+    if(sbAvatar){
+      if(savedPic){
+        sbAvatar.innerHTML = `<img src="${savedPic}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        sbAvatar.textContent = initials;
+        sbAvatar.style.fontSize = '1rem';
+      }
+    }
+    if(sbName) sbName.textContent = name;
+    if(sbEmail) sbEmail.textContent = user.email;
+    // Role badge
+    const isAdmin = user.email === (window._ownerEmail || '');
+    if(sbRole){
+      sbRole.textContent = isAdmin ? '👑 Admin' : '📚 Member';
+      sbRole.style.background = isAdmin
+        ? 'linear-gradient(135deg,rgba(201,161,74,0.3),rgba(201,161,74,0.15))'
+        : 'linear-gradient(135deg,rgba(46,125,50,0.2),rgba(46,125,50,0.1))';
+    }
+
     // User menu
     const menuAvatar = document.getElementById('userMenuAvatar');
     const menuName = document.getElementById('userMenuName');
     const menuEmail = document.getElementById('userMenuEmail');
-    if(menuAvatar) menuAvatar.textContent = initials;
+    if(menuAvatar){
+      if(savedPic){
+        menuAvatar.innerHTML = `<img src="${savedPic}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+      } else {
+        menuAvatar.textContent = initials;
+      }
+    }
     if(menuName) menuName.textContent = name;
     if(menuEmail) menuEmail.textContent = user.email;
     if(fbLoggedIn) fbLoggedIn.style.display = 'flex';
@@ -14168,6 +14370,7 @@ function updateUserUI(user){
     if(statusText) statusText.innerHTML = '✅ Logged in: ' + user.email;
   } else {
     if(pill) pill.style.display = 'none';
+    if(sbSection) sbSection.style.display = 'none';
     if(fbLoggedIn) fbLoggedIn.style.display = 'none';
     if(fbLoggedOut) fbLoggedOut.style.display = 'block';
     if(statusText) statusText.innerHTML = _fbReady ? '🔓 Login nahi kiya' : '⚙️ Firebase setup nahi hua';
@@ -14181,6 +14384,81 @@ function openUserMenu(){
   if(syncDot2) syncDot2.className = 'sync-dot synced';
   if(syncStatus) syncStatus.textContent = 'Synced ✅';
   document.getElementById('userMenuModal').classList.add('show');
+}
+
+// ── Profile Pic Upload ──
+var _profilePicDataUrl = null;
+
+function openProfilePicUpload(){
+  closeModal('userMenuModal');
+  const modal = document.getElementById('profileUploadModal');
+  const preview = document.getElementById('profilePicPreview');
+  if(!modal || !preview) return;
+  // Show current pic if any
+  const user = _currentUser;
+  if(user){
+    const saved = localStorage.getItem('profilePic_' + user.uid);
+    if(saved){
+      preview.innerHTML = `<img src="${saved}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    } else {
+      const name = user.displayName || user.email.split('@')[0];
+      preview.textContent = name.substring(0,2).toUpperCase();
+      preview.style.fontSize='1.8rem';
+    }
+  }
+  _profilePicDataUrl = null;
+  modal.classList.add('show');
+}
+
+function closeProfilePicUpload(){
+  const modal = document.getElementById('profileUploadModal');
+  if(modal) modal.classList.remove('show');
+  _profilePicDataUrl = null;
+}
+
+function previewProfilePic(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 3 * 1024 * 1024){ showToast('File bahut badi hai! 3MB se chhoti rakho.','error'); return; }
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    // Compress using canvas
+    const img = new Image();
+    img.onload = function(){
+      const canvas = document.createElement('canvas');
+      const MAX = 200; // 200px max dimension
+      let w = img.width, h = img.height;
+      if(w > h){ if(w>MAX){h=Math.round(h*MAX/w);w=MAX;} } else { if(h>MAX){w=Math.round(w*MAX/h);h=MAX;} }
+      canvas.width=w; canvas.height=h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      _profilePicDataUrl = canvas.toDataURL('image/jpeg', 0.75);
+      const preview = document.getElementById('profilePicPreview');
+      if(preview) preview.innerHTML = `<img src="${_profilePicDataUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+    };
+    img.src = ev.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfilePic(){
+  if(!_profilePicDataUrl){ showToast('Pehle photo chunno!','error'); return; }
+  if(!_currentUser){ showToast('Login karo pehle!','error'); return; }
+  try{
+    localStorage.setItem('profilePic_' + _currentUser.uid, _profilePicDataUrl);
+    updateUserUI(_currentUser);
+    closeProfilePicUpload();
+    showToast('✅ Profile photo save ho gayi!','success');
+  }catch(e){
+    showToast('Save error: storage full ho sakti hai','error');
+  }
+}
+
+function removeProfilePic(){
+  if(!_currentUser) return;
+  localStorage.removeItem('profilePic_' + _currentUser.uid);
+  updateUserUI(_currentUser);
+  closeProfilePicUpload();
+  showToast('Profile photo hata di gayi','info');
 }
 
 function setSyncStatus(status){
@@ -15434,7 +15712,7 @@ function insertAtCursor(html) {
 }
 
 function insertTextBlock() {
-  insertAtCursor('<div style="background:rgba(21,101,192,0.06);border-left:3px solid #1565c0;border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0;font-size:0.85rem;">📝 Text yahan likhein...</div><br>');
+  insertAtCursor('<div style="background:rgba(27,94,32,0.06);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0;font-size:0.85rem;">📝 Text yahan likhein...</div><br>');
 }
 function insertCallout() {
   insertAtCursor('<div style="background:rgba(255,248,225,1);border:1.5px solid #f9a825;border-radius:10px;padding:12px 14px;margin:8px 0;font-size:0.85rem;">💡 <strong>Important:</strong> Yahan likhein...</div><br>');
@@ -15466,7 +15744,7 @@ function insertEquation() {
   insertAtCursor('<div style="text-align:center;font-size:1.1rem;font-family:serif;padding:10px;margin:8px 0;background:var(--surface2);border-radius:8px;letter-spacing:1px;">' + eq + '</div><br>');
 }
 function insertQuoteBlock() {
-  insertAtCursor('<blockquote style="border-left:4px solid var(--accent);margin:10px 0;padding:8px 14px;background:rgba(21,101,192,0.04);border-radius:0 8px 8px 0;font-style:italic;color:var(--text2);">❝ Quote yahan likhein...</blockquote><br>');
+  insertAtCursor('<blockquote style="border-left:4px solid var(--accent);margin:10px 0;padding:8px 14px;background:rgba(27,94,32,0.04);border-radius:0 8px 8px 0;font-style:italic;color:var(--text2);">❝ Quote yahan likhein...</blockquote><br>');
 }
 function insertDateStamp() {
   var d = new Date().toLocaleDateString('hi-IN', { day:'numeric', month:'long', year:'numeric' });
@@ -15911,7 +16189,7 @@ function renderAiDiagram(diagram) {
   // ---- Step 4: Styles ----
   var styles = {
     root:      { bg:'#4a148c', fg:'#fff',    border:'#6a1b9a', r:12 },
-    branch:    { bg:'#1565c0', fg:'#fff',    border:'#1976d2', r:9  },
+    branch:    { bg:'var(--accent)', fg:'#fff',    border:'var(--accent3)', r:9  },
     leaf:      { bg:'#e8f5e9', fg:'#1b5e20', border:'#66bb6a', r:7  },
     step:      { bg:'#fff3e0', fg:'#bf360c', border:'#ffa726', r:18 },
     highlight: { bg:'#e65100', fg:'#fff',    border:'#ff6d00', r:9  },
@@ -16405,7 +16683,7 @@ function _showQmNodeFullEdit(node){
   var hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;';
   var hdrTitle = document.createElement('div');
-  hdrTitle.style.cssText = 'font-size:1rem;font-weight:800;color:#1565c0;';
+  hdrTitle.style.cssText = 'font-size:1rem;font-weight:800;color:var(--accent);';
   hdrTitle.textContent = '✏️ Node Edit karo';
   var closeBtn = document.createElement('button');
   closeBtn.textContent = '✕';
@@ -16438,11 +16716,11 @@ function _showQmNodeFullEdit(node){
   shapes.forEach(function(sp){
     var btn = document.createElement('button');
     btn.textContent = sp.icon + ' ' + sp.k;
-    btn.style.cssText = 'padding:6px 12px;border-radius:8px;border:2px solid '+(st.shape===sp.k?'#1565c0':'#ccc')+';background:'+(st.shape===sp.k?'#e3f0ff':'none')+';font-size:0.78rem;cursor:pointer;font-weight:700;-webkit-tap-highlight-color:transparent;';
+    btn.style.cssText = 'padding:6px 12px;border-radius:8px;border:2px solid '+(st.shape===sp.k?'var(--accent)':'#ccc')+';background:'+(st.shape===sp.k?'#e3f0ff':'none')+';font-size:0.78rem;cursor:pointer;font-weight:700;-webkit-tap-highlight-color:transparent;';
     btn.onclick = function(){
       st.shape = sp.k;
       Object.keys(shapeBtns).forEach(function(k){ shapeBtns[k].style.border='2px solid #ccc'; shapeBtns[k].style.background='none'; });
-      btn.style.border='2px solid #1565c0'; btn.style.background='#e3f0ff';
+      btn.style.border='2px solid var(--accent)'; btn.style.background='#e3f0ff';
     };
     shapeBtns[sp.k] = btn;
     shapeRow.appendChild(btn);
@@ -16456,7 +16734,7 @@ function _showQmNodeFullEdit(node){
   modal.appendChild(ncLabel);
   var ncRow = document.createElement('div');
   ncRow.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;';
-  var nodeColors = ['#e65100','#1565c0','#2e7d32','#6a1b9a','#00695c','#c62828','#f57f17','#0277bd','#37474f','#ff6f00','#880e4f','#01579b'];
+  var nodeColors = ['#e65100','var(--accent)','#2e7d32','#6a1b9a','#00695c','#c62828','#f57f17','#0277bd','#37474f','#ff6f00','#880e4f','#01579b'];
   var ncDots = [];
   nodeColors.forEach(function(c){
     var dot = document.createElement('div');
@@ -16484,15 +16762,15 @@ function _showQmNodeFullEdit(node){
   modal.appendChild(tcLabel);
   var tcRow = document.createElement('div');
   tcRow.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;align-items:center;';
-  var textColors = ['#ffffff','#1a1a1a','#1565c0','#c62828','#2e7d32','#6a1b9a','#e65100','#ff6f00','#fff8e1','#e3f0ff'];
+  var textColors = ['#ffffff','#1a1a1a','var(--accent)','#c62828','#2e7d32','#6a1b9a','#e65100','#ff6f00','#fff8e1','#e3f0ff'];
   var tcDots = [];
   textColors.forEach(function(c){
     var dot = document.createElement('div');
-    dot.style.cssText = 'width:28px;height:28px;border-radius:50%;background:'+c+';cursor:pointer;border:3px solid '+(st.textColor===c?'#1565c0':'rgba(0,0,0,0.18)')+';box-sizing:border-box;flex-shrink:0;';
+    dot.style.cssText = 'width:28px;height:28px;border-radius:50%;background:'+c+';cursor:pointer;border:3px solid '+(st.textColor===c?'var(--accent)':'rgba(0,0,0,0.18)')+';box-sizing:border-box;flex-shrink:0;';
     dot.onclick = function(){
       st.textColor=c;
       tcDots.forEach(function(d){ d.style.borderColor='rgba(0,0,0,0.18)'; });
-      dot.style.borderColor='#1565c0';
+      dot.style.borderColor='var(--accent)';
       tcPicker.value = c;
     };
     tcDots.push(dot);
@@ -16518,12 +16796,12 @@ function _showQmNodeFullEdit(node){
     var btn = document.createElement('button');
     btn.textContent = sz.l;
     var isSel = Math.abs((node.w||100)-sz.w)<30;
-    btn.style.cssText = 'padding:5px 14px;border-radius:8px;border:2px solid '+(isSel?'#1565c0':'#ccc')+';background:'+(isSel?'#e3f0ff':'none')+';font-size:0.82rem;font-weight:700;cursor:pointer;';
+    btn.style.cssText = 'padding:5px 14px;border-radius:8px;border:2px solid '+(isSel?'var(--accent)':'#ccc')+';background:'+(isSel?'#e3f0ff':'none')+';font-size:0.82rem;font-weight:700;cursor:pointer;';
     if(isSel){ st.w=sz.w; st.h=sz.h; }
     btn.onclick = function(){
       st.w=sz.w; st.h=sz.h;
       szBtns.forEach(function(b){ b.style.border='2px solid #ccc'; b.style.background='none'; });
-      btn.style.border='2px solid #1565c0'; btn.style.background='#e3f0ff';
+      btn.style.border='2px solid var(--accent)'; btn.style.background='#e3f0ff';
     };
     szBtns.push(btn);
     szRow.appendChild(btn);
@@ -16535,7 +16813,7 @@ function _showQmNodeFullEdit(node){
   btnRow.style.cssText = 'display:flex;gap:8px;';
   var okBtn = document.createElement('button');
   okBtn.textContent = '✓ OK — Save karo';
-  okBtn.style.cssText = 'flex:1;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-weight:800;font-size:0.9rem;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;';
+  okBtn.style.cssText = 'flex:1;padding:11px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-weight:800;font-size:0.9rem;cursor:pointer;font-family:inherit;-webkit-tap-highlight-color:transparent;';
   var cancelBtn2 = document.createElement('button');
   cancelBtn2.textContent = '✕ Cancel';
   cancelBtn2.style.cssText = 'padding:11px 14px;border-radius:10px;border:1.5px solid #ccc;background:none;color:#888;font-weight:700;cursor:pointer;font-family:inherit;';
@@ -20051,7 +20329,7 @@ function _srDrawTransformHandles(obj) {
   ctx.save();
   // Dashed box
   ctx.setLineDash([4,3]);
-  ctx.strokeStyle='rgba(21,101,192,0.6)';
+  ctx.strokeStyle='rgba(27,94,32,0.6)';
   ctx.lineWidth=1.5;
   ctx.strokeRect(obj.x-2,obj.y-2,obj.w+4,obj.h+4);
   ctx.setLineDash([]);
@@ -21204,7 +21482,7 @@ document.addEventListener('touchstart', function(e){
             <button class="qmap-tool-btn"     id="qmt-move"   onclick="setQmTool('move',this)"   title="Move node">✋</button>
             <div class="qmap-tool-sep"></div>
             <div class="qmap-color-dot" style="background:#e65100;" onclick="setQmColor('#e65100')" title="Orange"></div>
-            <div class="qmap-color-dot" style="background:#1565c0;" onclick="setQmColor('#1565c0')" title="Blue"></div>
+            <div class="qmap-color-dot" style="background:var(--accent);" onclick="setQmColor('var(--accent)')" title="Blue"></div>
             <div class="qmap-color-dot" style="background:#2e7d32;" onclick="setQmColor('#2e7d32')" title="Green"></div>
             <div class="qmap-color-dot" style="background:#c62828;" onclick="setQmColor('#c62828')" title="Red"></div>
             <div class="qmap-color-dot" style="background:#6a1b9a;" onclick="setQmColor('#6a1b9a')" title="Purple"></div>
@@ -21228,7 +21506,7 @@ document.addEventListener('touchstart', function(e){
             <div class="qmap-tool-sep"></div>
             <div class="qmap-color-dot" style="background:#000;"    onclick="setQmDrawColor('#000000')"></div>
             <div class="qmap-color-dot" style="background:#e65100;" onclick="setQmDrawColor('#e65100')"></div>
-            <div class="qmap-color-dot" style="background:#1565c0;" onclick="setQmDrawColor('#1565c0')"></div>
+            <div class="qmap-color-dot" style="background:var(--accent);" onclick="setQmDrawColor('var(--accent)')"></div>
             <div class="qmap-color-dot" style="background:#c62828;" onclick="setQmDrawColor('#c62828')"></div>
             <div class="qmap-color-dot" style="background:#2e7d32;" onclick="setQmDrawColor('#2e7d32')"></div>
             <input type="color" value="#000000" id="qmDrawColorPicker" onchange="setQmDrawColor(this.value)"
@@ -21254,14 +21532,14 @@ document.addEventListener('touchstart', function(e){
             <div class="qmap-tool-sep"></div>
             <span style="font-size:0.7rem;color:var(--text2);font-weight:700;">Border:</span>
             <div class="qmap-color-dot" style="background:#e65100;" onclick="setQmNodeStroke('#e65100')"></div>
-            <div class="qmap-color-dot" style="background:#1565c0;" onclick="setQmNodeStroke('#1565c0')"></div>
+            <div class="qmap-color-dot" style="background:var(--accent);" onclick="setQmNodeStroke('var(--accent)')"></div>
             <div class="qmap-color-dot" style="background:#2e7d32;" onclick="setQmNodeStroke('#2e7d32')"></div>
             <div class="qmap-color-dot" style="background:#c62828;" onclick="setQmNodeStroke('#c62828')"></div>
             <div class="qmap-color-dot" style="background:#6a1b9a;" onclick="setQmNodeStroke('#6a1b9a')"></div>
             <div class="qmap-tool-sep"></div>
             <span style="font-size:0.7rem;color:var(--text2);font-weight:700;">Text:</span>
             <div class="qmap-color-dot" style="background:#000;"    onclick="setQmNodeTextColor('#000000')"></div>
-            <div class="qmap-color-dot" style="background:#1565c0;" onclick="setQmNodeTextColor('#1565c0')"></div>
+            <div class="qmap-color-dot" style="background:var(--accent);" onclick="setQmNodeTextColor('var(--accent)')"></div>
             <div class="qmap-color-dot" style="background:#e65100;" onclick="setQmNodeTextColor('#e65100')"></div>
             <div class="qmap-color-dot" style="background:#fff;border:1px solid #ccc;" onclick="setQmNodeTextColor('#ffffff')"></div>
             <div class="qmap-tool-sep"></div>
@@ -21391,7 +21669,7 @@ document.addEventListener('touchstart', function(e){
     <div id="pdfStep1" style="padding:20px;">
       <div style="background:#f4f9fe;border:2px dashed #bdd5ea;border-radius:12px;padding:24px;text-align:center;cursor:pointer;" onclick="document.getElementById('pdfFileInput').click()">
         <div style="font-size:2.5rem;margin-bottom:8px;">📂</div>
-        <div style="font-weight:700;color:#1565c0;margin-bottom:4px;">PDF File Chunno</div>
+        <div style="font-weight:700;color:var(--accent);margin-bottom:4px;">PDF File Chunno</div>
         <div style="font-size:0.75rem;color:#37526d;">Normal PDF ya Scanned PDF -- dono chalega</div>
         <input type="file" id="pdfFileInput" accept=".pdf" style="display:none;" onchange="pdfFileSelected(this)">
       </div>
@@ -21401,7 +21679,7 @@ document.addEventListener('touchstart', function(e){
       <div id="pdfProgressBox" style="display:none;margin-top:16px;">
         <div style="font-size:0.8rem;color:#37526d;margin-bottom:6px;" id="pdfProgressLabel">⏳ Extract ho raha hai...</div>
         <div style="background:#e0e0e0;border-radius:10px;height:8px;overflow:hidden;">
-          <div id="pdfProgressBar" style="height:100%;background:linear-gradient(90deg,#1565c0,#42a5f5);width:0%;transition:width 0.3s;border-radius:10px;"></div>
+          <div id="pdfProgressBar" style="height:100%;background:linear-gradient(90deg,var(--accent),#66bb6a);width:0%;transition:width 0.3s;border-radius:10px;"></div>
         </div>
       </div>
 
@@ -21420,7 +21698,7 @@ document.addEventListener('touchstart', function(e){
       <textarea id="pdfAiInstructions" placeholder="Jaise: Sirf Chapter 3 ke points lo, ya MCQ format mein do, ya simple Hindi mein summarize karo, ya sirf definitions nikalo..." style="width:100%;border:1.5px solid #bdd5ea;border-radius:10px;padding:12px;font-size:0.82rem;font-family:inherit;resize:vertical;min-height:90px;outline:none;color:#0d1b2a;"></textarea>
 
       <div style="display:flex;gap:8px;margin-top:12px;">
-        <button onclick="pdfGenerateNotes()" id="pdfGenBtn" style="flex:1;padding:12px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">🤖 AI se Notes Banao</button>
+        <button onclick="pdfGenerateNotes()" id="pdfGenBtn" style="flex:1;padding:12px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">🤖 AI se Notes Banao</button>
       </div>
     </div>
 
@@ -21429,7 +21707,7 @@ document.addEventListener('touchstart', function(e){
       <div style="height:1px;background:#eee;margin-bottom:16px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div style="font-size:0.85rem;font-weight:700;color:#0d1b2a;">✅ Notes Ready!</div>
-        <button onclick="pdfRegenerateNotes()" style="background:none;border:1.5px solid #1565c0;border-radius:8px;padding:4px 10px;color:#1565c0;font-size:0.72rem;font-weight:700;cursor:pointer;">🔄 Regenerate</button>
+        <button onclick="pdfRegenerateNotes()" style="background:none;border:1.5px solid var(--accent);border-radius:8px;padding:4px 10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;">🔄 Regenerate</button>
       </div>
       <div id="pdfResultText" style="background:#f4f9fe;border:1px solid #bdd5ea;border-radius:10px;padding:14px;font-size:0.8rem;line-height:1.75;max-height:250px;overflow-y:auto;white-space:pre-wrap;color:#0d1b2a;"></div>
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
@@ -21718,7 +21996,7 @@ function pdfCopyResult() {
 
       <div style="background:#f4f9fe;border:2px dashed #bdd5ea;border-radius:12px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px;" onclick="document.getElementById('audioFileInput').click()">
         <div style="font-size:2rem;margin-bottom:6px;">🎵</div>
-        <div style="font-weight:700;color:#1565c0;font-size:0.85rem;">Audio File Chunno</div>
+        <div style="font-weight:700;color:var(--accent);font-size:0.85rem;">Audio File Chunno</div>
         <div style="font-size:0.72rem;color:#37526d;margin-top:3px;">MP3, WAV, M4A, OGG support</div>
         <input type="file" id="audioFileInput" accept="audio/*" style="display:none;" onchange="audioFileSelected(this)">
       </div>
@@ -21735,7 +22013,7 @@ function pdfCopyResult() {
     <div id="manualTabContent" style="display:none;padding:16px 20px;">
       <div style="font-size:0.8rem;color:#37526d;margin-bottom:8px;">YouTube transcript, koi bhi text, notes -- yahan paste karo:</div>
       <textarea id="manualPasteInput" placeholder="Yahan text paste karo..." style="width:100%;border:1.5px solid #bdd5ea;border-radius:10px;padding:12px;font-size:0.82rem;font-family:inherit;resize:vertical;min-height:140px;outline:none;color:#0d1b2a;"></textarea>
-      <button onclick="manualTextReady()" style="width:100%;padding:11px;margin-top:8px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">✅ Text Ready -- Aage Badho</button>
+      <button onclick="manualTextReady()" style="width:100%;padding:11px;margin-top:8px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">✅ Text Ready -- Aage Badho</button>
     </div>
 
     <!-- Progress Bar (shared) -->
@@ -21758,7 +22036,7 @@ function pdfCopyResult() {
       <div style="height:1px;background:#eee;margin-bottom:14px;"></div>
       <div style="font-size:0.85rem;font-weight:700;color:#0d1b2a;margin-bottom:8px;">🤖 AI ko kya karna hai?</div>
       <textarea id="ytAiInstructions" placeholder="Jaise: Sirf main points lo, ya MCQ format mein do, ya simple Hindi mein summarize karo, ya definitions nikalo..." style="width:100%;border:1.5px solid #bdd5ea;border-radius:10px;padding:12px;font-size:0.82rem;font-family:inherit;resize:vertical;min-height:80px;outline:none;color:#0d1b2a;"></textarea>
-      <button onclick="ytGenerateNotes()" id="ytGenBtn" style="width:100%;padding:12px;margin-top:10px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">🤖 AI se Notes Banao</button>
+      <button onclick="ytGenerateNotes()" id="ytGenBtn" style="width:100%;padding:12px;margin-top:10px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.88rem;cursor:pointer;font-family:inherit;">🤖 AI se Notes Banao</button>
     </div>
 
     <!-- Result -->
@@ -21766,7 +22044,7 @@ function pdfCopyResult() {
       <div style="height:1px;background:#eee;margin-bottom:14px;"></div>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
         <div style="font-size:0.85rem;font-weight:700;color:#0d1b2a;">✅ Notes Ready!</div>
-        <button onclick="ytRegenerateNotes()" style="background:none;border:1.5px solid #1565c0;border-radius:8px;padding:4px 10px;color:#1565c0;font-size:0.72rem;font-weight:700;cursor:pointer;">🔄 Regenerate</button>
+        <button onclick="ytRegenerateNotes()" style="background:none;border:1.5px solid var(--accent);border-radius:8px;padding:4px 10px;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;">🔄 Regenerate</button>
       </div>
       <div id="ytResultText" style="background:#f4f9fe;border:1px solid #bdd5ea;border-radius:10px;padding:14px;font-size:0.8rem;line-height:1.75;max-height:240px;overflow-y:auto;white-space:pre-wrap;color:#0d1b2a;"></div>
       <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
@@ -21832,7 +22110,7 @@ function switchYtTab(tab) {
 
   // Tab button styles
   const tabMap = { yt: 'tabYT', audio: 'tabAudio', manual: 'tabManual' };
-  const colors = { yt: '#ff0000', audio: '#6a1b9a', manual: '#1565c0' };
+  const colors = { yt: '#ff0000', audio: '#6a1b9a', manual: 'var(--accent)' };
   ['yt', 'audio', 'manual'].forEach(t => {
     const btn = document.getElementById(tabMap[t]);
     if(!btn) return;
@@ -22217,7 +22495,7 @@ function ytCopyResult() {
       <div id="masterResultText" style="background:#f9f4ff;border:1.5px solid #ce93d8;border-radius:10px;padding:12px;font-size:0.79rem;line-height:1.75;max-height:260px;overflow-y:auto;white-space:pre-wrap;color:#0d1b2a;"></div>
       <div style="display:flex;gap:7px;margin-top:10px;flex-wrap:wrap;">
         <button onclick="masterSaveNotes()" style="flex:1;padding:11px;background:linear-gradient(135deg,#2e7d32,#388e3c);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.84rem;cursor:pointer;font-family:inherit;">💾 Save</button>
-        <button onclick="masterOpenEditor()" style="flex:1;padding:11px;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.84rem;cursor:pointer;font-family:inherit;">✏️ Edit</button>
+        <button onclick="masterOpenEditor()" style="flex:1;padding:11px;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;border:none;border-radius:10px;font-weight:800;font-size:0.84rem;cursor:pointer;font-family:inherit;">✏️ Edit</button>
         <button onclick="masterCopy()" style="padding:11px 13px;background:#f4f9fe;border:1.5px solid #bdd5ea;border-radius:10px;font-weight:700;font-size:0.82rem;cursor:pointer;font-family:inherit;">📋</button>
       </div>
     </div>
@@ -22999,7 +23277,7 @@ function closeFactCollector() {
 function fcSetLevel(level) {
   _fcState.level = level;
   const levels = ['subject', 'section', 'topic'];
-  const colors = { subject: '#1565c0', section: '#2e7d32', topic: '#6a1b9a' };
+  const colors = { subject: 'var(--accent)', section: '#2e7d32', topic: '#6a1b9a' };
 
   levels.forEach(l => {
     const btn = document.getElementById('fcTab' + l.charAt(0).toUpperCase() + l.slice(1));
@@ -23723,9 +24001,9 @@ function _csHideWritePopup() {
   btn.style.cssText = [
     'position:fixed','bottom:100px','left:50%','transform:translateX(-50%)',
     'z-index:99999','padding:12px 22px','border-radius:24px','border:none',
-    'background:linear-gradient(135deg,#1565c0,#1976d2)','color:#fff',
+    'background:linear-gradient(135deg,var(--accent),var(--accent3))','color:#fff',
     'font-size:0.88rem','font-weight:800','font-family:inherit',
-    'box-shadow:0 4px 20px rgba(21,101,192,0.5)',
+    'box-shadow:0 4px 20px rgba(27,94,32,0.5)',
     'cursor:pointer','-webkit-tap-highlight-color:transparent',
     'touch-action:manipulation'
   ].join(';');
@@ -24101,7 +24379,7 @@ function _ncoOnThreeDot(obj, dot3El, boxEl) {
   }
 
   // 1. Adjust with previous text
-  menu.appendChild(makeItem('↔️', 'Adjust (Drag/Rotate/Resize)', '#1565c0', function(){
+  menu.appendChild(makeItem('↔️', 'Adjust (Drag/Rotate/Resize)', 'var(--accent)', function(){
     _ncoStartAdjustFresh(obj);
   }));
 
@@ -24157,8 +24435,8 @@ function _ncoStartAdjustFresh(obj) {
   cross.innerHTML = [
     '<div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(21,101,192,0.7);transform:translateY(-50%);"></div>',
     '<div style="position:absolute;left:50%;top:0;bottom:0;width:2px;background:rgba(21,101,192,0.7);transform:translateX(-50%);"></div>',
-    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;border:2.5px solid #1565c0;border-radius:50%;background:rgba(21,101,192,0.18);"></div>',
-    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,10px);font-size:0.65rem;font-weight:800;color:#1565c0;white-space:nowrap;background:rgba(255,255,255,0.85);padding:2px 7px;border-radius:8px;">Text yahan aayega</div>'
+    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:22px;height:22px;border:2.5px solid var(--accent);border-radius:50%;background:rgba(21,101,192,0.18);"></div>',
+    '<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,10px);font-size:0.65rem;font-weight:800;color:var(--accent);white-space:nowrap;background:rgba(255,255,255,0.85);padding:2px 7px;border-radius:8px;">Text yahan aayega</div>'
   ].join('');
   cross.style.cssText = [
     'position:fixed','top:0','left:0','right:0','bottom:0',
@@ -24187,7 +24465,7 @@ function _ncoStartAdjustFresh(obj) {
   setBtn.style.cssText = [
     'position:fixed','bottom:90px','left:50%','transform:translateX(-50%)',
     'z-index:99999','padding:16px 36px','border-radius:32px','border:none',
-    'background:linear-gradient(135deg,#1565c0,#1976d2)','color:#fff',
+    'background:linear-gradient(135deg,var(--accent),var(--accent3))','color:#fff',
     'font-size:0.95rem','font-weight:900','font-family:inherit',
     'box-shadow:0 6px 24px rgba(21,101,192,0.55)',
     'cursor:pointer','-webkit-tap-highlight-color:transparent',
@@ -24368,7 +24646,7 @@ var _sc = {
   canvas:    null, ctx:     null,
   qmCanvas:  null, qmCtx:   null,
   hlCanvas:  null, hlCtx:   null,
-  drawColor: '#1565c0', drawSize: 3, drawTool: 'pen',
+  drawColor: 'var(--accent)', drawSize: 3, drawTool: 'pen',
   hlActive:  false, hlTool: 'highlight',
   hlColor:   '#ffe000', hlSize: 12, hlEraserSize: 20,
   hlDrawing: false, hlPoints: [],
@@ -24911,7 +25189,7 @@ function _scSlideDeleteMenu(idx, cx, cy) {
   // Go to slide option
   var gotoBtn = document.createElement('button');
   gotoBtn.textContent = '📋 Slide ' + slideNum + ' pe jao';
-  gotoBtn.style.cssText = 'display:block;width:100%;padding:10px 16px;background:none;border:none;text-align:left;font-size:0.82rem;font-weight:600;cursor:pointer;color:#1565c0;-webkit-tap-highlight-color:transparent;';
+  gotoBtn.style.cssText = 'display:block;width:100%;padding:10px 16px;background:none;border:none;text-align:left;font-size:0.82rem;font-weight:600;cursor:pointer;color:var(--accent);-webkit-tap-highlight-color:transparent;';
   gotoBtn.onclick = function(){ menu.remove(); scGoToSlide(idx); };
   menu.appendChild(gotoBtn);
 
@@ -25421,7 +25699,7 @@ function _scShowBlockActions(b, el) {
   ub.style.textDecoration='underline'; bar.appendChild(ub);
   bar.appendChild(mkBtn('A−','Font chhota',function(){ scSnapshot();b.fontSize=Math.max(10,(b.fontSize||15)-2);_scRefreshBlock(b); }));
   bar.appendChild(mkBtn('A+','Font bada',function(){ scSnapshot();b.fontSize=Math.min(40,(b.fontSize||15)+2);_scRefreshBlock(b); }));
-  ['#1a1a1a','#1565c0','#c62828','#2e7d32','#6a1b9a','#e65100'].forEach(function(c){
+  ['#1a1a1a','var(--accent)','#c62828','#2e7d32','#6a1b9a','#e65100'].forEach(function(c){
     var dot=document.createElement('div');
     dot.style.cssText='width:14px;height:14px;border-radius:50%;background:'+c+';cursor:pointer;flex-shrink:0;border:1.5px solid rgba(0,0,0,0.15);';
     dot.addEventListener('pointerdown',function(e){ e.stopPropagation();scSnapshot();b.color=c;_scRefreshBlock(b); });
@@ -25441,7 +25719,7 @@ function _scShowBlockActions(b, el) {
     moveBtn.className = 'sc-block-act-btn';
     moveBtn.title     = 'Doosri slide par move karo';
     moveBtn.textContent = '⇢';
-    moveBtn.style.cssText = 'background:rgba(21,101,192,0.15);color:#1565c0;font-weight:900;font-size:0.85rem;';
+    moveBtn.style.cssText = 'background:rgba(27,94,32,0.15);color:var(--accent);font-weight:900;font-size:0.85rem;';
     moveBtn.addEventListener('pointerdown', function(e) {
       e.stopPropagation();
       _scShowMoveToSlideMenu(b, el, bar);
@@ -25489,13 +25767,13 @@ function _scShowMoveToSlideMenu(b, el, bar) {
       'transition:background 0.12s;-webkit-tap-highlight-color:transparent;';
     opt.innerHTML =
       '<span style="width:22px;height:22px;border-radius:7px;' +
-      'background:rgba(21,101,192,0.12);color:#1565c0;font-size:0.7rem;font-weight:900;' +
+      'background:rgba(27,94,32,0.12);color:var(--accent);font-size:0.7rem;font-weight:900;' +
       'display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;">' +
       (si+1)+'</span>'+
       '<span style="flex:1;">'+(slide.title||('Slide '+(si+1)))+'</span>'+
       '<span style="font-size:0.62rem;color:var(--text2);font-weight:600;">'+
       (slide.textBlocks?slide.textBlocks.length:0)+' blocks</span>';
-    opt.addEventListener('mouseenter',function(){opt.style.background='rgba(21,101,192,0.07)';});
+    opt.addEventListener('mouseenter',function(){opt.style.background='rgba(27,94,32,0.07)';});
     opt.addEventListener('mouseleave',function(){opt.style.background='';});
     opt.addEventListener('pointerdown',function(e){
       e.stopPropagation(); menu.remove();
@@ -25749,8 +26027,8 @@ function _scRenderStrokes() {
     if(!stroke.points||stroke.points.length<2) return;
     ctx.save(); ctx.lineCap='round'; ctx.lineJoin='round';
     if(stroke.tool==='eraser'){ctx.globalCompositeOperation='destination-out';ctx.lineWidth=stroke.size*4;ctx.strokeStyle='rgba(0,0,0,1)';}
-    else if(stroke.tool==='marker'){ctx.globalAlpha=0.45;ctx.strokeStyle=stroke.color||'#1565c0';ctx.lineWidth=stroke.size*2.5;}
-    else{ctx.strokeStyle=stroke.color||'#1565c0';ctx.lineWidth=stroke.size;}
+    else if(stroke.tool==='marker'){ctx.globalAlpha=0.45;ctx.strokeStyle=stroke.color||'var(--accent)';ctx.lineWidth=stroke.size*2.5;}
+    else{ctx.strokeStyle=stroke.color||'var(--accent)';ctx.lineWidth=stroke.size;}
     ctx.beginPath();ctx.moveTo(stroke.points[0].x,stroke.points[0].y);
     for(var i=1;i<stroke.points.length;i++){
       var p=stroke.points[i],pp=stroke.points[i-1];
@@ -26138,7 +26416,7 @@ function scClearHlStrokes() {
 // ══════════════════════════════════════
 // QUICKMAP
 // ══════════════════════════════════════
-var _scQmNodeColors=['#e65100','#1565c0','#2e7d32','#6a1b9a','#00695c','#c62828'];
+var _scQmNodeColors=['#e65100','var(--accent)','#2e7d32','#6a1b9a','#00695c','#c62828'];
 var _scQmNextId=1;
 var _scQmTouchLast=0,_scQmConnecting=null,_scQmDragging=null,_scQmDragOff={x:0,y:0};
 var _scQmTool='bubble'; // bubble | box | circle | diamond | connect | lock | select
@@ -26317,7 +26595,7 @@ function _scQmRender() {
     ctx.fill();
     // Selection ring
     if(_isSel){
-      ctx.globalAlpha=1;ctx.strokeStyle='#1565c0';ctx.lineWidth=3;ctx.setLineDash([6,3]);
+      ctx.globalAlpha=1;ctx.strokeStyle='var(--accent)';ctx.lineWidth=3;ctx.setLineDash([6,3]);
       ctx.beginPath();
       if(n.shape==='box'){
         if(ctx.roundRect)ctx.roundRect(n.x-r-4,n.y-rh/2-4,r*2+8,rh+8,11);
@@ -26424,7 +26702,7 @@ function _scQmShowFullEdit(node) {
   var hdr = document.createElement('div');
   hdr.style.cssText = 'display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;border-bottom:2px solid #e3f0ff;padding-bottom:10px;';
   var ht = document.createElement('div');
-  ht.style.cssText = 'font-size:1.05rem;font-weight:800;color:#1565c0;';
+  ht.style.cssText = 'font-size:1.05rem;font-weight:800;color:var(--accent);';
   ht.textContent = '✏️ Node Edit karo';
   var xBtn = document.createElement('button');
   xBtn.textContent = '✕';
@@ -26445,7 +26723,7 @@ function _scQmShowFullEdit(node) {
     'background:#f8f9fa;color:#111;outline:none;',
     'resize:none;box-sizing:border-box;line-height:1.5;'
   ].join('');
-  ta.onfocus = function(){ ta.style.borderColor='#1565c0'; };
+  ta.onfocus = function(){ ta.style.borderColor='var(--accent)'; };
   ta.onblur  = function(){ ta.style.borderColor='#ddd'; };
   modal.appendChild(ta);
 
@@ -26461,9 +26739,9 @@ function _scQmShowFullEdit(node) {
     var isSel = st.shape === sp.k;
     b.style.cssText = [
       'padding:7px 14px;border-radius:9px;cursor:pointer;font-weight:700;',
-      'border:2px solid '+(isSel?'#1565c0':'#ddd')+';',
+      'border:2px solid '+(isSel?'var(--accent)':'#ddd')+';',
       'background:'+(isSel?'#e3f0ff':'#fafafa')+';',
-      'color:'+(isSel?'#1565c0':'#444')+';',
+      'color:'+(isSel?'var(--accent)':'#444')+';',
       'font-size:0.88rem;-webkit-tap-highlight-color:transparent;flex:1;'
     ].join('');
     b.onclick = function(){
@@ -26473,9 +26751,9 @@ function _scQmShowFullEdit(node) {
         sBtns[k].style.background='#fafafa';
         sBtns[k].style.color='#444';
       });
-      b.style.border='2px solid #1565c0';
+      b.style.border='2px solid var(--accent)';
       b.style.background='#e3f0ff';
-      b.style.color='#1565c0';
+      b.style.color='var(--accent)';
     };
     sBtns[sp.k] = b;
     shapeRow.appendChild(b);
@@ -26486,7 +26764,7 @@ function _scQmShowFullEdit(node) {
   modal.appendChild(mkLabel('🎨 Node Color (Fill)'));
   var ncRow = document.createElement('div');
   ncRow.style.cssText = 'display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:2px;';
-  var nodeColors = ['#e65100','#1565c0','#2e7d32','#6a1b9a','#00695c','#c62828','#f57f17','#0277bd','#00838f','#37474f','#880e4f','#558b2f'];
+  var nodeColors = ['#e65100','var(--accent)','#2e7d32','#6a1b9a','#00695c','#c62828','#f57f17','#0277bd','#00838f','#37474f','#880e4f','#558b2f'];
   var ncDots = [];
   nodeColors.forEach(function(c){
     var d = document.createElement('div');
@@ -26523,7 +26801,7 @@ function _scQmShowFullEdit(node) {
   modal.appendChild(mkLabel('🖋 Text Color'));
   var tcRow = document.createElement('div');
   tcRow.style.cssText = 'display:flex;gap:7px;flex-wrap:wrap;align-items:center;margin-bottom:2px;';
-  var textColors = ['#ffffff','#1a1a1a','#fff8e1','#e3f0ff','#1565c0','#c62828','#2e7d32','#f57f17','#6a1b9a','#ffeb3b'];
+  var textColors = ['#ffffff','#1a1a1a','#fff8e1','#e3f0ff','var(--accent)','#c62828','#2e7d32','#f57f17','#6a1b9a','#ffeb3b'];
   var tcDots = [];
   textColors.forEach(function(c){
     var d = document.createElement('div');
@@ -26531,15 +26809,15 @@ function _scQmShowFullEdit(node) {
     d.style.cssText = [
       'width:30px;height:30px;border-radius:50%;background:'+c+';',
       'cursor:pointer;flex-shrink:0;',
-      'border:3px solid '+(isSel?'#1565c0':'rgba(0,0,0,0.15)')+';',
+      'border:3px solid '+(isSel?'var(--accent)':'rgba(0,0,0,0.15)')+';',
       'box-sizing:border-box;',
-      'box-shadow:'+(isSel?'0 0 0 2px #1565c0':'none')+';'
+      'box-shadow:'+(isSel?'0 0 0 2px var(--accent)':'none')+';'
     ].join('');
     d.onclick = function(){
       st.textColor = c;
       tcDots.forEach(function(x){ x.style.border='3px solid rgba(0,0,0,0.15)'; x.style.boxShadow='none'; });
-      d.style.border='3px solid #1565c0';
-      d.style.boxShadow='0 0 0 2px #1565c0';
+      d.style.border='3px solid var(--accent)';
+      d.style.boxShadow='0 0 0 2px var(--accent)';
       tcPicker.value = c;
     };
     tcDots.push(d);
@@ -26568,15 +26846,15 @@ function _scQmShowFullEdit(node) {
     var isSel = Math.abs(st.sizeBoost - sz.v) < 10;
     b.style.cssText = [
       'flex:1;padding:7px 4px;border-radius:9px;cursor:pointer;font-weight:800;',
-      'border:2px solid '+(isSel?'#1565c0':'#ddd')+';',
+      'border:2px solid '+(isSel?'var(--accent)':'#ddd')+';',
       'background:'+(isSel?'#e3f0ff':'#fafafa')+';',
-      'color:'+(isSel?'#1565c0':'#444')+';',
+      'color:'+(isSel?'var(--accent)':'#444')+';',
       'font-size:0.82rem;-webkit-tap-highlight-color:transparent;'
     ].join('');
     b.onclick = function(){
       st.sizeBoost = sz.v;
       szBtns.forEach(function(x){ x.style.border='2px solid #ddd'; x.style.background='#fafafa'; x.style.color='#444'; });
-      b.style.border='2px solid #1565c0'; b.style.background='#e3f0ff'; b.style.color='#1565c0';
+      b.style.border='2px solid var(--accent)'; b.style.background='#e3f0ff'; b.style.color='var(--accent)';
     };
     szBtns.push(b);
     szRow.appendChild(b);
@@ -26591,7 +26869,7 @@ function _scQmShowFullEdit(node) {
   okBtn.textContent = '✓ Save karo';
   okBtn.style.cssText = [
     'flex:1;padding:12px;border-radius:11px;border:none;',
-    'background:linear-gradient(135deg,#1565c0,#1976d2);',
+    'background:linear-gradient(135deg,var(--accent),var(--accent3));',
     'color:#fff;font-weight:800;font-size:0.92rem;',
     'cursor:pointer;font-family:inherit;',
     '-webkit-tap-highlight-color:transparent;'
@@ -26965,7 +27243,7 @@ function scRenderToolbar() {
       tb.innerHTML+='<button class="sc-tbtn sc-draw-size'+(s===_sc.drawSize?' active':'')
         +'" onclick="scSetDrawSize('+s+',this)" style="min-width:24px;">'+l+'</button>';});
     tb.innerHTML+='<div class="sc-sep"></div>';
-    ['#1a1a1a','#1565c0','#c62828','#2e7d32','#6a1b9a','#f57c00'].forEach(function(c){
+    ['#1a1a1a','var(--accent)','#c62828','#2e7d32','#6a1b9a','#f57c00'].forEach(function(c){
       tb.innerHTML+='<div class="sc-color-dot sc-draw-cdot'+(c===_sc.drawColor?' sel':'')
         +'" style="background:'+c+';" onclick="scSetDrawColor(\''+c+'\',this)"></div>';});
     tb.innerHTML+='<input type="color" value="'+_sc.drawColor+'" onchange="scSetDrawColor(this.value)" style="width:22px;height:22px;border:none;border-radius:5px;padding:0;cursor:pointer;flex-shrink:0;">';
@@ -26991,7 +27269,7 @@ function scRenderToolbar() {
      _th+='<button class="sc-tbtn'+(_lk?' active':'')+'" onclick="scQmSetTool(\'lock\')" title="Lock ON/OFF" style="min-width:30px;font-size:1rem;'+(_lk?'background:rgba(198,40,40,0.12);color:#c62828;border-color:rgba(198,40,40,0.4);':'')+'">'+(_lk?'🔒':'🔓')+'</button>';
      // Select button
      var _sl=(_scQmTool==='select');
-     _th+='<button class="sc-tbtn'+(_sl?' active':'')+'" onclick="scQmSetTool(\'select\')" title="Select Mode" style="min-width:30px;font-size:0.85rem;font-weight:900;'+(_sl?'background:rgba(21,101,192,0.12);color:#1565c0;border-color:rgba(21,101,192,0.4);':'')+'">'+(_sl?'☑':'☐')+'</button>';
+     _th+='<button class="sc-tbtn'+(_sl?' active':'')+'" onclick="scQmSetTool(\'select\')" title="Select Mode" style="min-width:30px;font-size:0.85rem;font-weight:900;'+(_sl?'background:rgba(27,94,32,0.12);color:var(--accent);border-color:rgba(27,94,32,0.4);':'')+'">'+(_sl?'☑':'☐')+'</button>';
      _th+='<div class="sc-sep"></div>';
      _th+='<button class="sc-tbtn" onclick="scQmClear()" style="min-width:26px;">🗑</button>';
      tb.innerHTML=_th;
@@ -27013,7 +27291,7 @@ function scAddBulletBlock(){
 }
 function scAddHeadingBlock(){
   var cur=_scCur(); if(!cur) return; scSnapshot();
-  var b={id:'scb_'+Date.now(),x:30,y:20,w:220,html:'Heading',fontSize:22,color:'#1565c0',bold:true,italic:false,underline:false,angle:0};
+  var b={id:'scb_'+Date.now(),x:30,y:20,w:220,html:'Heading',fontSize:22,color:'var(--accent)',bold:true,italic:false,underline:false,angle:0};
   cur.textBlocks.push(b); _scCreateBlockDOM(b);
 }
 
@@ -28128,9 +28406,9 @@ function scDownloadPDF() {
         var hdr = document.createElement('div');
         hdr.style.cssText =
           'display:flex;justify-content:space-between;align-items:center;' +
-          'border-bottom:2.5px solid #1565c0;padding-bottom:5px;margin-bottom:12px;';
+          'border-bottom:2.5px solid var(--accent);padding-bottom:5px;margin-bottom:12px;';
         hdr.innerHTML =
-          '<span style="font-size:13pt;font-weight:800;color:#1565c0;">'+_escHtml(docTitle)+'</span>' +
+          '<span style="font-size:13pt;font-weight:800;color:var(--accent);">'+_escHtml(docTitle)+'</span>' +
           '<span style="font-size:9pt;color:#666;">Slide '+(si+1)+' / '+_sc.slides.length+'</span>';
         page.appendChild(hdr);
 
@@ -28204,7 +28482,7 @@ function scDownloadPDF() {
             'margin-top:8mm;padding:8px 10px;background:rgba(21,101,192,0.05);' +
             'border-radius:8px;border:1px solid rgba(21,101,192,0.18);';
           qmSec.innerHTML =
-            '<div style="font-size:9pt;font-weight:800;color:#1565c0;margin-bottom:6px;">🗺 Mind Map Nodes</div>' +
+            '<div style="font-size:9pt;font-weight:800;color:var(--accent);margin-bottom:6px;">🗺 Mind Map Nodes</div>' +
             '<div style="display:flex;flex-wrap:wrap;gap:5px;">' +
             qmNodes.map(function(n) {
               return '<span style="background:'+(n.color||'#e65100')+';color:#fff;' +
@@ -28306,9 +28584,9 @@ function scExportPDF() {
 
     // ── Page header ──
     var hdr = document.createElement('div');
-    hdr.style.cssText = 'display:flex;justify-content:space-between;align-items:center;border-bottom:2.5px solid #1565c0;padding-bottom:5px;margin-bottom:10px;';
+    hdr.style.cssText = 'display:flex;justify-content:space-between;align-items:center;border-bottom:2.5px solid var(--accent);padding-bottom:5px;margin-bottom:10px;';
     hdr.innerHTML =
-      '<span style="font-size:12pt;font-weight:800;color:#1565c0;">'+_escHtml(docTitle)+'</span>'+
+      '<span style="font-size:12pt;font-weight:800;color:var(--accent);">'+_escHtml(docTitle)+'</span>'+
       '<span style="font-size:8pt;color:#666;font-weight:600;">Slide '+(si+1)+' / '+_sc.slides.length+'</span>';
     page.appendChild(hdr);
 
@@ -28519,13 +28797,13 @@ function scExportWord() {
     '<meta name="Generator" content="Microsoft Word 15">'+
     '<style>'+
     'body{font-family:"Noto Sans Devanagari","Arial",sans-serif;margin:2cm;color:#111;font-size:11pt;line-height:1.7;}'+
-    'h1{color:#1565c0;font-size:18pt;border-bottom:2px solid #1565c0;padding-bottom:6px;margin-bottom:14px;}'+
-    'h2{color:#0d47a1;font-size:13pt;margin-top:22px;margin-bottom:6px;border-left:4px solid #1565c0;padding-left:8px;}'+
+    'h1{color:var(--accent);font-size:18pt;border-bottom:2px solid var(--accent);padding-bottom:6px;margin-bottom:14px;}'+
+    'h2{color:#0d47a1;font-size:13pt;margin-top:22px;margin-bottom:6px;border-left:4px solid var(--accent);padding-left:8px;}'+
     '.slide-block{page-break-inside:avoid;margin-bottom:28px;border:1px solid #d0d0d0;border-radius:8px;padding:16px 18px;background:#fafbff;}'+
     '.slide-num{font-size:8pt;color:#888;float:right;}'+
     '.text-block{margin-bottom:8px;padding:4px 0;}'+
     '.map-section{background:#e8f5e9;border:1px solid #a5d6a7;border-radius:6px;padding:10px 12px;margin-top:10px;}'+
-    '.map-node{display:inline-block;background:#1565c0;color:#fff;padding:3px 10px;border-radius:14px;font-size:9pt;font-weight:700;margin:3px;}'+
+    '.map-node{display:inline-block;background:var(--accent);color:#fff;padding:3px 10px;border-radius:14px;font-size:9pt;font-weight:700;margin:3px;}'+
     '.mnemonic-section{background:#fff8e1;border:1px solid #ffe082;border-radius:6px;padding:10px 12px;margin-top:10px;}'+
     'p{margin:4px 0;}'+
     '</style></head><body>';
@@ -28555,7 +28833,7 @@ function scExportWord() {
     if(qmNodes.length){
       html += '<div class="map-section"><div style="font-size:9pt;font-weight:800;color:#2e7d32;margin-bottom:7px;">🗺 Mind Map Nodes</div>';
       qmNodes.forEach(function(n){
-        html += '<span class="map-node" style="background:'+(n.color||n.stroke||'#1565c0')+';">'+_escHtml(n.label||'')+'</span>';
+        html += '<span class="map-node" style="background:'+(n.color||n.stroke||'var(--accent)')+';">'+_escHtml(n.label||'')+'</span>';
       });
       // Edges as arrows
       var qmEdges = slide.qmEdges || [];
@@ -28797,19 +29075,19 @@ function _scBuildAiPanel() {
       '._scAiHdr button{background:rgba(255,255,255,0.2);border:none;color:#fff;border-radius:7px;padding:2px 9px;cursor:pointer;font-size:0.75rem;font-weight:700;}' +
       '#_scAiMsgs{flex:1;overflow-y:auto;padding:9px 11px;display:flex;flex-direction:column;gap:7px;}' +
       '._scMsg{padding:7px 10px;border-radius:11px;font-size:0.77rem;line-height:1.6;max-width:93%;}' +
-      '._scMsg.bot{background:rgba(21,101,192,0.07);border:1px solid rgba(21,101,192,0.15);color:var(--text,#0d1b2a);align-self:flex-start;}' +
-      '._scMsg.user{background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;align-self:flex-end;}' +
+      '._scMsg.bot{background:rgba(27,94,32,0.07);border:1px solid rgba(27,94,32,0.15);color:var(--text,#0d1b2a);align-self:flex-start;}' +
+      '._scMsg.user{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;align-self:flex-end;}' +
       '._scChips{display:flex;gap:5px;padding:5px 9px;overflow-x:auto;flex-shrink:0;border-top:1px solid rgba(0,0,0,0.06);}' +
-      '._scChip{padding:5px 11px;border-radius:20px;border:1.5px solid rgba(21,101,192,0.3);background:rgba(21,101,192,0.06);color:#1565c0;font-size:0.7rem;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;}' +
+      '._scChip{padding:5px 11px;border-radius:20px;border:1.5px solid rgba(27,94,32,0.3);background:rgba(27,94,32,0.06);color:var(--accent);font-size:0.7rem;font-weight:700;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent;}' +
       '._scInputRow{display:flex;gap:6px;padding:7px 9px;flex-shrink:0;border-top:1px solid rgba(0,0,0,0.07);}' +
       '#_scAiInput{flex:1;border:1.5px solid var(--border,#bdd5ea);border-radius:9px;padding:7px 10px;font-size:0.78rem;font-family:inherit;outline:none;background:var(--surface,#fff);color:var(--text,#0d1b2a);}' +
-      '#_scAiSend{width:34px;height:34px;border-radius:9px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-size:1rem;cursor:pointer;flex-shrink:0;}' +
+      '#_scAiSend{width:34px;height:34px;border-radius:9px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-size:1rem;cursor:pointer;flex-shrink:0;}' +
       // Flashcard styles
       '#_scFCPanel .scfc-hdr{background:linear-gradient(135deg,#e65100,#f57c00);}' +
       '.scfc-bar{height:4px;background:var(--bg2,#d4eaf7);flex-shrink:0;}' +
       '.scfc-fill{height:100%;background:linear-gradient(90deg,#2e7d32,#43a047);transition:width 0.35s;}' +
       '.scfc-card{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:18px;text-align:center;cursor:pointer;user-select:none;}' +
-      '.scfc-q{font-size:1rem;font-weight:800;color:var(--accent,#1565c0);line-height:1.5;}' +
+      '.scfc-q{font-size:1rem;font-weight:800;color:var(--accent,var(--accent));line-height:1.5;}' +
       '.scfc-a{font-size:0.85rem;color:var(--text,#0d1b2a);margin-top:10px;padding-top:10px;border-top:2px dashed rgba(0,0,0,0.1);line-height:1.55;}' +
       '.scfc-btns{display:flex;gap:8px;padding:10px;flex-shrink:0;}' +
       '.scfc-btn-wrong{flex:1;padding:11px;border-radius:11px;border:none;background:rgba(198,40,40,0.1);color:#c62828;font-weight:800;font-size:0.8rem;cursor:pointer;}' +
@@ -28826,7 +29104,7 @@ function _scBuildAiPanel() {
   // AI Chat panel
   var p = document.createElement('div'); p.id = '_scAiPanel';
   p.innerHTML =
-    '<div class="_scAiHdr" style="background:linear-gradient(135deg,#1565c0,#6a1b9a);">' +
+    '<div class="_scAiHdr" style="background:linear-gradient(135deg,var(--accent),#6a1b9a);">' +
     '<span>🤖 Canvas AI Assistant</span>' +
     '<button onclick="scCloseAiChat()">✕</button></div>' +
     '<div id="_scAiMsgs"></div>' +
@@ -28865,7 +29143,7 @@ function _scBuildAiPanel() {
   var qz = document.createElement('div'); qz.id = '_scQzPanel';
   qz.innerHTML =
     '<div class="_scQzHdr">' +
-    '<span style="flex:1;font-size:0.85rem;font-weight:800;color:var(--accent,#1565c0);">❓ Canvas Quiz</span>' +
+    '<span style="flex:1;font-size:0.85rem;font-weight:800;color:var(--accent,var(--accent));">❓ Canvas Quiz</span>' +
     '<button onclick="scCloseQz()" style="background:rgba(198,40,40,0.1);border:1px solid rgba(198,40,40,0.25);color:#c62828;border-radius:7px;padding:3px 9px;cursor:pointer;font-size:0.72rem;font-weight:700;">✕ Band</button>' +
     '</div>' +
     '<div id="_scQzBody"></div>';
@@ -29094,11 +29372,11 @@ function _scQzRender() {
     var emoji = pct>=80?'🏆':pct>=60?'👍':'💪';
     body.innerHTML =
       '<div style="text-align:center;padding:20px;">' +
-      '<div style="font-size:2.6rem;font-weight:800;color:var(--accent,#1565c0);">'+pct+'%</div>' +
+      '<div style="font-size:2.6rem;font-weight:800;color:var(--accent,var(--accent));">'+pct+'%</div>' +
       '<div style="font-size:1.6rem;margin:6px 0;">'+emoji+'</div>' +
       '<div style="font-size:0.84rem;color:var(--text2,#37526d);margin-bottom:14px;">'+_scQzScore+' / '+_scQzQs.length+' sahi</div>' +
       (pct<70?'<div style="font-size:0.76rem;color:#e65100;margin-bottom:12px;">💡 Flashcards se practice karo — weak areas par focus karo!</div>':'') +
-      '<button onclick="scAiStartQuiz()" style="padding:10px 22px;border-radius:11px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-weight:800;font-size:0.8rem;cursor:pointer;">🔄 Phir Khelo</button>' +
+      '<button onclick="scAiStartQuiz()" style="padding:10px 22px;border-radius:11px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-weight:800;font-size:0.8rem;cursor:pointer;">🔄 Phir Khelo</button>' +
       '</div>';
     return;
   }
@@ -29106,16 +29384,16 @@ function _scQzRender() {
   var pct = Math.round((_scQzCur/_scQzQs.length)*100);
   body.innerHTML =
     '<div style="height:4px;background:var(--bg2,#d4eaf7);border-radius:4px;margin-bottom:12px;">' +
-    '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,#1565c0,#42a5f5);border-radius:4px;transition:width 0.35s;"></div></div>' +
+    '<div style="height:100%;width:'+pct+'%;background:linear-gradient(90deg,var(--accent),#66bb6a);border-radius:4px;transition:width 0.35s;"></div></div>' +
     '<div style="font-size:0.7rem;color:var(--text2);margin-bottom:8px;font-weight:700;">Q '+(_scQzCur+1)+' / '+_scQzQs.length+' &nbsp;|&nbsp; Score: '+_scQzScore+'</div>' +
     '<div style="font-size:0.87rem;font-weight:800;color:var(--text,#0d1b2a);line-height:1.5;margin-bottom:13px;">'+_escHtml(q.q)+'</div>' +
     (q.opts||[]).map(function(opt,i) {
       return '<button class="_scQzOpt" id="_scQzO'+i+'" onclick="scQzAns('+i+')">' +
-        '<span style="color:var(--accent,#1565c0);font-weight:900;margin-right:7px;">'+'ABCD'[i]+'.</span>'+_escHtml(opt)+'</button>';
+        '<span style="color:var(--accent,var(--accent));font-weight:900;margin-right:7px;">'+'ABCD'[i]+'.</span>'+_escHtml(opt)+'</button>';
     }).join('') +
     '<div id="_scQzExp" style="display:none;margin-top:10px;padding:9px;border-radius:8px;font-size:0.74rem;line-height:1.5;"></div>' +
     '<div id="_scQzNext" style="display:none;text-align:right;margin-top:10px;">' +
-    '<button onclick="scQzNext()" style="padding:9px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-weight:800;font-size:0.78rem;cursor:pointer;">'+
+    '<button onclick="scQzNext()" style="padding:9px 20px;border-radius:10px;border:none;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;font-weight:800;font-size:0.78rem;cursor:pointer;">'+
     (_scQzCur+1>=_scQzQs.length ? '✅ Results' : 'Agla ➤')+'</button></div>';
 }
 
@@ -29223,7 +29501,7 @@ body.night-mode ._anp-handle { background: rgba(255,255,255,0.15); }
 }
 ._anp-title {
   flex: 1; font-size: 0.88rem; font-weight: 800;
-  color: var(--accent, #1565c0);
+  color: var(--accent, var(--accent));
 }
 ._anp-close {
   background: rgba(198,40,40,0.1); border: none; border-radius: 8px;
@@ -29284,7 +29562,7 @@ body.night-mode ._anp-node-detail { color: #8b949e; }
 
 /* Edit inline */
 ._anp-node-text[contenteditable="true"] {
-  outline: none; border-bottom: 1.5px solid var(--accent, #1565c0);
+  outline: none; border-bottom: 1.5px solid var(--accent, var(--accent));
   cursor: text;
 }
 
@@ -29305,8 +29583,8 @@ body.night-mode ._anp-node-detail { color: #8b949e; }
   transition: all 0.15s;
 }
 ._anp-btn-notes {
-  background: linear-gradient(135deg,#1565c0,#1976d2); color: #fff;
-  box-shadow: 0 3px 10px rgba(21,101,192,0.3);
+  background: linear-gradient(135deg,var(--accent),var(--accent3)); color: #fff;
+  box-shadow: 0 3px 10px rgba(27,94,32,0.3);
 }
 ._anp-btn-canvas {
   background: linear-gradient(135deg,#e65100,#f57c00); color: #fff;
@@ -29328,14 +29606,14 @@ body.night-mode ._anp-node-detail { color: #8b949e; }
 }
 ._anp-spinner {
   display: inline-block; width: 22px; height: 22px;
-  border: 2.5px solid rgba(21,101,192,0.2);
-  border-top-color: #1565c0; border-radius: 50%;
+  border: 2.5px solid rgba(27,94,32,0.2);
+  border-top-color: var(--accent); border-radius: 50%;
   animation: _anpSpin 0.7s linear infinite; margin-bottom: 8px;
 }
 @keyframes _anpSpin { to { transform: rotate(360deg); } }
 
 /* Node type color map */
-._anp-type-fact    { background: #1565c0; }
+._anp-type-fact    { background: var(--accent); }
 ._anp-type-def     { background: #6a1b9a; }
 ._anp-type-date    { background: #c62828; }
 ._anp-type-tip     { background: #2e7d32; }
@@ -29344,7 +29622,7 @@ body.night-mode ._anp-node-detail { color: #8b949e; }
 ._anp-type-term    { background: #37474f; }
 
 /* Drag-over highlight on notes editor + canvas */
-.ne-node-drop-ready { outline: 3px dashed rgba(21,101,192,0.5) !important; }
+.ne-node-drop-ready { outline: 3px dashed rgba(27,94,32,0.5) !important; }
 .sc-node-drop-ready { outline: 3px dashed rgba(230,81,0,0.5) !important; }
 
 /* Node pill in notes editor */
@@ -29380,7 +29658,7 @@ var _anDragIdx = null;
 
 // ── Type config (color + label) ──
 var _anTypes = {
-  fact:    { color:'#1565c0', label:'📌 Key Fact' },
+  fact:    { color:'var(--accent)', label:'📌 Key Fact' },
   def:     { color:'#6a1b9a', label:'📖 Definition' },
   date:    { color:'#c62828', label:'📅 Date/Year' },
   tip:     { color:'#2e7d32', label:'💡 Tip' },
@@ -29651,7 +29929,7 @@ function _anShowJSON() {
   overlay.innerHTML =
     '<div style="background:var(--surface,#fff);border-radius:16px;width:100%;max-width:520px;max-height:70vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.3);">' +
       '<div style="padding:12px 16px;border-bottom:1px solid var(--border,#e0e0e0);display:flex;align-items:center;justify-content:space-between;">' +
-        '<span style="font-weight:800;font-size:0.88rem;color:var(--accent,#1565c0);">{ } JSON Nodes</span>' +
+        '<span style="font-weight:800;font-size:0.88rem;color:var(--accent,var(--accent));">{ } JSON Nodes</span>' +
         '<div style="display:flex;gap:7px;">' +
           '<button onclick="navigator.clipboard.writeText(this.closest(\'div\').parentNode.querySelector(\'textarea\').value).then(()=>showToast&&showToast(\'✅ Copied!\',\'success\'))" style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);font-size:0.74rem;font-weight:700;cursor:pointer;font-family:inherit;">Copy</button>' +
           '<button onclick="this.closest(\'div\').parentNode.parentNode.remove()" style="padding:5px 10px;border-radius:8px;border:none;background:rgba(198,40,40,0.1);color:#c62828;font-size:0.74rem;font-weight:700;cursor:pointer;font-family:inherit;">✕</button>' +
@@ -29742,14 +30020,14 @@ document.addEventListener('DOMContentLoaded', function() {
 .snm-trigger-btn {
   display:inline-flex;align-items:center;gap:5px;
   padding:7px 12px;border-radius:10px;
-  border:1.5px solid rgba(21,101,192,0.3);
-  background:linear-gradient(135deg,rgba(21,101,192,0.08),rgba(106,27,154,0.08));
-  color:var(--accent,#1565c0);font-size:0.75rem;font-weight:800;
+  border:1.5px solid rgba(27,94,32,0.3);
+  background:linear-gradient(135deg,rgba(27,94,32,0.08),rgba(106,27,154,0.08));
+  color:var(--accent,var(--accent));font-size:0.75rem;font-weight:800;
   cursor:pointer;font-family:inherit;
   -webkit-tap-highlight-color:transparent;
   transition:all 0.15s;
 }
-.snm-trigger-btn:hover{background:linear-gradient(135deg,rgba(21,101,192,0.15),rgba(106,27,154,0.15));}
+.snm-trigger-btn:hover{background:linear-gradient(135deg,rgba(27,94,32,0.15),rgba(106,27,154,0.15));}
 
 /* Full-screen panel */
 #_snmPanel {
@@ -29765,7 +30043,7 @@ body.night-mode #_snmPanel{background:#0f1117;}
 ._snm-hdr{
   display:flex;align-items:center;gap:8px;
   padding:10px 14px;flex-shrink:0;
-  background:linear-gradient(135deg,#1565c0,#6a1b9a);
+  background:linear-gradient(135deg,var(--accent),#6a1b9a);
   color:#fff;
 }
 ._snm-hdr-title{flex:1;font-size:0.9rem;font-weight:800;}
@@ -29803,10 +30081,10 @@ body.night-mode ._snm-status{background:#161b22;border-color:#30363d;}
   background:var(--surface,#fff);
   border:1.5px solid var(--border,#bdd5ea);
   border-radius:16px;overflow:hidden;
-  box-shadow:0 2px 10px rgba(21,101,192,0.07);
+  box-shadow:0 2px 10px rgba(27,94,32,0.07);
 }
 body.night-mode ._snm-map-card{background:#1c2128;border-color:#30363d;}
-._snm-map-card.selected{border-color:#1565c0;box-shadow:0 2px 14px rgba(21,101,192,0.2);}
+._snm-map-card.selected{border-color:var(--accent);box-shadow:0 2px 14px rgba(27,94,32,0.2);}
 
 ._snm-map-hdr{
   display:flex;align-items:center;gap:8px;
@@ -29826,7 +30104,7 @@ body.night-mode ._snm-map-label{color:#e6edf3;}
   font-size:0.7rem;flex-shrink:0;
   transition:all 0.12s;
 }
-._snm-map-sel-chk.checked{background:#1565c0;border-color:#1565c0;color:#fff;}
+._snm-map-sel-chk.checked{background:var(--accent);border-color:var(--accent);color:#fff;}
 body.night-mode ._snm-map-sel-chk{background:#21262d;border-color:#444;}
 
 /* Nodes canvas area */
@@ -29874,8 +30152,8 @@ body.night-mode ._snm-node{background:#21262d;border-color:#444;color:#e6edf3;}
 
 /* Edit node inline */
 ._snm-node[contenteditable="true"]{
-  outline:none;border-color:var(--accent,#1565c0);
-  box-shadow:0 0 0 2px rgba(21,101,192,0.2);
+  outline:none;border-color:var(--accent,var(--accent));
+  box-shadow:0 0 0 2px rgba(27,94,32,0.2);
   cursor:text;
 }
 
@@ -29899,7 +30177,7 @@ body.night-mode ._snm-bottom{background:#1c2128;border-color:#30363d;}
   transition:all 0.15s;
 }
 ._snm-btn-canvas{background:linear-gradient(135deg,#e65100,#f57c00);color:#fff;box-shadow:0 3px 10px rgba(230,81,0,0.25);}
-._snm-btn-notes{background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;box-shadow:0 3px 10px rgba(21,101,192,0.25);}
+._snm-btn-notes{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;box-shadow:0 3px 10px rgba(27,94,32,0.25);}
 ._snm-btn-overview{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;box-shadow:0 3px 10px rgba(46,125,50,0.25);}
 ._snm-btn-sm{
   flex:none;padding:8px 11px;border-radius:10px;
@@ -29907,14 +30185,14 @@ body.night-mode ._snm-bottom{background:#1c2128;border-color:#30363d;}
   color:var(--text2);font-size:0.7rem;font-weight:700;cursor:pointer;
   font-family:inherit;-webkit-tap-highlight-color:transparent;
 }
-._snm-btn-sm:hover{border-color:var(--accent,#1565c0);color:var(--accent,#1565c0);}
+._snm-btn-sm:hover{border-color:var(--accent,var(--accent));color:var(--accent,var(--accent));}
 
 /* Select-all bar */
 ._snm-sel-bar{
   display:flex;align-items:center;gap:6px;width:100%;
   padding:0 2px;font-size:0.72rem;color:var(--text2);
 }
-._snm-sel-count{font-weight:800;color:var(--accent,#1565c0);}
+._snm-sel-count{font-weight:800;color:var(--accent,var(--accent));}
 
 /* Loading spinner */
 ._snm-loading{
@@ -29924,8 +30202,8 @@ body.night-mode ._snm-bottom{background:#1c2128;border-color:#30363d;}
 }
 ._snm-spinner{
   width:32px;height:32px;border-radius:50%;
-  border:3px solid rgba(21,101,192,0.15);
-  border-top-color:#1565c0;
+  border:3px solid rgba(27,94,32,0.15);
+  border-top-color:var(--accent);
   animation:_snmSpin 0.7s linear infinite;
 }
 @keyframes _snmSpin{to{transform:rotate(360deg);}}
@@ -29974,7 +30252,7 @@ var _snm = {
 
 /* ── Type config ── */
 var _snmTypeColor = {
-  main:'#1565c0', place:'#e65100', date:'#c62828',
+  main:'var(--accent)', place:'#e65100', date:'#c62828',
   person:'#6a1b9a', term:'#2e7d32', fact:'#00695c',
   formula:'#37474f', event:'#0277bd'
 };
@@ -30137,7 +30415,7 @@ async function _snmGenerate(tid, sid, secid, topicName) {
         id: map.id || _snmId(),
         icon: map.icon || '🗂️',
         title: map.title || 'Section',
-        color: map.color || '#1565c0',
+        color: map.color || 'var(--accent)',
         nodes: (map.nodes||[]).map(function(n){
           return { id:n.id||_snmId(), x:n.x||50, y:n.y||50, text:n.text||'Node', type:n.type||'fact' };
         }),
@@ -30631,7 +30909,7 @@ function _snmShowJSON() {
   overlay.innerHTML =
     '<div class="_snm-json-box">' +
       '<div class="_snm-json-hdr">' +
-        '<span style="font-weight:800;font-size:0.86rem;color:var(--accent,#1565c0);">{ } Node Map JSON</span>' +
+        '<span style="font-weight:800;font-size:0.86rem;color:var(--accent,var(--accent));">{ } Node Map JSON</span>' +
         '<div style="display:flex;gap:6px;">' +
           '<button onclick="navigator.clipboard.writeText(this.closest(\'._snm-json-box\').querySelector(\'._snm-json-ta\').value).then(()=>{showToast&&showToast(\'✅ Copied!\',\'success\')})" ' +
           'style="padding:5px 12px;border-radius:8px;border:1.5px solid var(--accent);background:transparent;color:var(--accent);font-size:0.72rem;font-weight:700;cursor:pointer;font-family:inherit;">📋 Copy</button>' +
@@ -30717,7 +30995,7 @@ function _snmAddChatButton(tid, sid, secid, topicName) {
       var nowOpen2 = panel && panel.classList.contains('sc-open');
       tab.style.background = nowOpen2
         ? 'linear-gradient(180deg,#c62828,#e65100)'
-        : 'linear-gradient(180deg,#e65100,#1565c0)';
+        : 'linear-gradient(180deg,#e65100,var(--accent))';
       tab.querySelector('span:last-child').textContent = nowOpen2 ? 'बंद' : 'C·S';
     }
   }
@@ -30747,7 +31025,7 @@ function _snmAddChatButton(tid, sid, secid, topicName) {
         var tab2 = document.getElementById('_aiCanvasTab');
         if(tab2) {
           tab2.classList.remove('visible');
-          tab2.style.background = 'linear-gradient(180deg,#e65100,#1565c0)';
+          tab2.style.background = 'linear-gradient(180deg,#e65100,var(--accent))';
         }
       }
     }).observe(overlay, {attributes:true, attributeFilter:['class']});
@@ -30818,7 +31096,7 @@ function _snmAddChatButton(tid, sid, secid, topicName) {
       'top:'+(rect.top-38)+'px;'+
       'left:'+(rect.left + rect.width/2)+'px;'+
       'transform:translateX(-50%);'+
-      'background:linear-gradient(135deg,#1565c0,#6a1b9a);'+
+      'background:linear-gradient(135deg,var(--accent),#6a1b9a);'+
       'color:#fff;border-radius:10px;padding:5px 12px;'+
       'font-size:0.72rem;font-weight:800;cursor:pointer;'+
       'box-shadow:0 4px 16px rgba(0,0,0,0.25);'+
@@ -31278,8 +31556,8 @@ body.night-mode #_fabMasterToggle.fabs-hidden {
   transition: border-color 0.15s, background 0.15s;
 }
 .ai-msg.bot[draggable="true"]:hover {
-  border-left-color: rgba(21,101,192,0.5);
-  background: rgba(21,101,192,0.04) !important;
+  border-left-color: rgba(27,94,32,0.5);
+  background: rgba(27,94,32,0.04) !important;
 }
 .ai-msg.bot[draggable="true"]:active { cursor: grabbing; }
 
@@ -31294,8 +31572,8 @@ body.night-mode #_fabMasterToggle.fabs-hidden {
   margin-top: 4px;
   padding: 1px 6px;
   border-radius: 6px;
-  background: rgba(21,101,192,0.06);
-  border: 1px solid rgba(21,101,192,0.12);
+  background: rgba(27,94,32,0.06);
+  border: 1px solid rgba(27,94,32,0.12);
   cursor: grab;
   -webkit-user-select: none;
   user-select: none;
@@ -31318,7 +31596,7 @@ body.night-mode #_fabMasterToggle.fabs-hidden {
 
 /* HL Btn float — already defined above, but ensure animation */
 @keyframes _hlBtnPulse {
-  0%,100% { box-shadow: 0 2px 10px rgba(21,101,192,0.3), 0 0 0 0 rgba(106,27,154,0.2); }
+  0%,100% { box-shadow: 0 2px 10px rgba(27,94,32,0.3), 0 0 0 0 rgba(106,27,154,0.2); }
   50%      { box-shadow: 0 2px 18px rgba(106,27,154,0.55), 0 0 0 6px rgba(106,27,154,0); }
 }
 </style>
@@ -31447,7 +31725,7 @@ body.night-mode #_fabMasterToggle.fabs-hidden {
   transition: all 0.18s;
   backdrop-filter: blur(4px);
 }
-.sc-swipe-peek.left-peek  { left: 2%;  border-color: #1565c0; }
+.sc-swipe-peek.left-peek  { left: 2%;  border-color: var(--accent); }
 .sc-swipe-peek.right-peek { right: 2%; border-color: #e65100; }
 .sc-swipe-peek.highlighted { transform: scale(1.04); box-shadow: 0 6px 28px rgba(106,27,154,0.4); }
 .sc-swipe-peek.new-slide { border-style: dashed; border-color: #2e7d32; }
@@ -31847,7 +32125,7 @@ function _shShowMoveTypeMenu(cx, cy, itemType) {
   // Option 1: Existing slide (drag)
   var existBtn = document.createElement('button');
   existBtn.textContent = '📋 Existing slide par → drag left/right';
-  existBtn.style.cssText = 'display:block;width:100%;padding:10px 16px;background:none;border:none;text-align:left;font-size:0.78rem;font-weight:700;cursor:pointer;color:#1565c0;-webkit-tap-highlight-color:transparent;';
+  existBtn.style.cssText = 'display:block;width:100%;padding:10px 16px;background:none;border:none;text-align:left;font-size:0.78rem;font-weight:700;cursor:pointer;color:var(--accent);-webkit-tap-highlight-color:transparent;';
   existBtn.onclick = function() {
     menu.remove();
     _sh.newSlideMode = false;
@@ -32277,7 +32555,7 @@ window.scToggleReadMode = function scToggleReadMode() {
     if(tbBar)    { tbBar.style.display='none'; }
     if(ghostBtn) { ghostBtn.style.display='flex'; }
     if(miniBar)  { miniBar.style.display='flex'; }
-    if(readBtn)  { readBtn.style.background='rgba(21,101,192,0.18)'; readBtn.style.borderColor='rgba(21,101,192,0.6)'; readBtn.textContent='✏️ Edit'; }
+    if(readBtn)  { readBtn.style.background='rgba(21,101,192,0.18)'; readBtn.style.borderColor='rgba(27,94,32,0.6)'; readBtn.textContent='✏️ Edit'; }
     if(canvasWrap) canvasWrap.setAttribute('data-read-mode','1');
     // Auto-switch to Select mode so taps don't create/edit blocks
     var selTab = document.querySelector('.sc-mode-tab[data-mode="select"]');
@@ -32306,7 +32584,7 @@ window.scExitFullRead = function scExitFullRead() {
   if(tbBar)    { tbBar.style.display='flex'; }
   if(ghostBtn) { ghostBtn.style.display='none'; }
   if(miniBar)  { miniBar.style.display='none'; }
-  if(readBtn)  { readBtn.style.background='rgba(21,101,192,0.06)'; readBtn.style.borderColor='rgba(21,101,192,0.3)'; readBtn.textContent='👁️ Read'; }
+  if(readBtn)  { readBtn.style.background='rgba(27,94,32,0.06)'; readBtn.style.borderColor='rgba(27,94,32,0.3)'; readBtn.textContent='👁️ Read'; }
   if(canvasWrap) canvasWrap.removeAttribute('data-read-mode');
   // Restore header buttons
   ['scHdrUndo','scHdrRedo','scExportWrap','scHdrHelp'].forEach(function(id){
