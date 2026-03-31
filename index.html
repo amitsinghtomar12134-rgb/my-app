@@ -358,6 +358,7 @@ body{
 .page{display:none;}
 .page.active{display:block;animation:fadeIn 0.25s ease;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* PAGE HEADER */
 .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
@@ -885,6 +886,39 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 /* Floating text-copy button */
 #browseFloatingCopy{position:fixed;display:none;z-index:9000;background:var(--accent);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:0.8rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-family:inherit;white-space:nowrap;}
 #browseFloatingCopy.show{display:block;animation:fadeIn 0.15s ease;}
+/* ── Live Quiz ── */
+.lq-tab{padding:7px 14px;border-radius:20px;font-size:0.76rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--text2);transition:all 0.15s;font-family:inherit;}
+.lq-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);}
+.lq-quiz-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:13px 15px;margin-bottom:10px;}
+.lq-quiz-title{font-weight:800;font-size:0.88rem;color:var(--text);margin-bottom:4px;}
+.lq-quiz-meta{font-size:0.72rem;color:var(--text2);margin-bottom:8px;}
+.lq-rank-row{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:var(--surface2);}
+.lq-rank-medal{font-size:1.1rem;width:28px;text-align:center;flex-shrink:0;}
+.lq-rank-name{font-weight:700;font-size:0.82rem;flex:1;}
+.lq-rank-score{font-size:0.8rem;font-weight:800;color:var(--accent);}
+.lq-option{display:block;width:100%;padding:11px 14px;margin-bottom:8px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);text-align:left;cursor:pointer;font-size:0.84rem;color:var(--text);transition:all 0.15s;font-family:inherit;}
+.lq-option:hover{border-color:var(--accent);background:rgba(21,101,192,0.04);}
+.lq-option.selected{border-color:var(--accent);background:rgba(21,101,192,0.1);color:var(--accent);font-weight:700;}
+.lq-option.correct{border-color:var(--green);background:rgba(46,125,50,0.1);color:var(--green);font-weight:700;}
+.lq-option.wrong{border-color:var(--red);background:rgba(198,40,40,0.08);color:var(--red);}
+/* ── Group Chat ── */
+.gc-thread-card{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:9px;cursor:pointer;transition:all 0.15s;}
+.gc-thread-card:hover{border-color:var(--accent);background:rgba(21,101,192,0.03);}
+.gc-thread-title{font-weight:800;font-size:0.88rem;color:var(--text);margin-bottom:3px;}
+.gc-thread-meta{font-size:0.7rem;color:var(--text2);}
+.gc-thread-last{font-size:0.75rem;color:var(--text2);margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.gc-msg{display:flex;gap:9px;margin-bottom:12px;align-items:flex-start;}
+.gc-msg.mine{flex-direction:row-reverse;}
+.gc-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;flex-shrink:0;}
+.gc-bubble{max-width:78%;padding:9px 12px;border-radius:12px;font-size:0.82rem;line-height:1.55;word-break:break-word;}
+.gc-bubble.theirs{background:var(--surface2);border:1px solid var(--border);border-radius:4px 12px 12px 12px;color:var(--text);}
+.gc-bubble.mine{background:var(--accent);color:#fff;border-radius:12px 4px 12px 12px;}
+.gc-bubble-name{font-size:0.65rem;font-weight:700;margin-bottom:3px;opacity:0.75;}
+.gc-bubble-time{font-size:0.6rem;opacity:0.6;margin-top:3px;text-align:right;}
+.gc-input-bar{display:flex;gap:8px;padding:10px 14px;border-top:1.5px solid var(--border);background:var(--surface);flex-shrink:0;}
+.gc-input{flex:1;padding:9px 12px;border:1.5px solid var(--border);border-radius:20px;font-size:0.84rem;outline:none;background:var(--bg);color:var(--text);font-family:inherit;}
+.gc-input:focus{border-color:var(--accent);}
+.gc-send-btn{width:40px;height:40px;border-radius:50%;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .sync-dot.synced{background:var(--green);}
 .sync-dot.syncing{background:var(--accent2);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
@@ -4030,6 +4064,16 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <span class="sb-icon">👥</span>
       <span class="sb-label">Sabke Notes</span>
     </div>
+    <div class="nav-item" onclick="showPage('livequiz',this)" data-page="livequiz">
+      <span class="sb-icon">⚡</span>
+      <span class="sb-label">Live Quiz</span>
+      <span class="nav-badge red" id="liveQuizBadge" style="display:none;">LIVE</span>
+    </div>
+    <div class="nav-item" onclick="showPage('groupchat',this)" data-page="groupchat">
+      <span class="sb-icon">💬</span>
+      <span class="sb-label">Group Chat</span>
+      <span class="nav-badge" id="gchatBadge" style="display:none;">0</span>
+    </div>
     <div class="nav-item" onclick="showPage('settings',this)" data-page="settings">
       <span class="sb-icon">⚙️</span>
       <span class="sb-label">Settings</span>
@@ -4706,6 +4750,136 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
 
     </div><!-- /page-browse -->
 
+    <!-- ══════════════════════════════════════ -->
+    <!-- LIVE QUIZ PAGE                          -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="page-livequiz" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">⚡ Live Quiz</div>
+          <div class="page-subtitle" id="lqSubtitle">Upcoming aur past quizzes</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-outline btn-sm" onclick="lqLoadPage()">🔄</button>
+          <button class="btn btn-primary btn-sm" id="lqScheduleBtn" style="display:none;" onclick="lqOpenSchedule()">➕ Schedule</button>
+        </div>
+      </div>
+
+      <!-- Live Now Banner (shown when quiz is active) -->
+      <div id="lqLiveBanner" style="display:none;background:linear-gradient(135deg,#c62828,#e53935);color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;text-align:center;">
+        <div style="font-size:1.1rem;font-weight:800;margin-bottom:4px;">🔴 LIVE QUIZ CHAL RAHA HAI!</div>
+        <div id="lqLiveName" style="font-size:0.85rem;margin-bottom:10px;"></div>
+        <button onclick="lqJoinActive()" style="background:#fff;color:#c62828;border:none;border-radius:20px;padding:9px 24px;font-weight:800;font-size:0.9rem;cursor:pointer;">▶ Abhi Do!</button>
+      </div>
+
+      <!-- Upcoming Quiz countdown -->
+      <div id="lqUpcomingBanner" style="display:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;border-radius:12px;padding:14px 16px;margin-bottom:14px;">
+        <div style="font-weight:800;font-size:0.9rem;margin-bottom:4px;">⏰ Aane Wali Quiz</div>
+        <div id="lqUpcomingName" style="font-size:0.82rem;margin-bottom:6px;"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div id="lqCountdown" style="font-size:1.2rem;font-weight:800;font-family:monospace;"></div>
+          <button id="lqAlarmBtn" onclick="lqToggleAlarm()" style="background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.5);color:#fff;border-radius:20px;padding:5px 14px;font-size:0.75rem;cursor:pointer;font-weight:700;">🔔 Alert ON</button>
+        </div>
+      </div>
+
+      <!-- Tabs: Upcoming / Past Results -->
+      <div style="display:flex;gap:8px;margin-bottom:14px;">
+        <button class="lq-tab active" id="lqTabUpcoming" onclick="lqSwitchTab('upcoming')">📅 Upcoming</button>
+        <button class="lq-tab" id="lqTabResults" onclick="lqSwitchTab('results')">📊 Results</button>
+        <button class="lq-tab" id="lqTabMine" onclick="lqSwitchTab('mine')">👤 Meri Attempts</button>
+      </div>
+
+      <!-- Tab content areas -->
+      <div id="lqTabContentUpcoming">
+        <div id="lqUpcomingList" style="color:var(--text2);font-size:0.84rem;">⏳ Loading...</div>
+      </div>
+      <div id="lqTabContentResults" style="display:none;">
+        <div id="lqResultsList" style="color:var(--text2);font-size:0.84rem;">⏳ Loading...</div>
+      </div>
+      <div id="lqTabContentMine" style="display:none;">
+        <div id="lqMineList" style="color:var(--text2);font-size:0.84rem;">⏳ Loading...</div>
+      </div>
+    </div><!-- /page-livequiz -->
+
+    <!-- LIVE QUIZ ATTEMPT OVERLAY -->
+    <div id="lqAttemptOverlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:900;flex-direction:column;">
+      <div style="padding:12px 16px;border-bottom:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+        <div>
+          <div id="lqAttemptTitle" style="font-weight:800;font-size:0.9rem;color:var(--accent);"></div>
+          <div id="lqAttemptTimer" style="font-size:0.75rem;color:var(--red);font-weight:700;font-family:monospace;"></div>
+        </div>
+        <div style="font-size:0.8rem;color:var(--text2);" id="lqAttemptProgress">Q 1/10</div>
+      </div>
+      <div id="lqAttemptBody" style="flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;"></div>
+      <div style="padding:12px 16px;border-top:1.5px solid var(--border);background:var(--surface);flex-shrink:0;display:flex;gap:8px;">
+        <button id="lqPrevBtn" onclick="lqNavQ(-1)" class="btn btn-outline btn-sm" style="flex:1;">‹ Prev</button>
+        <button id="lqNextBtn" onclick="lqNavQ(1)" class="btn btn-primary btn-sm" style="flex:2;">Next ›</button>
+        <button id="lqSubmitBtn" onclick="lqSubmitAttempt()" class="btn btn-green btn-sm" style="display:none;flex:2;">✅ Submit</button>
+      </div>
+    </div>
+
+    <!-- RESULTS VIEW OVERLAY -->
+    <div id="lqResultOverlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:901;flex-direction:column;">
+      <div style="padding:12px 16px;border-bottom:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <button onclick="lqCloseResult()" class="btn btn-outline btn-sm">‹ Wapas</button>
+        <div id="lqResultTitle" style="font-weight:800;font-size:0.9rem;flex:1;"></div>
+      </div>
+      <div id="lqResultBody" style="flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch;"></div>
+    </div>
+
+    <!-- SCHEDULE QUIZ MODAL (Admin only) -->
+    <div class="modal-overlay" id="lqScheduleModal">
+      <div class="modal" style="max-height:88vh;overflow-y:auto;">
+        <div class="modal-title">⚡ Quiz Schedule Karo</div>
+        <div class="field-group">
+          <label class="field-label">Quiz Title:</label>
+          <input type="text" class="inp" id="lqSTitle" placeholder="Jaise: Ancient History MCQ Test..." />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Date & Time:</label>
+          <input type="datetime-local" class="inp" id="lqSDateTime" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Duration (minutes):</label>
+          <input type="number" class="inp" id="lqSDuration" value="30" min="5" max="180" />
+        </div>
+        <div class="field-group">
+          <label class="field-label">Questions (JSON ya topic se AI se banao):</label>
+          <div style="display:flex;gap:6px;margin-bottom:8px;">
+            <select class="inp" id="lqSTopicSel" style="flex:1;font-size:0.78rem;"></select>
+            <button class="btn btn-primary btn-sm" onclick="lqGenQuestionsAI()">🤖 AI Generate</button>
+          </div>
+          <div id="lqAiGenStatus" style="font-size:0.75rem;color:var(--text2);margin-bottom:6px;"></div>
+          <textarea class="inp" id="lqSQuestions" rows="6" placeholder='[{"q":"Question?","opts":["A","B","C","D"],"ans":0,"exp":"Explanation"}]' style="font-size:0.75rem;font-family:monospace;"></textarea>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Message to Members (optional):</label>
+          <input type="text" class="inp" id="lqSMessage" placeholder="Aaj raat 8 bje sabhi aayein..." />
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline btn-sm" onclick="closeModal('lqScheduleModal')">Cancel</button>
+          <button class="btn btn-primary btn-sm" onclick="lqSaveSchedule()">✅ Schedule Karo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GROUP CHAT PAGE -->
+    <div id="page-groupchat" class="page">
+      <div class="page-header"><div><div class="page-title">💬 Group Chat</div><div class="page-subtitle">Topic-wise discussion sabke liye</div></div><button class="btn btn-primary btn-sm" onclick="gcOpenNewThread()">➕ New</button></div>
+      <div id="gcThreadList"><div style="text-align:center;padding:30px;color:var(--text2);">⏳ Loading...</div></div>
+    </div>
+    <!-- CHAT WINDOW OVERLAY -->
+    <div id="gcChatOverlay" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:850;flex-direction:column;">
+      <div style="padding:11px 14px;border-bottom:1.5px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <button onclick="gcCloseChat()" class="btn btn-outline btn-sm">‹</button>
+        <div style="flex:1;min-width:0;"><div id="gcChatTitle" style="font-weight:800;font-size:0.9rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div><div id="gcChatMeta" style="font-size:0.68rem;color:var(--text2);"></div></div>
+        <button id="gcDeleteThreadBtn" onclick="gcDeleteThread()" style="display:none;background:none;border:none;font-size:1rem;cursor:pointer;color:var(--red);">🗑</button>
+      </div>
+      <div id="gcMsgList" style="flex:1;overflow-y:auto;padding:14px 12px;-webkit-overflow-scrolling:touch;"></div>
+      <div class="gc-input-bar"><input class="gc-input" id="gcMsgInput" placeholder="Message likho..." onkeydown="if(event.key==='Enter'  </div><!-- /page-area -->  </div><!-- /page-area -->!event.shiftKey){event.preventDefault();gcSendMsg();}"/><button class="gc-send-btn" onclick="gcSendMsg()">➤</button></div>
+    </div>
+    <!-- NEW THREAD MODAL -->
+    <div class="modal-overlay" id="gcNewThreadModal"><div class="modal"><div class="modal-title">💬 Nayi Discussion Shuru Karo</div><div class="field-group"><label class="field-label">Topic / Title:</label><input type="text" class="inp" id="gcNewTitle" placeholder="Jaise: Mauryan Empire ke baare mein..."/></div><div class="field-group"><label class="field-label">Category (optional):</label><input type="text" class="inp" id="gcNewCategory" placeholder="History, Polity, Current Affairs..."/></div><div class="modal-actions"><button class="btn btn-outline btn-sm" onclick="closeModal('gcNewThreadModal')">Cancel</button><button class="btn btn-primary btn-sm" onclick="gcCreateThread()">✅ Create</button></div></div></div>
   </div><!-- /page-area -->
 </div><!-- /main-content -->
 </div><!-- /app-shell -->
@@ -6285,7 +6459,7 @@ function saveApiKey2(){
 function showApiStatus(m,t){document.getElementById('apiStatus').innerHTML=`<span style="font-size:0.76rem;padding:3px 9px;border-radius:20px;display:inline-block;background:${t==='saved'?'rgba(46,125,50,0.1)':'rgba(198,40,40,0.1)'};color:${t==='saved'?'var(--green)':'var(--red)'};">${m}</span>`;}
 
 // ==================== TABS ====================
-const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History','adminpanel':'👑 Admin Panel','browse':'👥 Sabke Notes'};
+const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History','adminpanel':'👑 Admin Panel','browse':'👥 Sabke Notes','livequiz':'⚡ Live Quiz','groupchat':'💬 Group Chat'};
 function showPage(p,el,_skipHistory){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
@@ -6310,6 +6484,12 @@ function showPage(p,el,_skipHistory){
   }
   if(p==='browse'){
     browseLoadMembers();
+  }
+  if(p==='livequiz'){
+    lqLoadPage();
+  }
+  if(p==='groupchat'){
+    gcLoadPage();
   }
   if(window.innerWidth<=768){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('show');}
   if(!_skipHistory){history.pushState({type:'page',page:p},'');}
@@ -12565,6 +12745,10 @@ async function choosePersonalMode(){
 let _browseCurrentMember = null; // {uid, name, subjects:[]}
 let _browseCurrentTopic  = null; // topic object being viewed
 let _browseSelectedText  = '';   // for floating copy button
+let _browseCache         = {};   // {uid: {subjects:[], loadedAt: timestamp}}
+let _browseCacheTTL      = 5 * 60 * 1000; // 5 minutes
+let _browseConfigCache   = null; // cached security config
+let _browseConfigLoadedAt = 0;
 
 async function chooseBrowseMode(){
   // Keep _appMode = 'personal' so sync still works
@@ -12577,22 +12761,33 @@ async function chooseBrowseMode(){
   showToast('Sabke Notes khul gaye! 👥', 'success');
 }
 
-// ── Load all approved members list ──
+// ── Load all approved members list (with cache) ──
 async function browseLoadMembers(){
   if(!_db || !_currentUser){ return; }
   const el = document.getElementById('browseMemberList');
   const sub = document.getElementById('browseSubtitle');
-  if(el) el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">⏳ Members load ho rahe hain...</div>';
+
+  // Show skeleton immediately
+  if(el) el.innerHTML = _browseSkeleton(3);
+
   try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
-      ()=> _db.collection('app_config').doc('security').get()
-    );
-    if(!cfgDoc.exists){ if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">Config nahi mila.</div>'; return; }
-    const cfg = cfgDoc.data();
+    // Use cached config if fresh (< 2 min)
+    let cfg;
+    const now = Date.now();
+    if(_browseConfigCache && (now - _browseConfigLoadedAt) < 120000){
+      cfg = _browseConfigCache;
+    } else {
+      const cfgDoc = await _db.collection('app_config').doc('security')
+        .get({source:'server'}).catch(()=> _db.collection('app_config').doc('security').get());
+      if(!cfgDoc.exists){ if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">Config nahi mila.</div>'; return; }
+      cfg = cfgDoc.data();
+      _browseConfigCache = cfg;
+      _browseConfigLoadedAt = now;
+    }
+
     const memberKeys = cfg.member_keys || {};
     const memberNames = cfg.member_names || {};
     const revokedUids = cfg.revoked_uids || [];
-    // All members who have keys (approved) + not revoked
     const uids = Object.keys(memberKeys).filter(uid => !revokedUids.includes(uid));
     if(sub) sub.textContent = uids.length + ' members available';
     if(!el) return;
@@ -12600,26 +12795,96 @@ async function browseLoadMembers(){
       el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2);">Abhi koi member nahi hai.</div>';
       return;
     }
+
     el.innerHTML = uids.map(uid => {
       const name = memberNames[uid] || 'Member';
       const isMe = uid === (_currentUser ? _currentUser.uid : '');
       const isAdmin = uid === OWNER_UID;
       const initials = name.substring(0,2).toUpperCase();
+      const cached = _browseCache[uid];
+      const isCached = cached && (Date.now() - cached.loadedAt) < _browseCacheTTL;
       return `<div class="browse-member-card" onclick="browseOpenMember('${uid}','${name.replace(/'/g,"\\'")}')">
         <div class="browse-member-avatar">${initials}</div>
         <div style="flex:1;min-width:0;">
           <div class="browse-member-name">${isAdmin?'👑 ':''}${name}${isMe?' (Tum)':''}</div>
-          <div class="browse-member-meta">${isAdmin ? 'Admin — Owner notes' : 'Member notes'} • Click to browse</div>
+          <div class="browse-member-meta">${isCached?'⚡ Ready':'📡 Click to load'} • ${isAdmin?'Admin notes':'Member notes'}</div>
         </div>
         <span style="font-size:1.2rem;color:var(--text2);">›</span>
       </div>`;
     }).join('');
+
+    // Background prefetch all members silently
+    _browsePrefetchAll(uids);
+
   }catch(e){
     if(el) el.innerHTML = '❌ Error: ' + e.message;
   }
 }
 
-// ── Open a specific member's library ──
+// ── Skeleton loader HTML ──
+function _browseSkeleton(n){
+  return Array(n).fill(0).map(()=>`
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;">
+      <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(90deg,var(--border) 25%,var(--surface2) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;flex-shrink:0;"></div>
+      <div style="flex:1;">
+        <div style="height:14px;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,var(--surface2) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;margin-bottom:7px;width:60%;"></div>
+        <div style="height:10px;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,var(--surface2) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.2s infinite;width:40%;"></div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Prefetch all members data in background ──
+async function _browsePrefetchAll(uids){
+  if(!_db) return;
+  for(const uid of uids){
+    const cached = _browseCache[uid];
+    if(cached && (Date.now() - cached.loadedAt) < _browseCacheTTL) continue;
+    // Load silently in background
+    _browseLoadMemberData(uid).catch(()=>{});
+    await new Promise(r => setTimeout(r, 300)); // stagger to avoid hammering
+  }
+}
+
+// ── Core: load one member's data (returns subjects[]) ──
+async function _browseLoadMemberData(uid){
+  const metaDoc = await _db.collection('users').doc(uid).get();
+  if(!metaDoc.exists) return [];
+  const meta = metaDoc.data();
+  const subjectIds = meta.subjectIds || [];
+  if(subjectIds.length === 0) return [];
+
+  // Parallel load shells + topics
+  const [shellDocs, topicSnapshot] = await Promise.all([
+    Promise.all(subjectIds.map(id =>
+      _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get()
+    )),
+    _db.collection('users').doc(uid).collection('topics').get()
+  ]);
+
+  const topicMap = {};
+  topicSnapshot.forEach(d => {
+    const td = d.data();
+    if(td && td.topic) topicMap[String(td.topic.id)] = td.topic;
+  });
+
+  const subjects = shellDocs.filter(d => d.exists).map(d => {
+    const shell = d.data().shell;
+    if(!shell) return null;
+    shell.sections = (shell.sectionMeta||[]).map(sm => {
+      sm.topics = (sm.topicIds||[]).map(tid => topicMap[String(tid)]).filter(Boolean);
+      delete sm.topicIds;
+      return sm;
+    });
+    delete shell.sectionMeta;
+    return shell;
+  }).filter(Boolean);
+
+  // Store in cache
+  _browseCache[uid] = { subjects, loadedAt: Date.now() };
+  return subjects;
+}
+
+// ── Open a specific member's library (cache-first = instant) ──
 async function browseOpenMember(uid, name){
   if(!_db){ showToast('Connection error!','error'); return; }
   const listArea = document.getElementById('browseMemberListArea');
@@ -12629,50 +12894,44 @@ async function browseOpenMember(uid, name){
   if(nameEl) nameEl.textContent = name + ' ke Notes';
   if(listArea) listArea.style.display = 'none';
   if(contentArea) contentArea.style.display = 'block';
-  if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">⏳ Notes load ho rahe hain...</div>';
   _browseCurrentMember = {uid, name, subjects:[]};
-  try{
-    // Load subject shells
-    const metaDoc = await _db.collection('users').doc(uid).get();
-    if(!metaDoc.exists){
-      if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Is member ke abhi koi notes nahi hain.</div>';
-      return;
+
+  // Check cache first
+  const cached = _browseCache[uid];
+  const isFresh = cached && (Date.now() - cached.loadedAt) < _browseCacheTTL;
+
+  if(isFresh){
+    // Instant render from cache ⚡
+    _browseCurrentMember.subjects = cached.subjects;
+    browseRenderTree(cached.subjects, uid, name, treeEl);
+    // Silently refresh cache in background
+    _browseLoadMemberData(uid).then(()=>{}).catch(()=>{});
+  } else {
+    // Show skeleton while loading
+    if(treeEl) treeEl.innerHTML = _browseTreeSkeleton();
+    try{
+      const subjects = await _browseLoadMemberData(uid);
+      _browseCurrentMember.subjects = subjects;
+      browseRenderTree(subjects, uid, name, treeEl);
+    }catch(e){
+      if(treeEl) treeEl.innerHTML = '❌ Error loading: ' + e.message;
     }
-    const meta = metaDoc.data();
-    const subjectIds = meta.subjectIds || [];
-    if(subjectIds.length === 0){
-      if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Is member ke abhi koi notes nahi hain.</div>';
-      return;
-    }
-    // Load all subject shells
-    const shellDocs = await Promise.all(
-      subjectIds.map(id => _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get())
-    );
-    // Load all topics
-    const topicDocs = await _db.collection('users').doc(uid).collection('topics').get();
-    const topicMap = {};
-    topicDocs.forEach(d => {
-      const td = d.data();
-      if(td && td.topic) topicMap[String(td.topic.id)] = td.topic;
-    });
-    // Reassemble subjects
-    const subjects = shellDocs.filter(d => d.exists).map(d => {
-      const shell = d.data().shell;
-      if(!shell) return null;
-      shell.sections = (shell.sectionMeta||[]).map(sm => {
-        sm.topics = (sm.topicIds||[]).map(tid => topicMap[String(tid)]).filter(Boolean);
-        delete sm.topicIds;
-        return sm;
-      });
-      delete shell.sectionMeta;
-      return shell;
-    }).filter(Boolean);
-    _browseCurrentMember.subjects = subjects;
-    browseRenderTree(subjects, uid, name, treeEl);
-  }catch(e){
-    if(treeEl) treeEl.innerHTML = '❌ Error loading: ' + e.message;
-    showToast('Load error: '+e.message,'error');
   }
+}
+
+// ── Tree skeleton ──
+function _browseTreeSkeleton(){
+  return Array(3).fill(0).map(()=>`
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;">
+      <div style="padding:12px 14px;background:var(--surface2);">
+        <div style="height:13px;width:50%;border-radius:6px;background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200%;animation:shimmer 1.2s infinite;"></div>
+      </div>
+      ${Array(2).fill(0).map(()=>`
+        <div style="padding:10px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;">
+          <div style="height:11px;width:55%;border-radius:5px;background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200%;animation:shimmer 1.2s infinite;"></div>
+          <div style="height:22px;width:60px;border-radius:10px;background:linear-gradient(90deg,var(--border) 25%,var(--surface) 50%,var(--border) 75%);background-size:200%;animation:shimmer 1.2s infinite;"></div>
+        </div>`).join('')}
+    </div>`).join('');
 }
 
 // ── Render library tree for a member ──
@@ -12904,6 +13163,731 @@ function browseFloatingCopyAction(){
   browseCopyText(_browseSelectedText, 'Selected text');
   browseHideFloatingCopy();
   window.getSelection()?.removeAllRanges();
+}
+
+// ══════════════════════════════════════════════════════
+// PHASE 3 — LIVE QUIZ SYSTEM
+// ══════════════════════════════════════════════════════
+
+let _lqCurrentTab     = 'upcoming';
+let _lqActiveQuiz     = null;   // currently live quiz object
+let _lqUpcomingQuiz   = null;   // next scheduled quiz
+let _lqCountdownTimer = null;   // interval for countdown
+let _lqAttemptData    = null;   // {quiz, answers:[], currentQ:0, startTime, isReAttempt}
+let _lqAlarmEnabled   = true;   // user alarm preference
+let _lqAttemptTimer   = null;   // quiz timer interval
+let _lqAllQuizzes     = [];     // cached quiz list
+
+// ── Load Live Quiz page ──
+async function lqLoadPage(){
+  if(!_db || !_currentUser) return;
+  // Show admin schedule button
+  const schedBtn = document.getElementById('lqScheduleBtn');
+  if(schedBtn) schedBtn.style.display = (_currentUser.uid === OWNER_UID) ? 'inline-flex' : 'none';
+  // Populate topic select for admin
+  if(_currentUser.uid === OWNER_UID) lqPopulateTopics();
+  // Load quizzes from Firestore
+  try{
+    const snap = await _db.collection('live_quiz').orderBy('scheduledAt','desc').limit(30).get();
+    _lqAllQuizzes = [];
+    snap.forEach(d => _lqAllQuizzes.push({id: d.id, ...d.data()}));
+    lqCheckActiveAndUpcoming();
+    lqRenderTab(_lqCurrentTab);
+  }catch(e){
+    showToast('Live Quiz load error: '+e.message,'error');
+  }
+}
+
+// ── Check if any quiz is live or upcoming ──
+function lqCheckActiveAndUpcoming(){
+  const now = Date.now();
+  _lqActiveQuiz = null;
+  _lqUpcomingQuiz = null;
+
+  for(const q of _lqAllQuizzes){
+    const start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+    const end   = start + (q.duration||30)*60000;
+    if(now >= start && now <= end){
+      _lqActiveQuiz = q;
+    } else if(now < start && !_lqUpcomingQuiz){
+      _lqUpcomingQuiz = q;
+    }
+  }
+
+  // Live banner
+  const liveBanner = document.getElementById('lqLiveBanner');
+  const upBanner   = document.getElementById('lqUpcomingBanner');
+  const badge      = document.getElementById('liveQuizBadge');
+
+  if(_lqActiveQuiz){
+    if(liveBanner){ liveBanner.style.display='block'; document.getElementById('lqLiveName').textContent=_lqActiveQuiz.title; }
+    if(badge) badge.style.display='inline-block';
+    if(upBanner) upBanner.style.display='none';
+  } else {
+    if(liveBanner) liveBanner.style.display='none';
+    if(badge) badge.style.display='none';
+  }
+
+  if(_lqUpcomingQuiz && !_lqActiveQuiz){
+    if(upBanner){ upBanner.style.display='block'; document.getElementById('lqUpcomingName').textContent=_lqUpcomingQuiz.title; }
+    lqStartCountdown(_lqUpcomingQuiz);
+  } else {
+    if(upBanner && !_lqActiveQuiz) upBanner.style.display='none';
+    if(_lqCountdownTimer) clearInterval(_lqCountdownTimer);
+  }
+}
+
+// ── Countdown timer ──
+function lqStartCountdown(quiz){
+  if(_lqCountdownTimer) clearInterval(_lqCountdownTimer);
+  const el = document.getElementById('lqCountdown');
+  const alarmBtn = document.getElementById('lqAlarmBtn');
+  if(alarmBtn) alarmBtn.textContent = _lqAlarmEnabled ? '🔔 Alert ON' : '🔕 Alert OFF';
+
+  _lqCountdownTimer = setInterval(()=>{
+    const start = quiz.scheduledAt ? quiz.scheduledAt.toMillis() : 0;
+    const diff  = start - Date.now();
+    if(diff <= 0){
+      clearInterval(_lqCountdownTimer);
+      lqLoadPage(); // refresh — quiz might be live now
+      return;
+    }
+    const h = Math.floor(diff/3600000);
+    const m = Math.floor((diff%3600000)/60000);
+    const s = Math.floor((diff%60000)/1000);
+    if(el) el.textContent = (h>0?h+'h ':'')+m+'m '+s+'s';
+
+    // Alert 5 min before
+    if(_lqAlarmEnabled && diff <= 300000 && diff > 299000){
+      showToast('⏰ Live Quiz 5 minutes mein shuru hogi: '+quiz.title, 'success');
+      if('vibrate' in navigator) navigator.vibrate([300,100,300]);
+    }
+  }, 1000);
+}
+
+function lqToggleAlarm(){
+  _lqAlarmEnabled = !_lqAlarmEnabled;
+  const btn = document.getElementById('lqAlarmBtn');
+  if(btn) btn.textContent = _lqAlarmEnabled ? '🔔 Alert ON' : '🔕 Alert OFF';
+  showToast(_lqAlarmEnabled ? '🔔 Alert ON' : '🔕 Alert OFF', 'success');
+}
+
+// ── Render tab content ──
+function lqSwitchTab(tab){
+  _lqCurrentTab = tab;
+  ['upcoming','results','mine'].forEach(t=>{
+    const btn = document.getElementById('lqTab'+t.charAt(0).toUpperCase()+t.slice(1));
+    const content = document.getElementById('lqTabContent'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(btn) btn.classList.toggle('active', t===tab);
+    if(content) content.style.display = t===tab ? 'block' : 'none';
+  });
+  lqRenderTab(tab);
+}
+
+function lqRenderTab(tab){
+  const now = Date.now();
+  if(tab==='upcoming'){
+    const el = document.getElementById('lqUpcomingList');
+    const upcoming = _lqAllQuizzes.filter(q=>{
+      const start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+      const end   = start + (q.duration||30)*60000;
+      return now <= end;
+    });
+    if(!el) return;
+    if(upcoming.length===0){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text2);">Koi upcoming quiz nahi hai.</div>'; return; }
+    el.innerHTML = upcoming.map(q=>lqQuizCard(q,now)).join('');
+  } else if(tab==='results'){
+    const el = document.getElementById('lqResultsList');
+    const past = _lqAllQuizzes.filter(q=>{
+      const start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+      const end   = start + (q.duration||30)*60000;
+      return now > end;
+    });
+    if(!el) return;
+    if(past.length===0){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text2);">Abhi koi past quiz nahi.</div>'; return; }
+    el.innerHTML = past.map(q=>lqQuizCard(q,now)).join('');
+  } else if(tab==='mine'){
+    lqRenderMyAttempts();
+  }
+}
+
+function lqQuizCard(q, now){
+  const start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+  const end   = start + (q.duration||30)*60000;
+  const isLive = now>=start && now<=end;
+  const isPast = now>end;
+  const dt = new Date(start).toLocaleString('hi-IN',{dateStyle:'short',timeStyle:'short'});
+  const qCount = (q.questions||[]).length;
+  return `<div class="lq-quiz-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div style="flex:1;">
+        <div class="lq-quiz-title">${isLive?'🔴 ':isPast?'✅ ':'📅 '}${q.title||'Quiz'}</div>
+        <div class="lq-quiz-meta">${dt} • ${q.duration||30} min • ${qCount} questions${q.message?' • '+q.message:''}</div>
+      </div>
+      ${_currentUser&&_currentUser.uid===OWNER_UID?`<button onclick="lqDeleteQuiz('${q.id}')" class="btn btn-danger btn-sm" style="font-size:0.65rem;padding:3px 7px;flex-shrink:0;margin-left:6px;">🗑</button>`:''}
+    </div>
+    <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;">
+      ${isLive?`<button onclick="lqJoinQuiz('${q.id}')" class="btn btn-primary btn-sm">▶ Abhi Do!</button>`:''}
+      ${isPast?`<button onclick="lqViewResult('${q.id}')" class="btn btn-outline btn-sm">📊 Results</button>`:''}
+      ${isPast?`<button onclick="lqReAttempt('${q.id}')" class="btn btn-outline btn-sm">🔄 Re-attempt</button>`:''}
+    </div>
+  </div>`;
+}
+
+// ── Join live quiz ──
+function lqJoinActive(){ if(_lqActiveQuiz) lqJoinQuiz(_lqActiveQuiz.id); }
+
+function lqJoinQuiz(quizId){
+  const q = _lqAllQuizzes.find(x=>x.id===quizId);
+  if(!q || !q.questions || q.questions.length===0){ showToast('Quiz mein koi question nahi!','error'); return; }
+  const start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+  const end   = start + (q.duration||30)*60000;
+  const now   = Date.now();
+  // Check if already submitted
+  const myResult = (q.results||{})[_currentUser.uid];
+  if(myResult && !myResult.isReAttempt){ showToast('Tum pehle se attempt kar chuke ho! Results dekho.','info'); return; }
+  _lqAttemptData = {
+    quiz: q,
+    answers: new Array(q.questions.length).fill(null),
+    currentQ: 0,
+    startTime: now,
+    isReAttempt: false,
+    endTime: end
+  };
+  lqShowAttemptOverlay();
+}
+
+function lqReAttempt(quizId){
+  const q = _lqAllQuizzes.find(x=>x.id===quizId);
+  if(!q || !q.questions || q.questions.length===0){ showToast('Quiz nahi mili!','error'); return; }
+  _lqAttemptData = {
+    quiz: q,
+    answers: new Array(q.questions.length).fill(null),
+    currentQ: 0,
+    startTime: Date.now(),
+    isReAttempt: true,
+    endTime: Date.now() + (q.duration||30)*60000
+  };
+  lqShowAttemptOverlay();
+}
+
+// ── Show attempt overlay ──
+function lqShowAttemptOverlay(){
+  const overlay = document.getElementById('lqAttemptOverlay');
+  if(!overlay) return;
+  overlay.style.display = 'flex';
+  document.getElementById('lqAttemptTitle').textContent = _lqAttemptData.quiz.title;
+  lqRenderQuestion();
+  // Start quiz timer (only for live, not re-attempt)
+  if(!_lqAttemptData.isReAttempt){
+    if(_lqAttemptTimer) clearInterval(_lqAttemptTimer);
+    _lqAttemptTimer = setInterval(()=>{
+      const remaining = _lqAttemptData.endTime - Date.now();
+      const el = document.getElementById('lqAttemptTimer');
+      if(remaining <= 0){
+        clearInterval(_lqAttemptTimer);
+        if(el) el.textContent = '⏰ Time Up!';
+        lqSubmitAttempt();
+      } else {
+        const m = Math.floor(remaining/60000);
+        const s = Math.floor((remaining%60000)/1000);
+        if(el) el.textContent = '⏱ '+m+':'+('0'+s).slice(-2)+' remaining';
+      }
+    }, 1000);
+  } else {
+    const el = document.getElementById('lqAttemptTimer');
+    if(el) el.textContent = '🔄 Re-attempt (Practice Mode)';
+  }
+}
+
+function lqRenderQuestion(){
+  if(!_lqAttemptData) return;
+  const {quiz, answers, currentQ} = _lqAttemptData;
+  const q = quiz.questions[currentQ];
+  const total = quiz.questions.length;
+  document.getElementById('lqAttemptProgress').textContent = 'Q '+(currentQ+1)+'/'+total;
+  const body = document.getElementById('lqAttemptBody');
+  const selectedAns = answers[currentQ];
+  body.innerHTML = `
+    <div style="font-size:0.78rem;color:var(--text2);margin-bottom:12px;font-weight:700;">Question ${currentQ+1} of ${total}</div>
+    <div style="font-size:0.92rem;font-weight:700;color:var(--text);margin-bottom:18px;line-height:1.6;">${q.q||q.question||''}</div>
+    ${(q.opts||q.options||[]).map((opt,i)=>`
+      <button class="lq-option${selectedAns===i?' selected':''}" onclick="lqSelectAns(${i})">${String.fromCharCode(65+i)}. ${opt}</button>
+    `).join('')}
+  `;
+  // Nav buttons
+  document.getElementById('lqPrevBtn').style.opacity = currentQ===0 ? '0.4' : '1';
+  const isLast = currentQ === total-1;
+  document.getElementById('lqNextBtn').style.display = isLast ? 'none' : 'block';
+  document.getElementById('lqSubmitBtn').style.display = isLast ? 'block' : 'none';
+}
+
+function lqSelectAns(idx){
+  if(!_lqAttemptData) return;
+  _lqAttemptData.answers[_lqAttemptData.currentQ] = idx;
+  lqRenderQuestion();
+}
+
+function lqNavQ(dir){
+  if(!_lqAttemptData) return;
+  const newQ = _lqAttemptData.currentQ + dir;
+  if(newQ < 0 || newQ >= _lqAttemptData.quiz.questions.length) return;
+  _lqAttemptData.currentQ = newQ;
+  lqRenderQuestion();
+}
+
+// ── Submit attempt ──
+async function lqSubmitAttempt(){
+  if(!_lqAttemptData || !_currentUser || !_db) return;
+  if(_lqAttemptTimer) clearInterval(_lqAttemptTimer);
+  const {quiz, answers, startTime, isReAttempt} = _lqAttemptData;
+  // Calculate score
+  let correct=0, wrong=0;
+  const details = quiz.questions.map((q,i)=>{
+    const userAns = answers[i];
+    const correctAns = q.ans !== undefined ? q.ans : q.correct;
+    const isCorrect = userAns === correctAns;
+    if(userAns===null){ return {userAns, correctAns, isCorrect:false, skipped:true}; }
+    if(isCorrect) correct++; else wrong++;
+    return {userAns, correctAns, isCorrect, exp: q.exp||q.explanation||''};
+  });
+  const score = Math.round((correct/quiz.questions.length)*100);
+  const timeTaken = Math.round((Date.now()-startTime)/1000);
+  const resultData = {
+    uid: _currentUser.uid,
+    name: _currentUser.displayName || _currentUser.email.split('@')[0],
+    score, correct, wrong,
+    total: quiz.questions.length,
+    timeTaken,
+    submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+    isReAttempt,
+    details
+  };
+  try{
+    const resultKey = isReAttempt ? 'reattempt_'+_currentUser.uid : _currentUser.uid;
+    await _db.collection('live_quiz').doc(quiz.id).update({
+      ['results.'+resultKey]: resultData
+    });
+    // Update local cache
+    const idx = _lqAllQuizzes.findIndex(x=>x.id===quiz.id);
+    if(idx>=0){
+      if(!_lqAllQuizzes[idx].results) _lqAllQuizzes[idx].results={};
+      _lqAllQuizzes[idx].results[resultKey] = resultData;
+    }
+    // Close attempt overlay
+    document.getElementById('lqAttemptOverlay').style.display='none';
+    _lqAttemptData = null;
+    // Show result immediately
+    lqViewResult(quiz.id);
+    showToast('✅ Quiz submit ho gaya! Score: '+score+'%','success');
+  }catch(e){
+    showToast('Submit error: '+e.message,'error');
+  }
+}
+
+// ── View result + leaderboard ──
+async function lqViewResult(quizId){
+  let q = _lqAllQuizzes.find(x=>x.id===quizId);
+  if(!q){ showToast('Quiz nahi mili!','error'); return; }
+  // Fetch fresh results from server
+  try{
+    const doc = await _db.collection('live_quiz').doc(quizId).get();
+    if(doc.exists){ q = {id:doc.id,...doc.data()}; const idx=_lqAllQuizzes.findIndex(x=>x.id===quizId); if(idx>=0) _lqAllQuizzes[idx]=q; }
+  }catch(e){}
+
+  const overlay = document.getElementById('lqResultOverlay');
+  const body    = document.getElementById('lqResultBody');
+  overlay.style.display='flex';
+  document.getElementById('lqResultTitle').textContent = q.title||'Quiz Result';
+
+  const results = q.results || {};
+  // Build leaderboard (exclude re-attempts for ranking)
+  const board = Object.entries(results)
+    .filter(([k])=>!k.startsWith('reattempt_'))
+    .map(([k,v])=>v)
+    .sort((a,b)=> b.score!==a.score ? b.score-a.score : a.timeTaken-b.timeTaken);
+
+  const myUid = _currentUser.uid;
+  const myResult = results[myUid] || results['reattempt_'+myUid];
+  const myRank = board.findIndex(r=>r.uid===myUid)+1;
+
+  const medals = ['🥇','🥈','🥉'];
+  const leaderHtml = board.length===0
+    ? '<div style="color:var(--text2);text-align:center;padding:20px;">Abhi koi result nahi.</div>'
+    : board.map((r,i)=>`
+      <div class="lq-rank-row${r.uid===myUid?' '+('background:rgba(21,101,192,0.08);border:1.5px solid rgba(21,101,192,0.3);'):''}">
+        <div class="lq-rank-medal">${medals[i]||'#'+(i+1)}</div>
+        <div class="lq-rank-name">${r.name||'Member'}${r.uid===myUid?' (Tum)':''}</div>
+        <div class="lq-rank-score">${r.score}% <span style="font-size:0.65rem;color:var(--text2);">${r.correct}/${r.total} • ${r.timeTaken}s</span></div>
+      </div>`).join('');
+
+  // My answers detail
+  let myAnswerHtml = '';
+  if(myResult && myResult.details){
+    myAnswerHtml = `<div style="margin-top:16px;">
+      <div style="font-weight:800;font-size:0.88rem;margin-bottom:10px;color:var(--text);">📝 Mere Jawab</div>
+      ${q.questions.map((qs,i)=>{
+        const d = myResult.details[i]||{};
+        const correct = qs.ans!==undefined?qs.ans:qs.correct;
+        const opts = qs.opts||qs.options||[];
+        return `<div style="background:var(--surface);border:1.5px solid ${d.isCorrect?'rgba(46,125,50,0.3)':'rgba(198,40,40,0.3)'};border-radius:10px;padding:11px 13px;margin-bottom:8px;">
+          <div style="font-size:0.82rem;font-weight:700;margin-bottom:6px;">${i+1}. ${qs.q||qs.question||''}</div>
+          <div style="font-size:0.78rem;color:${d.isCorrect?'var(--green)':'var(--red)'};">
+            ${d.skipped?'⏭ Skipped':d.isCorrect?'✅ Sahi: ':'❌ Galat: '}${d.skipped?'':opts[d.userAns]||''}
+          </div>
+          ${!d.isCorrect&&!d.skipped?`<div style="font-size:0.75rem;color:var(--green);">✅ Sahi jawab: ${opts[correct]||''}</div>`:''}
+          ${d.exp?`<div style="font-size:0.72rem;color:var(--text2);margin-top:4px;">💡 ${d.exp}</div>`:''}
+        </div>`;
+      }).join('')}
+    </div>`;
+  }
+
+  body.innerHTML = `
+    ${myResult?`<div style="background:linear-gradient(135deg,rgba(21,101,192,0.1),rgba(25,118,210,0.05));border:1.5px solid rgba(21,101,192,0.25);border-radius:12px;padding:14px;margin-bottom:16px;text-align:center;">
+      <div style="font-size:2rem;font-weight:800;">${myResult.score}%</div>
+      <div style="font-size:0.82rem;color:var(--text2);">${myResult.correct}/${myResult.total} sahi • ${myResult.timeTaken}s • ${myRank>0?'Rank #'+myRank:'Re-attempt'}</div>
+    </div>`:''}
+    <div style="font-weight:800;font-size:0.88rem;margin-bottom:10px;">🏆 Leaderboard</div>
+    ${leaderHtml}
+    ${myAnswerHtml}
+  `;
+}
+
+function lqCloseResult(){
+  document.getElementById('lqResultOverlay').style.display='none';
+  lqRenderTab(_lqCurrentTab);
+}
+
+// ── My past attempts ──
+async function lqRenderMyAttempts(){
+  const el = document.getElementById('lqMineList');
+  if(!el) return;
+  const myUid = _currentUser.uid;
+  const myQuizzes = _lqAllQuizzes.filter(q=>{
+    const r = q.results||{};
+    return r[myUid] || r['reattempt_'+myUid];
+  });
+  if(myQuizzes.length===0){ el.innerHTML='<div style="text-align:center;padding:30px;color:var(--text2);">Abhi koi attempt nahi ki.</div>'; return; }
+  el.innerHTML = myQuizzes.map(q=>{
+    const r = (q.results||{})[myUid] || (q.results||{})['reattempt_'+myUid];
+    return `<div class="lq-quiz-card">
+      <div class="lq-quiz-title">${q.title}</div>
+      <div class="lq-quiz-meta">Score: ${r.score}% • ${r.correct}/${r.total} sahi • ${r.timeTaken}s${r.isReAttempt?' (Re-attempt)':''}</div>
+      <button onclick="lqViewResult('${q.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;">📊 Result Dekho</button>
+      <button onclick="lqReAttempt('${q.id}')" class="btn btn-outline btn-sm" style="margin-top:6px;">🔄 Re-attempt</button>
+    </div>`;
+  }).join('');
+}
+
+// ── ADMIN: Schedule quiz ──
+function lqOpenSchedule(){
+  // Set default datetime to 1 hour from now
+  const d = new Date(Date.now()+3600000);
+  const pad = n=>('0'+n).slice(-2);
+  document.getElementById('lqSDateTime').value =
+    d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())+'T'+pad(d.getHours())+':'+pad(d.getMinutes());
+  document.getElementById('lqScheduleModal').classList.add('show');
+}
+
+function lqPopulateTopics(){
+  const sel = document.getElementById('lqSTopicSel');
+  if(!sel) return;
+  sel.innerHTML = '<option value="">-- Topic chunno --</option>';
+  (S.subjects||[]).forEach(subj=>{
+    (subj.sections||[]).forEach(sec=>{
+      (sec.topics||[]).forEach(t=>{
+        sel.innerHTML += `<option value="${t.id}">${subj.name} › ${t.name}</option>`;
+      });
+    });
+  });
+}
+
+async function lqGenQuestionsAI(){
+  const topicId = document.getElementById('lqSTopicSel').value;
+  const statusEl = document.getElementById('lqAiGenStatus');
+  if(!topicId){ statusEl.textContent='❌ Pehle topic chunno!'; return; }
+  let topic = null;
+  for(const s of S.subjects||[]){ for(const sec of s.sections||[]){ const t=sec.topics.find(x=>x.id==topicId); if(t){topic=t;break;} } if(topic) break; }
+  if(!topic){ statusEl.textContent='❌ Topic nahi mila!'; return; }
+  const apiKey = S.apiKey2 || localStorage.getItem('groqApiKey2');
+  if(!apiKey){ statusEl.textContent='❌ Groq API Key nahi! Settings mein daalo.'; return; }
+  statusEl.textContent='⏳ AI questions bana raha hai...';
+  const notes = (topic.finalNotes||'') + (topic.notes||[]).map(n=>n.content||'').join('\n');
+  const prompt = `Topic: ${topic.name}\nNotes:\n${notes.substring(0,3000)}\n\nIn notes ke basis par 10 MCQ questions banao. Return ONLY valid JSON array:\n[{"q":"Question?","opts":["A","B","C","D"],"ans":0,"exp":"Explanation"}]\nans is 0-indexed correct option. No markdown, no extra text.`;
+  try{
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+      method:'POST', headers:{'Content-Type':'application/json','Authorization':'Bearer '+apiKey},
+      body: JSON.stringify({model:S.model||'llama-3.3-70b-versatile',max_tokens:2000,messages:[{role:'user',content:prompt}]})
+    });
+    const data = await res.json();
+    const text = data.choices?.[0]?.message?.content||'';
+    const clean = text.replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(clean);
+    document.getElementById('lqSQuestions').value = JSON.stringify(parsed, null, 2);
+    statusEl.textContent = '✅ '+parsed.length+' questions ready!';
+  }catch(e){
+    statusEl.textContent = '❌ Error: '+e.message;
+  }
+}
+
+async function lqSaveSchedule(){
+  const title = document.getElementById('lqSTitle').value.trim();
+  const dt    = document.getElementById('lqSDateTime').value;
+  const dur   = parseInt(document.getElementById('lqSDuration').value)||30;
+  const msg   = document.getElementById('lqSMessage').value.trim();
+  const qText = document.getElementById('lqSQuestions').value.trim();
+  if(!title){ showToast('Title daalo!','error'); return; }
+  if(!dt){ showToast('Date & Time daalo!','error'); return; }
+  let questions = [];
+  if(qText){
+    try{ questions = JSON.parse(qText.replace(/```json|```/g,'').trim()); }
+    catch(e){ showToast('Questions JSON galat hai!','error'); return; }
+  }
+  try{
+    const schedDate = new Date(dt);
+    await _db.collection('live_quiz').add({
+      title, duration: dur, message: msg,
+      scheduledAt: firebase.firestore.Timestamp.fromDate(schedDate),
+      questions, results:{},
+      createdBy: _currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    closeModal('lqScheduleModal');
+    document.getElementById('lqSTitle').value='';
+    document.getElementById('lqSQuestions').value='';
+    showToast('✅ Quiz schedule ho gaya!','success');
+    lqLoadPage();
+  }catch(e){
+    showToast('Schedule error: '+e.message,'error');
+  }
+}
+
+async function lqDeleteQuiz(quizId){
+  if(!confirm('Pakka delete karna hai?')) return;
+  try{
+    await _db.collection('live_quiz').doc(quizId).delete();
+    _lqAllQuizzes = _lqAllQuizzes.filter(x=>x.id!==quizId);
+    lqRenderTab(_lqCurrentTab);
+    showToast('Quiz delete ho gaya!','success');
+  }catch(e){
+    showToast('Delete error: '+e.message,'error');
+  }
+}
+
+// ══════════════════════════════════════════════════════
+// GROUP CHAT SYSTEM
+// ══════════════════════════════════════════════════════
+
+let _gcCurrentThread  = null;  // {id, title, category}
+let _gcMsgListener    = null;  // Firestore realtime listener unsubscribe fn
+let _gcThreads        = [];    // cached threads
+let _gcLastMsgCount   = 0;     // for unread badge
+
+// ── Load group chat page (thread list) ──
+async function gcLoadPage(){
+  if(!_db || !_currentUser) return;
+  const el = document.getElementById('gcThreadList');
+  if(el) el.innerHTML = _browseSkeleton(3);
+  try{
+    const snap = await _db.collection('discussions')
+      .orderBy('lastMsgAt','desc').limit(50).get();
+    _gcThreads = [];
+    snap.forEach(d => _gcThreads.push({id: d.id, ...d.data()}));
+    gcRenderThreadList();
+  }catch(e){
+    if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">⏳ Threads load karo — Firestore mein discussions collection banana ho sakta hai.</div>';
+  }
+}
+
+// ── Render thread list ──
+function gcRenderThreadList(){
+  const el = document.getElementById('gcThreadList');
+  if(!el) return;
+  if(_gcThreads.length === 0){
+    el.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text2);">
+      <div style="font-size:2rem;margin-bottom:8px;">💬</div>
+      <div style="font-weight:700;margin-bottom:6px;">Abhi koi discussion nahi</div>
+      <div style="font-size:0.8rem;">Upar "➕ New" se pehli discussion shuru karo!</div>
+    </div>`;
+    return;
+  }
+  el.innerHTML = _gcThreads.map(t => {
+    const lastMsg = t.lastMsg || '';
+    const lastUser = t.lastUser || '';
+    const lastAt = t.lastMsgAt ? new Date(t.lastMsgAt.toMillis()).toLocaleString('hi-IN',{dateStyle:'short',timeStyle:'short'}) : '';
+    const msgCount = t.msgCount || 0;
+    return `<div class="gc-thread-card" onclick="gcOpenThread('${t.id}','${(t.title||'').replace(/'/g,"\\'")}','${(t.category||'').replace(/'/g,"\\'")}')">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;">
+        <div style="flex:1;min-width:0;">
+          <div class="gc-thread-title">${t.category?`<span style="font-size:0.65rem;background:rgba(21,101,192,0.1);color:var(--accent);padding:1px 7px;border-radius:10px;font-weight:700;margin-right:5px;">${t.category}</span>`:''}${t.title||'Discussion'}</div>
+          ${lastMsg?`<div class="gc-thread-last">${lastUser}: ${lastMsg}</div>`:''}
+          <div class="gc-thread-meta">${msgCount} messages${lastAt?' • '+lastAt:''}</div>
+        </div>
+        <span style="font-size:1.1rem;color:var(--text2);flex-shrink:0;">›</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ── Open a thread ──
+function gcOpenThread(threadId, title, category){
+  _gcCurrentThread = {id: threadId, title, category};
+  const overlay = document.getElementById('gcChatOverlay');
+  overlay.style.display = 'flex';
+  document.getElementById('gcChatTitle').textContent = title;
+  document.getElementById('gcChatMeta').textContent = category ? '📂 '+category : '💬 Group Discussion';
+  // Show delete btn for admin
+  const delBtn = document.getElementById('gcDeleteThreadBtn');
+  if(delBtn) delBtn.style.display = (_currentUser && _currentUser.uid === OWNER_UID) ? 'block' : 'none';
+  // Clear messages
+  const msgList = document.getElementById('gcMsgList');
+  if(msgList) msgList.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text2);">⏳ Messages load ho rahe hain...</div>';
+  // Unsubscribe old listener
+  if(_gcMsgListener){ _gcMsgListener(); _gcMsgListener = null; }
+  // Realtime listener for messages
+  _gcMsgListener = _db.collection('discussions').doc(threadId)
+    .collection('messages').orderBy('sentAt','asc').limit(200)
+    .onSnapshot(snap => {
+      const msgs = [];
+      snap.forEach(d => msgs.push({id: d.id, ...d.data()}));
+      gcRenderMessages(msgs);
+    }, err => {
+      if(msgList) msgList.innerHTML = '❌ Error: '+err.message;
+    });
+  // Focus input
+  setTimeout(()=>{ const inp=document.getElementById('gcMsgInput'); if(inp) inp.focus(); }, 300);
+}
+
+// ── Render messages ──
+function gcRenderMessages(msgs){
+  const el = document.getElementById('gcMsgList');
+  if(!el) return;
+  const myUid = _currentUser ? _currentUser.uid : '';
+  if(msgs.length === 0){
+    el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Abhi koi message nahi. Pehla message bhejo! 👋</div>';
+    return;
+  }
+  el.innerHTML = msgs.map(m => {
+    const isMe = m.uid === myUid;
+    const initials = (m.name||'U').substring(0,2).toUpperCase();
+    const time = m.sentAt ? new Date(m.sentAt.toMillis()).toLocaleTimeString('hi-IN',{hour:'2-digit',minute:'2-digit'}) : '';
+    const isAdmin = m.uid === OWNER_UID;
+    return `<div class="gc-msg${isMe?' mine':''}">
+      <div class="gc-avatar" style="${isAdmin?'background:linear-gradient(135deg,#e65100,#f57c00);':''}">${initials}</div>
+      <div>
+        <div class="gc-bubble ${isMe?'mine':'theirs'}">
+          ${!isMe?`<div class="gc-bubble-name">${isAdmin?'👑 ':''}${m.name||'Member'}</div>`:''}
+          <div>${m.text||''}</div>
+          <div class="gc-bubble-time">${time}</div>
+        </div>
+        ${(isMe||(_currentUser&&_currentUser.uid===OWNER_UID))?`<div style="text-align:${isMe?'right':'left'};margin-top:2px;"><button onclick="gcDeleteMsg('${m.id}')" style="background:none;border:none;font-size:0.6rem;color:var(--text2);cursor:pointer;padding:0;">🗑</button></div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+  // Scroll to bottom
+  el.scrollTop = el.scrollHeight;
+}
+
+// ── Send message ──
+async function gcSendMsg(){
+  if(!_db || !_currentUser || !_gcCurrentThread) return;
+  const inp = document.getElementById('gcMsgInput');
+  const text = (inp ? inp.value : '').trim();
+  if(!text) return;
+  inp.value = '';
+  inp.focus();
+  const name = _currentUser.displayName || _currentUser.email.split('@')[0];
+  const now = firebase.firestore.FieldValue.serverTimestamp();
+  try{
+    // Add message
+    await _db.collection('discussions').doc(_gcCurrentThread.id)
+      .collection('messages').add({
+        text, uid: _currentUser.uid, name,
+        sentAt: now
+      });
+    // Update thread meta (last message preview)
+    await _db.collection('discussions').doc(_gcCurrentThread.id).update({
+      lastMsg: text.substring(0,60),
+      lastUser: name,
+      lastMsgAt: now,
+      msgCount: firebase.firestore.FieldValue.increment(1)
+    });
+    // Update local threads cache
+    const idx = _gcThreads.findIndex(t=>t.id===_gcCurrentThread.id);
+    if(idx>=0){
+      _gcThreads[idx].lastMsg = text.substring(0,60);
+      _gcThreads[idx].lastUser = name;
+      _gcThreads[idx].msgCount = (_gcThreads[idx].msgCount||0)+1;
+    }
+  }catch(e){
+    showToast('Message send error: '+e.message,'error');
+    inp.value = text; // restore
+  }
+}
+
+// ── Close chat ──
+function gcCloseChat(){
+  if(_gcMsgListener){ _gcMsgListener(); _gcMsgListener = null; }
+  _gcCurrentThread = null;
+  document.getElementById('gcChatOverlay').style.display = 'none';
+  gcRenderThreadList();
+}
+
+// ── Delete message (admin or own) ──
+async function gcDeleteMsg(msgId){
+  if(!_gcCurrentThread || !_db) return;
+  try{
+    await _db.collection('discussions').doc(_gcCurrentThread.id)
+      .collection('messages').doc(msgId).delete();
+    await _db.collection('discussions').doc(_gcCurrentThread.id).update({
+      msgCount: firebase.firestore.FieldValue.increment(-1)
+    });
+  }catch(e){ showToast('Delete error: '+e.message,'error'); }
+}
+
+// ── Delete whole thread (admin only) ──
+async function gcDeleteThread(){
+  if(!_gcCurrentThread || !_currentUser || _currentUser.uid !== OWNER_UID) return;
+  if(!confirm('Poora thread delete karna hai? Saare messages chale jaayenge!')) return;
+  try{
+    // Delete all messages first
+    const msgs = await _db.collection('discussions').doc(_gcCurrentThread.id).collection('messages').get();
+    const batch = _db.batch();
+    msgs.forEach(d => batch.delete(d.ref));
+    await batch.commit();
+    await _db.collection('discussions').doc(_gcCurrentThread.id).delete();
+    gcCloseChat();
+    showToast('Thread delete ho gaya!','success');
+  }catch(e){ showToast('Delete error: '+e.message,'error'); }
+}
+
+// ── Create new thread ──
+async function gcOpenNewThread(){
+  document.getElementById('gcNewTitle').value = '';
+  document.getElementById('gcNewCategory').value = '';
+  document.getElementById('gcNewThreadModal').classList.add('show');
+}
+
+async function gcCreateThread(){
+  const title    = (document.getElementById('gcNewTitle').value||'').trim();
+  const category = (document.getElementById('gcNewCategory').value||'').trim();
+  if(!title){ showToast('Title daalo!','error'); return; }
+  if(!_db || !_currentUser){ showToast('Login karo!','error'); return; }
+  try{
+    const docRef = await _db.collection('discussions').add({
+      title, category,
+      createdBy: _currentUser.uid,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      lastMsgAt: firebase.firestore.FieldValue.serverTimestamp(),
+      msgCount: 0, lastMsg:'', lastUser:''
+    });
+    closeModal('gcNewThreadModal');
+    showToast('Discussion shuru ho gayi!','success');
+    // Open immediately
+    gcOpenThread(docRef.id, title, category);
+    // Refresh list
+    gcLoadPage();
+  }catch(e){ showToast('Create error: '+e.message,'error'); }
 }
 
 async function chooseAdminMode(){
