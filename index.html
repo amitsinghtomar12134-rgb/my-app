@@ -13609,7 +13609,7 @@ async function lqGenQuestionsAI(){
   let topic = null;
   for(const s of S.subjects||[]){ for(const sec of s.sections||[]){ const t=sec.topics.find(x=>x.id==topicId); if(t){topic=t;break;} } if(topic) break; }
   if(!topic){ statusEl.textContent='❌ Topic nahi mila!'; return; }
-  const apiKey = S.apiKey2 || localStorage.getItem('groqApiKey2');
+  const apiKey = S.apiKey || localStorage.getItem('groqApiKey2');
   if(!apiKey){ statusEl.textContent='❌ Groq API Key nahi! Settings mein daalo.'; return; }
   statusEl.textContent='⏳ AI questions bana raha hai...';
   const notes = (topic.finalNotes||'') + (topic.notes||[]).map(n=>n.content||'').join('\n');
