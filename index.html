@@ -22,10 +22,10 @@
 <!-- Tesseract.js for scanned PDF OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<!-- Firebase SDK v11.6.0 — WebChannel fix for cross-device sync -->
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-firestore-compat.js"></script>
 
 <!-- PWA Manifest -->
 <link rel="manifest" href="manifest.json">
@@ -34,13 +34,13 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231b4332'/%3E%3Crect width='512' height='512' rx='80' fill='url(%23g)'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%231b4332'/%3E%3Cstop offset='1' stop-color='%230d2b18'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ctext x='256' y='310' font-size='260' text-anchor='middle' fill='%23c9a14a'%3E🏛%3C/text%3E%3C/svg%3E">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='80' fill='%231b4332'/%3E%3Ctext x='256' y='310' font-size='260' text-anchor='middle' fill='%23c9a14a'%3E🏛%3C/text%3E%3C/svg%3E">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Cinzel:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 :root{
-  /* ── UPSC Dark Green + Gold Theme ── */
-  --bg:#f0f4f0;
-  --bg2:#e0ece0;
+  /* ── UPSC Premium Dark Green + Gold Theme ── */
+  --bg:#eef3ee;
+  --bg2:#dce8dc;
   --surface:#ffffff;
-  --surface2:#f5f8f5;
+  --surface2:#f4f8f4;
   --accent:#1b5e20;        /* Deep Forest Green */
   --accent2:#b8860b;       /* Dark Gold */
   --accent3:#2e7d32;       /* Medium Green */
@@ -52,22 +52,27 @@
   --red:#b71c1c;
   --purple:#4a148c;
   --teal:#00695c;
-  --text:#1a2e1a;
-  --text2:#4a6741;
-  --border:#c8d8c0;
+  --text:#0f1f0f;
+  --text2:#446644;
+  --border:#c0d4b8;
   --card:#ffffff;
-  --shadow:0 2px 12px rgba(27,94,32,0.10);
-  --shadow-gold:0 2px 12px rgba(184,134,11,0.15);
+  --shadow:0 2px 16px rgba(27,94,32,0.12);
+  --shadow-gold:0 2px 14px rgba(184,134,11,0.18);
   --highlight:#fffde7;
   --new-bg:#e8f5e9;
   --new-border:#a5d6a7;
-  --sidebar-w:232px;
+  --sidebar-w:240px;
   --user-highlight:#fff8e1;
   --user-highlight-border:#ffd54f;
   --save-color:#5d4037;
-  --radius:12px;
-  --radius-lg:18px;
+  --radius:14px;
+  --radius-lg:20px;
   --transition:0.2s ease;
+  /* Premium additions */
+  --glass:rgba(255,255,255,0.7);
+  --topbar-h:56px;
+  --btn-shadow:0 2px 8px rgba(27,94,32,0.22);
+  --card-shadow:0 2px 16px rgba(27,94,32,0.08);
 }
 
 /* ===== NIGHT MODE -- body.night-mode se sab kuch badalta hai ===== */
@@ -369,22 +374,39 @@ body{
 /* MAIN CONTENT */
 .main-content{margin-left:var(--sidebar-w);flex:1;display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;height:100vh;height:100dvh;overscroll-behavior:none;overscroll-behavior-y:none;}
 
-/* TOP BAR */
+/* TOP BAR - Premium */
 .topbar{
-  background:var(--surface);
-  border-bottom:2px solid var(--border);
-  padding:10px 14px;
-  padding-top:max(10px,env(safe-area-inset-top,10px));
+  background:linear-gradient(to right,var(--surface),rgba(244,248,244,0.95));
+  border-bottom:1.5px solid var(--border);
+  padding:0 16px;
+  padding-left:max(16px,env(safe-area-inset-left,16px));
+  padding-right:max(16px,env(safe-area-inset-right,16px));
+  padding-top:max(0px,env(safe-area-inset-top,0px));
+  height:calc(var(--topbar-h) + max(0px,env(safe-area-inset-top,0px)));
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:50;
-  box-shadow:0 2px 12px rgba(27,94,32,0.10);
+  box-shadow:0 2px 16px rgba(27,94,32,0.08);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
 }
-.topbar-title{font-size:0.95rem;font-weight:800;color:var(--accent);letter-spacing:0.2px;}
+.topbar-title{
+  font-family:'Baloo 2','Inter',sans-serif;
+  font-size:1rem;font-weight:800;color:var(--accent);
+  letter-spacing:0.2px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  max-width:200px;
+}
 .topbar-right{display:flex;align-items:center;gap:8px;}
-.hamburger{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--accent);padding:6px;min-width:36px;min-height:36px;border-radius:8px;-webkit-tap-highlight-color:transparent;}
+.hamburger{
+  display:none;background:none;border:none;
+  font-size:1.3rem;cursor:pointer;color:var(--accent);
+  padding:6px;min-width:38px;min-height:38px;
+  border-radius:10px;-webkit-tap-highlight-color:transparent;
+  transition:background 0.15s;
+}
+.hamburger:hover{background:rgba(27,94,32,0.08);}
 
 /* API KEY TOPBAR */
-.api-pill{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:4px 8px;font-size:0.72rem;max-width:200px;}
+.api-pill{display:flex;align-items:center;gap:5px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:0.72rem;max-width:200px;box-shadow:inset 0 1px 3px rgba(0,0,0,0.04);}
 .api-pill input{background:none;border:none;outline:none;width:85px;font-size:0.72rem;color:var(--text);}
 .api-pill .btn{padding:3px 8px !important;font-size:0.68rem !important;min-height:unset !important;white-space:nowrap;}
 .api-dot{width:8px;height:8px;border-radius:50%;background:#ccc;}
@@ -394,60 +416,80 @@ body{
 .page-area{padding:16px;flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:none;overscroll-behavior-y:none;}
 .page{display:none;}
 .page.active{display:block;animation:fadeIn 0.25s ease;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 /* PAGE HEADER */
-.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px;}
-.page-title{font-family:'Baloo 2',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);}
-.page-subtitle{font-size:0.78rem;color:var(--text2);margin-top:2px;}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px;}
+.page-title{font-family:'Baloo 2','Inter',sans-serif;font-size:1.35rem;font-weight:800;color:var(--text);}
+.page-subtitle{font-size:0.78rem;color:var(--text2);margin-top:2px;font-weight:500;}
 
-/* CARDS */
-.card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow);}
-.card-title{font-size:0.9rem;font-weight:800;margin-bottom:12px;color:var(--accent);display:flex;align-items:center;gap:6px;}
+/* CARDS - Premium */
+.card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  padding:16px;margin-bottom:14px;
+  box-shadow:var(--card-shadow);
+  transition:box-shadow 0.2s;
+}
+.card:hover{box-shadow:0 4px 24px rgba(27,94,32,0.1);}
+.card-title{font-family:'Baloo 2','Inter',sans-serif;font-size:0.9rem;font-weight:800;margin-bottom:12px;color:var(--accent);display:flex;align-items:center;gap:6px;}
 .card-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 
-/* INPUTS */
-textarea{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;padding:10px 12px;color:var(--text);font-family:'Noto Sans Devanagari',sans-serif;font-size:0.85rem;resize:vertical;outline:none;transition:border 0.2s;line-height:1.6;}
-textarea:focus{border-color:var(--accent);background:var(--surface);}
-.inp{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:8px 11px;color:var(--text);font-family:'Noto Sans Devanagari',sans-serif;font-size:0.84rem;outline:none;transition:border 0.2s;}
-.inp:focus{border-color:var(--accent);}
-.field-group{margin-bottom:10px;}
-.field-label{display:block;font-size:0.76rem;color:var(--text2);font-weight:700;margin-bottom:4px;}
+/* INPUTS - Premium */
+textarea{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:12px;padding:10px 13px;color:var(--text);font-family:'Noto Sans Devanagari','Inter',sans-serif;font-size:0.85rem;resize:vertical;outline:none;transition:all 0.2s;line-height:1.7;}
+textarea:focus{border-color:var(--accent);background:var(--surface);box-shadow:0 0 0 3px rgba(27,94,32,0.08);}
+.inp{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:11px;padding:9px 12px;color:var(--text);font-family:'Noto Sans Devanagari','Inter',sans-serif;font-size:0.84rem;outline:none;transition:all 0.2s;}
+.inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(27,94,32,0.07);}
+.field-group{margin-bottom:11px;}
+.field-label{display:block;font-size:0.76rem;color:var(--text2);font-weight:700;margin-bottom:5px;letter-spacing:0.2px;}
 
-/* BUTTONS */
-.btn{padding:8px 15px;border:none;border-radius:9px;cursor:pointer;font-family:'Noto Sans Devanagari',sans-serif;font-weight:700;font-size:0.82rem;transition:all 0.18s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;}
-.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;box-shadow:0 2px 8px rgba(27,94,32,0.25);}
-.btn-primary:hover{transform:translateY(-1px);box-shadow:0 4px 14px rgba(27,94,32,0.35);}
+/* BUTTONS - Premium */
+.btn{
+  padding:9px 16px;border:none;border-radius:11px;
+  cursor:pointer;font-family:'Noto Sans Devanagari','Inter',sans-serif;
+  font-weight:700;font-size:0.82rem;
+  transition:all 0.18s;
+  display:inline-flex;align-items:center;gap:5px;
+  white-space:nowrap;letter-spacing:0.1px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,#1b5e20,#2e7d32);
+  color:#fff;
+  box-shadow:var(--btn-shadow);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(27,94,32,0.38);}
 .btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none;}
-.btn-green{background:linear-gradient(135deg,var(--green),#388e3c);color:#fff;}
+.btn-green{background:linear-gradient(135deg,#2e7d32,#43a047);color:#fff;box-shadow:0 2px 8px rgba(46,125,50,0.22);}
 .btn-green:hover{transform:translateY(-1px);}
-.btn-orange{background:linear-gradient(135deg,#b8860b,#8b6914);color:#fff;}
+.btn-orange{background:linear-gradient(135deg,#b8860b,#8b6914);color:#fff;box-shadow:0 2px 8px rgba(184,134,11,0.22);}
 .btn-teal{background:linear-gradient(135deg,var(--teal),#00897b);color:#fff;}
 .btn-purple{background:linear-gradient(135deg,var(--purple),#6a1b9a);color:#fff;}
 .btn-outline{background:transparent;border:1.5px solid var(--border);color:var(--text2);}
 .btn-outline:hover{border-color:var(--accent);color:var(--accent);background:rgba(27,94,32,0.05);}
 .btn-danger{background:rgba(183,28,28,0.08);color:var(--red);border:1.5px solid rgba(183,28,28,0.18);}
-.btn-sm{padding:6px 11px;font-size:0.76rem;}
-.btn-xs{padding:3px 8px;font-size:0.7rem;}
+.btn-danger:hover{background:rgba(183,28,28,0.14);}
+.btn-sm{padding:6px 12px;font-size:0.76rem;}
+.btn-xs{padding:3px 9px;font-size:0.7rem;}
 .btn-row{display:flex;gap:7px;flex-wrap:wrap;}
 
 /* HIERARCHY TREE */
-.subject-block{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow);transition:box-shadow var(--transition);}
-.subject-header{padding:11px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:linear-gradient(90deg,rgba(27,94,32,0.06),transparent);}
+.subject-block{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:12px;overflow:hidden;box-shadow:var(--card-shadow);transition:box-shadow var(--transition);}
+.subject-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:linear-gradient(90deg,rgba(27,94,32,0.05),transparent);}
 .subject-header:hover{background:linear-gradient(90deg,rgba(27,94,32,0.1),transparent);}
-.subj-name{font-weight:800;font-size:0.88rem;color:var(--accent);}
+.subj-name{font-family:'Baloo 2','Inter',sans-serif;font-weight:800;font-size:0.9rem;color:var(--accent);}
 .subj-meta{font-size:0.7rem;color:var(--text2);margin-top:1px;}
 .subject-body{padding:8px 12px;display:none;}
 .subject-body.open{display:block;}
-.section-block{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;margin-bottom:7px;overflow:hidden;}
+.section-block{background:var(--surface);border:1px solid var(--border);border-radius:11px;margin-bottom:7px;overflow:hidden;}
 .section-header{padding:8px 12px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;}
 .section-header:hover{background:rgba(184,134,11,0.05);}
-.sec-name{font-weight:700;font-size:0.82rem;color:var(--accent2);}
+.sec-name{font-weight:700;font-size:0.83rem;color:var(--accent2);}
 .topic-list{padding:6px 10px;}
-.topic-item{display:flex;align-items:center;justify-content:space-between;padding:9px 10px;border-radius:10px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all var(--transition);}
-.topic-item:hover{border-color:var(--accent3);}
-.topic-name-el{font-size:0.8rem;font-weight:700;color:var(--text);}
+.topic-item{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-radius:11px;margin-bottom:5px;background:var(--surface2);border:1px solid var(--border);transition:all var(--transition);}
+.topic-item:hover{border-color:var(--accent3);box-shadow:0 2px 8px rgba(27,94,32,0.07);}
+.topic-name-el{font-size:0.81rem;font-weight:700;color:var(--text);}
 .topic-meta-el{font-size:0.68rem;color:var(--text2);}
 
 /* NEW CONTENT HIGHLIGHT */
@@ -462,7 +504,7 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 }
 .new-point::before{content:'🆕 ';font-style:normal;font-size:0.75rem;}
 .new-date{font-size:0.68rem;color:var(--text2);font-style:normal;margin-left:6px;}
-.final-notes-body{font-size:0.85rem;line-height:1.85;color:var(--text);white-space:pre-wrap;}
+.final-notes-body{font-size:0.85rem;line-height:1.9;color:var(--text);white-space:pre-wrap;}
 .highlight-text{background:var(--highlight);padding:1px 4px;border-radius:4px;font-weight:700;color:#e65100;}
 .user-highlight-text{background:var(--user-highlight);padding:1px 4px;border-radius:4px;font-weight:700;color:var(--accent2);border:1px solid var(--user-highlight-border);}
 .important-tag{background:#d4edda;padding:1px 7px;border-radius:4px;color:#1b5e20;font-weight:800;font-size:0.75rem;}
@@ -805,6 +847,202 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 /* OFFLINE INDICATOR */
 .offline-bar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#c62828;color:#fff;text-align:center;font-size:0.78rem;font-weight:700;padding:6px;display:none;animation:fadeIn 0.3s;}
 .offline-bar.show{display:block;}
+
+/* ===== TOPBAR USER BUTTON ===== */
+.topbar-user-btn{
+  display:flex;align-items:center;gap:6px;
+  cursor:pointer;padding:4px;
+  border-radius:50%;
+  transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+}
+.topbar-user-btn:hover{background:rgba(27,94,32,0.1);}
+.topbar-user-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,#1b5e20,#2e7d32);
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;font-weight:800;
+  border:2px solid rgba(27,94,32,0.2);
+  overflow:hidden;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(27,94,32,0.25);
+}
+.topbar-user-avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+/* Sync dot on topbar avatar */
+.topbar-user-btn .sync-dot{
+  position:absolute;bottom:3px;right:3px;
+  width:9px;height:9px;border-radius:50%;
+  background:#ccc;border:2px solid var(--surface);
+  flex-shrink:0;
+}
+
+/* ===== HELP OVERLAY ===== */
+.help-overlay{
+  position:fixed;inset:0;z-index:3000;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.6);
+  padding:16px;
+}
+.help-overlay.show{display:flex;}
+.help-panel{
+  background:var(--surface);
+  border-radius:var(--radius-lg);
+  width:100%;max-width:480px;
+  max-height:90vh;
+  overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,0.35);
+  animation:slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+.help-header{
+  background:linear-gradient(135deg,#0a1f0a,#1b4332);
+  padding:20px;border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.help-header-title{font-family:'Baloo 2',sans-serif;font-size:1.1rem;font-weight:800;color:#f5d87a;}
+.help-header-sub{font-size:0.72rem;color:rgba(201,161,74,0.7);margin-top:2px;}
+.help-close-btn{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(201,161,74,0.15);border:1px solid rgba(201,161,74,0.3);
+  color:#f5d87a;cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.help-body{padding:16px;}
+.help-section{margin-bottom:16px;}
+.help-section-title{
+  font-size:0.82rem;font-weight:800;color:var(--accent);
+  margin-bottom:10px;display:flex;align-items:center;gap:6px;
+  padding-bottom:6px;border-bottom:1px solid var(--border);
+}
+.help-feature-card{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;border-radius:11px;
+  background:var(--surface2);border:1px solid var(--border);
+  margin-bottom:7px;
+}
+.help-feature-icon{font-size:1.3rem;flex-shrink:0;margin-top:1px;}
+.help-feature-info{}
+.help-feature-name{font-size:0.82rem;font-weight:800;color:var(--text);margin-bottom:2px;}
+.help-feature-desc{font-size:0.74rem;color:var(--text2);line-height:1.55;}
+
+/* ===== RULES MODAL ===== */
+.rules-overlay{
+  position:fixed;inset:0;z-index:2500;
+  display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,0.55);
+}
+.rules-overlay.show{display:flex;}
+.rules-panel{
+  background:var(--surface);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  width:100%;max-width:680px;
+  max-height:88vh;overflow-y:auto;
+  box-shadow:0 -8px 40px rgba(0,0,0,0.2);
+  animation:slideUp 0.28s cubic-bezier(0.4,0,0.2,1);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+.rules-header{
+  padding:18px 18px 14px;
+  border-bottom:1.5px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.rules-title{font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:800;color:var(--accent);}
+.rules-body{padding:14px 18px 20px;}
+.rule-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 12px;border-radius:11px;
+  background:var(--surface2);border:1px solid var(--border);
+  margin-bottom:8px;position:relative;
+}
+.rule-num{
+  width:24px;height:24px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--accent3));
+  color:#fff;font-size:0.7rem;font-weight:800;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:1px;
+}
+.rule-text{font-size:0.83rem;color:var(--text);line-height:1.6;flex:1;}
+.rule-del-btn{
+  background:none;border:none;color:var(--red);cursor:pointer;
+  font-size:0.8rem;padding:2px;flex-shrink:0;
+  opacity:0.7;-webkit-tap-highlight-color:transparent;
+}
+.rule-del-btn:hover{opacity:1;}
+.rule-add-row{display:flex;gap:8px;margin-top:12px;}
+.rule-add-input{
+  flex:1;border:1.5px solid var(--border);border-radius:10px;
+  padding:9px 12px;font-family:inherit;font-size:0.83rem;
+  background:var(--surface);color:var(--text);outline:none;
+}
+.rule-add-input:focus{border-color:var(--accent);}
+.rules-empty{text-align:center;padding:24px;color:var(--text2);font-size:0.82rem;}
+
+/* ===== LIVE QUIZ POPUP NOTIFICATION ===== */
+.lq-popup-notif{
+  position:fixed;top:calc(var(--topbar-h) + 8px + max(0px,env(safe-area-inset-top,0px)));
+  left:14px;
+  z-index:8000;
+  background:linear-gradient(135deg,#c62828,#e53935);
+  color:#fff;border-radius:14px;
+  padding:10px 14px;
+  display:none;align-items:center;gap:10px;
+  box-shadow:0 6px 24px rgba(198,40,40,0.45);
+  max-width:calc(100vw - 28px);
+  animation:lqPopupIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.lq-popup-notif.show{display:flex;}
+@keyframes lqPopupIn{
+  from{transform:translateY(-60px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+@keyframes lqPopupBlink{
+  0%,100%{box-shadow:0 6px 24px rgba(198,40,40,0.45);}
+  50%{box-shadow:0 6px 32px rgba(198,40,40,0.8),0 0 0 4px rgba(198,40,40,0.2);}
+}
+.lq-popup-notif.blinking{animation:lqPopupBlink 1.2s ease-in-out infinite;}
+.lq-popup-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:#fff;flex-shrink:0;
+  animation:lqDotPulse 1s ease-in-out infinite;
+}
+@keyframes lqDotPulse{
+  0%,100%{opacity:1;transform:scale(1);}
+  50%{opacity:0.5;transform:scale(0.7);}
+}
+.lq-popup-text{flex:1;min-width:0;}
+.lq-popup-title{font-size:0.82rem;font-weight:800;letter-spacing:0.2px;}
+.lq-popup-sub{font-size:0.7rem;opacity:0.88;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.lq-popup-close{
+  background:rgba(255,255,255,0.2);border:none;color:#fff;
+  border-radius:50%;width:24px;height:24px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;cursor:pointer;flex-shrink:0;
+  -webkit-tap-highlight-color:transparent;
+}
+.lq-popup-join{
+  background:rgba(255,255,255,0.25);border:1px solid rgba(255,255,255,0.4);
+  color:#fff;border-radius:20px;padding:4px 10px;
+  font-size:0.72rem;font-weight:800;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;flex-shrink:0;
+}
+
+/* ===== SAVE QUESTION TO TOPIC MODAL ===== */
+.save-q-overlay{
+  position:fixed;inset:0;z-index:2800;
+  display:none;align-items:flex-end;justify-content:center;
+  background:rgba(0,0,0,0.55);
+}
+.save-q-overlay.show{display:flex;}
+.save-q-panel{
+  background:var(--surface);
+  border-radius:var(--radius-lg) var(--radius-lg) 0 0;
+  width:100%;max-width:520px;
+  padding:20px 18px 32px;
+  box-shadow:0 -8px 40px rgba(0,0,0,0.2);
+  animation:slideUp 0.28s cubic-bezier(0.4,0,0.2,1);
+}
 
 /* ===== READING MODE ===== */
 .reading-overlay{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;}
@@ -4134,23 +4372,23 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </div>
   </div>
 
-  <!-- NAV ITEMS -->
+  <!-- NAV ITEMS - Reordered for better UX -->
   <div class="nav-section">
 
-    <div class="sb-group-title">📖 Study</div>
+    <div class="sb-group-title">📖 Padhna Seekhna</div>
     <div class="nav-item active" onclick="showPage('library',this)" data-page="library">
       <span class="sb-icon">🏛️</span>
       <span class="sb-label">Library</span>
-    </div>
-    <div class="nav-item" onclick="showPage('savedFacts',this)" data-page="savedFacts">
-      <span class="sb-icon">📌</span>
-      <span class="sb-label">Saved Facts</span>
-      <span class="nav-badge" id="savedBadge" style="display:none;">0</span>
     </div>
     <div class="nav-item" onclick="showPage('smartnotes',this)" data-page="smartnotes">
       <span class="sb-icon">🧠</span>
       <span class="sb-label">Smart Notes</span>
       <span class="nav-badge red" id="smartBadge" style="display:none;">0</span>
+    </div>
+    <div class="nav-item" onclick="showPage('savedFacts',this)" data-page="savedFacts">
+      <span class="sb-icon">📌</span>
+      <span class="sb-label">Saved Facts</span>
+      <span class="nav-badge" id="savedBadge" style="display:none;">0</span>
     </div>
     <div class="nav-item" onclick="showPage('aichathistory',this)" data-page="aichathistory">
       <span class="sb-icon">🤖</span>
@@ -4159,14 +4397,14 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </div>
 
     <div class="sb-group-title">⚔️ Practice</div>
-    <div class="nav-item" onclick="showPage('quiz',this)" data-page="quiz">
-      <span class="sb-icon">📝</span>
-      <span class="sb-label">Quiz</span>
-    </div>
     <div class="nav-item" onclick="showPage('livequiz',this)" data-page="livequiz">
       <span class="sb-icon">⚡</span>
       <span class="sb-label">Live Quiz</span>
       <span class="nav-badge red" id="liveQuizBadge" style="display:none;">LIVE</span>
+    </div>
+    <div class="nav-item" onclick="showPage('quiz',this)" data-page="quiz">
+      <span class="sb-icon">📝</span>
+      <span class="sb-label">Quiz</span>
     </div>
     <div class="nav-item" onclick="showPage('quizvault',this)" data-page="quizvault">
       <span class="sb-icon">🗄️</span>
@@ -4184,14 +4422,14 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       <span class="sb-icon">📊</span>
       <span class="sb-label">Stats</span>
     </div>
-    <div class="nav-item" onclick="showPage('exams',this)" data-page="exams">
-      <span class="sb-icon">🎯</span>
-      <span class="sb-label">Exam Profiles</span>
-    </div>
     <div class="nav-item sb-coach-item" onclick="openStudyCoach()">
       <span class="sb-icon">🎓</span>
       <span class="sb-label">Study Coach</span>
       <span class="sb-coach-badge">AI</span>
+    </div>
+    <div class="nav-item" onclick="showPage('exams',this)" data-page="exams">
+      <span class="sb-icon">🎯</span>
+      <span class="sb-label">Exam Profiles</span>
     </div>
 
     <div class="sb-group-title">🌐 Community</div>
@@ -4206,6 +4444,14 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </div>
 
     <div class="sb-group-title">⚙️ Account</div>
+    <div class="nav-item" onclick="openHelpOverlay()">
+      <span class="sb-icon">❓</span>
+      <span class="sb-label">Help & Guide</span>
+    </div>
+    <div class="nav-item" onclick="openRulesSection()">
+      <span class="sb-icon">📋</span>
+      <span class="sb-label">Rules</span>
+    </div>
     <div class="nav-item" onclick="showPage('settings',this)" data-page="settings">
       <span class="sb-icon">⚙️</span>
       <span class="sb-label">Settings</span>
@@ -4235,14 +4481,23 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
   <!-- TOP BAR -->
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:10px;">
-      <button class="hamburger" onclick="toggleSidebar()">☰</button>
+      <button class="hamburger" onclick="toggleSidebar()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      </button>
       <div class="topbar-title" id="topbarTitle">📚 Library</div>
     </div>
     <div class="topbar-right">
-      <!-- Night mode moved to sidebar settings -->
-      <div class="user-info-pill" id="userInfoPill" onclick="openUserMenu()" style="display:none;">
-        <div class="user-avatar" id="userAvatar">?</div>
+      <!-- User Profile Icon - Always visible, not affected by sidebar -->
+      <div class="topbar-user-btn" id="topbarUserBtn" onclick="openUserMenu()" style="display:none;" title="Profile">
+        <div class="topbar-user-avatar" id="topbarUserAvatar">?</div>
         <div class="sync-dot" id="syncDot"></div>
+      </div>
+      <!-- Old pill hidden, topbar-user-btn used instead -->
+      <div class="user-info-pill" id="userInfoPill" onclick="openUserMenu()" style="display:none !important;visibility:hidden;position:absolute;pointer-events:none;">
+        <div class="user-avatar" id="userAvatar">?</div>
+        <div class="sync-dot" id="syncDotOld"></div>
         <span id="userNameShort" style="max-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700;font-size:0.72rem;"></span>
       </div>
       <div class="api-pill">
@@ -4976,7 +5231,34 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
           <input type="number" class="inp" id="lqSDuration" value="30" min="5" max="180" />
         </div>
         <div class="field-group">
-          <label class="field-label">Questions (JSON ya topic se AI se banao):</label>
+          <label class="field-label">🔢 Questions kitne chahiye:</label>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="range" id="lqSQCountRange" min="5" max="50" value="10" style="flex:1;accent-color:var(--accent);"
+              oninput="document.getElementById('lqSQCount').value=this.value">
+            <input type="number" class="inp" id="lqSQCount" min="5" max="50" value="10"
+              style="width:64px;text-align:center;font-weight:700;color:var(--accent);"
+              oninput="document.getElementById('lqSQCountRange').value=this.value">
+          </div>
+          <div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap;">
+            <button class="btn btn-xs btn-outline" onclick="document.getElementById('lqSQCount').value=5;document.getElementById('lqSQCountRange').value=5">5</button>
+            <button class="btn btn-xs btn-outline" onclick="document.getElementById('lqSQCount').value=10;document.getElementById('lqSQCountRange').value=10">10</button>
+            <button class="btn btn-xs btn-outline" onclick="document.getElementById('lqSQCount').value=15;document.getElementById('lqSQCountRange').value=15">15</button>
+            <button class="btn btn-xs btn-outline" onclick="document.getElementById('lqSQCount').value=20;document.getElementById('lqSQCountRange').value=20">20</button>
+            <button class="btn btn-xs btn-outline" onclick="document.getElementById('lqSQCount').value=30;document.getElementById('lqSQCountRange').value=30">30</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">🤖 AI ke liye special instructions (optional):</label>
+          <input type="text" class="inp" id="lqSAiInstructions" placeholder="Jaise: Hard questions, sirf dates, PYQ style, English medium..." />
+          <div style="display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;">
+            <button class="btn btn-xs" style="background:rgba(74,20,140,0.1);color:var(--purple);border:1px solid rgba(74,20,140,0.2);border-radius:20px;" onclick="document.getElementById('lqSAiInstructions').value='Bahut mushkil aur tricky questions chahiye'">🔴 Hard</button>
+            <button class="btn btn-xs" style="background:rgba(74,20,140,0.1);color:var(--purple);border:1px solid rgba(74,20,140,0.2);border-radius:20px;" onclick="document.getElementById('lqSAiInstructions').value='PYQ pattern mein questions chahiye'">📝 PYQ Style</button>
+            <button class="btn btn-xs" style="background:rgba(74,20,140,0.1);color:var(--purple);border:1px solid rgba(74,20,140,0.2);border-radius:20px;" onclick="document.getElementById('lqSAiInstructions').value='Sirf dates aur saal wale questions'">📅 Dates</button>
+            <button class="btn btn-xs" style="background:rgba(74,20,140,0.1);color:var(--purple);border:1px solid rgba(74,20,140,0.2);border-radius:20px;" onclick="document.getElementById('lqSAiInstructions').value='Easy basic level questions'">🟢 Easy</button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="field-label">Questions (AI se generate karo ya JSON paste karo):</label>
           <div style="display:flex;gap:6px;margin-bottom:8px;">
             <select class="inp" id="lqSTopicSel" style="flex:1;font-size:0.78rem;"></select>
             <button class="btn btn-primary btn-sm" onclick="lqGenQuestionsAI()">🤖 AI Generate</button>
@@ -32858,10 +33140,669 @@ function _neRmSyncButtons() {
   esBtn.style.boxShadow   = esOn ? '0 0 0 2px rgba(229,57,53,0.25)':'';
   if(pill) pill.textContent = (hlOn||esOn) ? (hlOn?'🖊':'🧹') : '🖊';
 }
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: TOPBAR USER ICON — Always visible, profile pic support
+// ══════════════════════════════════════════════════════════════════════
+(function _patchTopbarUserIcon() {
+  // Patch the updateUserUI / onAuthStateChanged to also update topbar icon
+  var _origInterval = setInterval(function() {
+    if (typeof window._currentUser !== 'undefined') {
+      clearInterval(_origInterval);
+      _syncTopbarUser();
+      // Watch for changes
+      setInterval(_syncTopbarUser, 3000);
+    }
+  }, 500);
+
+  window._syncTopbarUser = function() {
+    var user = window._currentUser;
+    var btn = document.getElementById('topbarUserBtn');
+    var av  = document.getElementById('topbarUserAvatar');
+    var sd  = btn ? btn.querySelector('.sync-dot') : null;
+    if (!btn) return;
+
+    if (!user) { btn.style.display = 'none'; return; }
+    btn.style.display = 'flex';
+
+    // Profile pic check
+    var savedPic = null;
+    try { savedPic = localStorage.getItem('profilePic_' + user.uid); } catch(e){}
+    if (savedPic) {
+      av.innerHTML = '<img src="' + savedPic + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+    } else if (user.photoURL) {
+      av.innerHTML = '<img src="' + user.photoURL + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.parentNode.textContent=\'' + (user.displayName||user.email||'U').substring(0,1).toUpperCase() + '\'">';
+    } else {
+      var initials = (user.displayName || user.email || 'U').substring(0,1).toUpperCase();
+      av.textContent = initials;
+    }
+
+    // Sync dot color
+    if (sd) {
+      var online = navigator.onLine;
+      sd.style.background = online ? '#4caf50' : '#f44336';
+    }
+  };
+
+  // Also patch profile upload to update topbar avatar
+  var _origSaveProfilePic = window.saveProfilePic;
+  if (typeof _origSaveProfilePic === 'function') {
+    window.saveProfilePic = function() {
+      _origSaveProfilePic.apply(this, arguments);
+      setTimeout(_syncTopbarUser, 500);
+    };
+  }
+  // Sync when profile pic is updated
+  document.addEventListener('profilePicUpdated', _syncTopbarUser);
+})();
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: HELP OVERLAY
+// First time auto-show, baad mein sidebar se manual
+// ══════════════════════════════════════════════════════════════════════
+window.openHelpOverlay = function() {
+  var ov = document.getElementById('appHelpOverlay');
+  if (ov) { ov.classList.add('show'); }
+};
+window.closeHelpOverlay = function() {
+  var ov = document.getElementById('appHelpOverlay');
+  if (ov) { ov.classList.remove('show'); }
+  try { localStorage.setItem('helpSeen_v2', '1'); } catch(e) {}
+};
+
+// Auto show on first visit
+document.addEventListener('DOMContentLoaded', function() {
+  setTimeout(function() {
+    var seen = false;
+    try { seen = localStorage.getItem('helpSeen_v2') === '1'; } catch(e) {}
+    if (!seen && document.getElementById('appHelpOverlay')) {
+      window.openHelpOverlay();
+    }
+  }, 2000);
+});
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: RULES SECTION
+// Admin add/delete/modify kare, sab users dekh saken
+// ══════════════════════════════════════════════════════════════════════
+var _rulesData = [];
+var _rulesLoaded = false;
+
+window.openRulesSection = function() {
+  var ov = document.getElementById('rulesOverlay');
+  if (!ov) return;
+  ov.classList.add('show');
+  _loadRules();
+  // Show add section only for admin
+  var addSection = document.getElementById('rulesAdminSection');
+  if (addSection) {
+    addSection.style.display = (window._currentUser && window._currentUser.uid === window.OWNER_UID) ? 'block' : 'none';
+  }
+};
+window.closeRulesSection = function() {
+  var ov = document.getElementById('rulesOverlay');
+  if (ov) ov.classList.remove('show');
+};
+
+function _loadRules() {
+  var listEl = document.getElementById('rulesList');
+  if (!listEl) return;
+  if (window._db) {
+    listEl.innerHTML = '<div style="text-align:center;padding:16px;color:var(--text2);">⏳ Loading...</div>';
+    window._db.collection('app_config').doc('rules').get().then(function(doc) {
+      _rulesData = (doc.exists && doc.data().rules) ? doc.data().rules : [];
+      _renderRules();
+    }).catch(function() {
+      // Fallback to localStorage
+      try { _rulesData = JSON.parse(localStorage.getItem('appRules') || '[]'); } catch(e) { _rulesData = []; }
+      _renderRules();
+    });
+  } else {
+    try { _rulesData = JSON.parse(localStorage.getItem('appRules') || '[]'); } catch(e) { _rulesData = []; }
+    _renderRules();
+  }
+}
+
+function _renderRules() {
+  var listEl = document.getElementById('rulesList');
+  if (!listEl) return;
+  var isAdmin = window._currentUser && window._currentUser.uid === window.OWNER_UID;
+  if (_rulesData.length === 0) {
+    listEl.innerHTML = '<div class="rules-empty">📋 Abhi koi rules nahi hain.<br><span style="font-size:0.72rem;">Admin rules add kar sakta hai.</span></div>';
+    return;
+  }
+  listEl.innerHTML = _rulesData.map(function(r, i) {
+    return '<div class="rule-item">' +
+      '<div class="rule-num">' + (i+1) + '</div>' +
+      '<div class="rule-text">' + (r.text || r) + '</div>' +
+      (isAdmin ? '<button class="rule-del-btn" onclick="deleteRule(' + i + ')" title="Delete">✕</button>' : '') +
+      '</div>';
+  }).join('');
+}
+
+window.addRule = function() {
+  var inp = document.getElementById('ruleAddInput');
+  if (!inp) return;
+  var text = inp.value.trim();
+  if (!text) { showToast && showToast('Rule text likhein!', 'error'); return; }
+  _rulesData.push({ text: text, addedAt: Date.now() });
+  inp.value = '';
+  _saveRules();
+  _renderRules();
+  showToast && showToast('✅ Rule add ho gaya!', 'success');
+};
+
+window.deleteRule = function(idx) {
+  if (!confirm('Yeh rule delete karo?')) return;
+  _rulesData.splice(idx, 1);
+  _saveRules();
+  _renderRules();
+  showToast && showToast('Rule delete ho gaya', 'success');
+};
+
+function _saveRules() {
+  try { localStorage.setItem('appRules', JSON.stringify(_rulesData)); } catch(e) {}
+  if (window._db && window._currentUser && window._currentUser.uid === window.OWNER_UID) {
+    window._db.collection('app_config').doc('rules').set({ rules: _rulesData, updatedAt: firebase.firestore.FieldValue.serverTimestamp() })
+      .catch(function(e) { console.warn('Rules save error:', e); });
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: LIVE QUIZ POPUP NOTIFICATION
+// Jab admin quiz schedule kare, sab users ko top mein blinking popup
+// ══════════════════════════════════════════════════════════════════════
+var _lqPopupDismissed = {};
+var _lqPopupCheckTimer = null;
+
+function _startLqPopupWatcher() {
+  if (_lqPopupCheckTimer) return;
+  _lqPopupCheckTimer = setInterval(_checkLqPopup, 15000); // har 15 sec check
+  _checkLqPopup(); // immediate check
+}
+
+function _checkLqPopup() {
+  if (!window._db || !window._currentUser) return;
+  var now = Date.now();
+  // Check from cached _lqAllQuizzes if available
+  var quizzes = window._lqAllQuizzes || [];
+  var liveOrSoon = null;
+  for (var i = 0; i < quizzes.length; i++) {
+    var q = quizzes[i];
+    var start = q.scheduledAt ? q.scheduledAt.toMillis() : 0;
+    var end   = start + (q.duration || 30) * 60000;
+    var diff  = start - now;
+    // Show popup: quiz start hone wali hai (15 min se pehle) ya abhi live hai
+    if ((diff > 0 && diff <= 15 * 60000) || (now >= start && now <= end)) {
+      if (!_lqPopupDismissed[q.id]) {
+        liveOrSoon = q;
+        break;
+      }
+    }
+  }
+  if (liveOrSoon) {
+    _showLqPopup(liveOrSoon);
+  } else {
+    _hideLqPopup();
+  }
+}
+
+function _showLqPopup(quiz) {
+  var popup = document.getElementById('lqPopupNotif');
+  if (!popup) return;
+  var now = Date.now();
+  var start = quiz.scheduledAt ? quiz.scheduledAt.toMillis() : 0;
+  var isLive = now >= start;
+  var diff = start - now;
+  var timeStr = isLive ? 'LIVE chal raha hai!' : Math.ceil(diff / 60000) + ' min mein shuru';
+
+  var titleEl = popup.querySelector('.lq-popup-title');
+  var subEl   = popup.querySelector('.lq-popup-sub');
+  if (titleEl) titleEl.textContent = isLive ? '🔴 Live Quiz: ' + (quiz.title || 'Quiz') : '⚡ Quiz Aane Wali: ' + (quiz.title || 'Quiz');
+  if (subEl)   subEl.textContent   = timeStr + (quiz.message ? ' • ' + quiz.message : '');
+
+  popup._quizId = quiz.id;
+  popup.classList.add('show');
+  if (isLive) popup.classList.add('blinking');
+  else popup.classList.remove('blinking');
+}
+
+function _hideLqPopup() {
+  var popup = document.getElementById('lqPopupNotif');
+  if (popup) { popup.classList.remove('show', 'blinking'); }
+}
+
+window.dismissLqPopup = function() {
+  var popup = document.getElementById('lqPopupNotif');
+  if (popup && popup._quizId) _lqPopupDismissed[popup._quizId] = true;
+  _hideLqPopup();
+};
+
+window.goToLiveQuizFromPopup = function() {
+  _hideLqPopup();
+  if (typeof showPage === 'function') {
+    var navItem = document.querySelector('[data-page="livequiz"]');
+    showPage('livequiz', navItem);
+    if (typeof toggleSidebar === 'function') {
+      var sidebar = document.getElementById('sidebar');
+      if (sidebar && sidebar.classList.contains('open')) toggleSidebar();
+    }
+    if (typeof lqLoadPage === 'function') lqLoadPage();
+  }
+};
+
+// Start watcher when user is logged in
+document.addEventListener('DOMContentLoaded', function() {
+  var _watchTimer = setInterval(function() {
+    if (window._currentUser && window._lqAllQuizzes !== undefined) {
+      clearInterval(_watchTimer);
+      _startLqPopupWatcher();
+    }
+  }, 2000);
+});
+
+// Also trigger check when live quiz page loads
+(function() {
+  var _origLqLoadPage = window.lqLoadPage;
+  if (typeof _origLqLoadPage === 'function') {
+    window.lqLoadPage = function() {
+      _origLqLoadPage.apply(this, arguments);
+      setTimeout(_checkLqPopup, 1500);
+    };
+  }
+})();
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: LIVE QUIZ — Question Count + AI Instructions
+// lqGenQuestionsAI ko update karo
+// ══════════════════════════════════════════════════════════════════════
+(function _patchLqGenQuestionsAI() {
+  var _origFn = window.lqGenQuestionsAI;
+  window.lqGenQuestionsAI = async function() {
+    var topicId = document.getElementById('lqSTopicSel') ? document.getElementById('lqSTopicSel').value : '';
+    var statusEl = document.getElementById('lqAiGenStatus');
+    var qCount = parseInt(document.getElementById('lqSQCount') ? document.getElementById('lqSQCount').value : '10') || 10;
+    var instructions = document.getElementById('lqSAiInstructions') ? document.getElementById('lqSAiInstructions').value.trim() : '';
+
+    if (!topicId) { if(statusEl) statusEl.textContent='❌ Pehle topic chunno!'; return; }
+    var topic = null;
+    for (var s of (window.S && S.subjects) || []) { for (var sec of s.sections||[]) { var t=sec.topics.find(x=>x.id==topicId); if(t){topic=t;break;} } if(topic) break; }
+    if (!topic) { if(statusEl) statusEl.textContent='❌ Topic nahi mila!'; return; }
+    var apiKey = (window.S && S.apiKey2) || localStorage.getItem('groqApiKey2');
+    if (!apiKey) { if(statusEl) statusEl.textContent='❌ Groq API Key nahi! Settings mein daalo.'; return; }
+    if(statusEl) statusEl.textContent='⏳ AI ' + qCount + ' questions bana raha hai...';
+    var notes = (topic.finalNotes||'') + (topic.notes||[]).map(n=>n.content||'').join('\n');
+    var extraInstr = instructions ? '\n\nSpecial Instructions: ' + instructions : '';
+    var prompt = 'Topic: '+topic.name+'\nNotes:\n'+notes.substring(0,3000)+extraInstr+'\n\nIn notes ke basis par EXACTLY '+qCount+' MCQ questions banao. Return ONLY valid JSON array:\n[{"q":"Question?","opts":["A","B","C","D"],"ans":0,"exp":"Explanation"}]\nans is 0-indexed correct option. No markdown, no extra text. Exactly '+qCount+' questions.';
+    try {
+      var res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method:'POST',
+        headers:{'Authorization':'Bearer '+apiKey,'Content-Type':'application/json'},
+        body:JSON.stringify({model:'llama3-70b-8192',messages:[{role:'user',content:prompt}],temperature:0.7,max_tokens:4000})
+      });
+      var data = await res.json();
+      var text = data.choices[0].message.content;
+      var clean = text.replace(/```json|```/g,'').trim();
+      var questions = JSON.parse(clean);
+      if (!Array.isArray(questions) || questions.length === 0) throw new Error('Invalid response');
+      var qEl = document.getElementById('lqSQuestions');
+      if(qEl) qEl.value = JSON.stringify(questions, null, 2);
+      if(statusEl) statusEl.innerHTML = '✅ <strong>'+questions.length+' questions</strong> generate ho gaye! Review karo phir schedule karo.';
+      showToast && showToast('✅ ' + questions.length + ' questions ready!', 'success');
+    } catch(e) {
+      if(statusEl) statusEl.textContent = '❌ Error: ' + e.message;
+    }
+  };
+})();
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: QUIZ SUBMIT — Question Save to Topic / Flashcard
+// ══════════════════════════════════════════════════════════════════════
+window.openSaveQuestionModal = function(questionObj, quizTitle) {
+  var ov = document.getElementById('saveQOverlay');
+  if (!ov) return;
+  ov._questionObj = questionObj;
+  ov._quizTitle   = quizTitle || 'Quiz';
+  ov.classList.add('show');
+
+  // Populate subject/topic dropdowns
+  var subjSel = document.getElementById('saveQSubjectSel');
+  if (subjSel && window.S && S.subjects) {
+    subjSel.innerHTML = '<option value="">-- Subject chunno --</option>';
+    S.subjects.forEach(function(subj, si) {
+      subjSel.innerHTML += '<option value="' + si + '">' + (subj.name||'Subject') + '</option>';
+    });
+    subjSel.onchange = function() {
+      var topSel = document.getElementById('saveQTopicSel');
+      if (!topSel) return;
+      topSel.innerHTML = '<option value="">-- Topic chunno --</option>';
+      var subj = S.subjects[parseInt(this.value)];
+      if (!subj) return;
+      (subj.sections||[]).forEach(function(sec, sei) {
+        (sec.topics||[]).forEach(function(t, ti) {
+          topSel.innerHTML += '<option value="'+sei+'_'+ti+'">' + (t.name||'Topic') + '</option>';
+        });
+      });
+    };
+  }
+
+  // Populate question preview
+  var prevEl = document.getElementById('saveQPreview');
+  if (prevEl && questionObj) {
+    prevEl.textContent = (questionObj.q || questionObj.question || '').substring(0, 150);
+  }
+};
+
+window.closeSaveQuestionModal = function() {
+  var ov = document.getElementById('saveQOverlay');
+  if (ov) { ov.classList.remove('show'); ov._questionObj = null; }
+};
+
+window.saveQuestionToTopic = function(asFlashcard) {
+  var ov = document.getElementById('saveQOverlay');
+  if (!ov || !ov._questionObj) return;
+  var q = ov._questionObj;
+  var subjIdx = parseInt(document.getElementById('saveQSubjectSel').value);
+  var topicVal = document.getElementById('saveQTopicSel').value;
+  if (isNaN(subjIdx) || !topicVal) { showToast && showToast('Subject aur Topic chunno!', 'error'); return; }
+  var parts = topicVal.split('_');
+  var sei = parseInt(parts[0]), ti = parseInt(parts[1]);
+  var subj = S.subjects && S.subjects[subjIdx];
+  var sec  = subj && subj.sections && subj.sections[sei];
+  var topic = sec && sec.topics && sec.topics[ti];
+  if (!topic) { showToast && showToast('Topic nahi mila!', 'error'); return; }
+
+  var opts = q.opts || q.options || [];
+  var correctIdx = (q.ans !== undefined) ? q.ans : q.correct;
+  var qText = (q.q || q.question || '') + '\n\nOptions: ' + opts.map(function(o,i){return String.fromCharCode(65+i)+') '+o;}).join(', ') + '\nSahi Jawab: ' + (opts[correctIdx]||'') + (q.exp?'\nExplanation: '+q.exp:'');
+
+  if (asFlashcard) {
+    if (!topic.flashcards) topic.flashcards = [];
+    topic.flashcards.push({
+      id: Date.now(),
+      front: q.q || q.question || '',
+      back: (opts[correctIdx]||'') + (q.exp ? '\n\n' + q.exp : ''),
+      source: 'Quiz: ' + (ov._quizTitle||''),
+      createdAt: Date.now(),
+      dueDate: Date.now(),
+      interval: 1, easeFactor: 2.5, repetitions: 0
+    });
+    showToast && showToast('✅ Flashcard bana di!', 'success');
+  } else {
+    if (!topic.savedFacts) topic.savedFacts = [];
+    topic.savedFacts.push({ text: qText, source: 'Quiz: ' + (ov._quizTitle||''), savedAt: Date.now() });
+    showToast && showToast('✅ Question saved!', 'success');
+  }
+
+  if (typeof save === 'function') save();
+  if (typeof saveToFirebase === 'function' && window._currentUser && window._db) saveToFirebase();
+  window.closeSaveQuestionModal();
+};
+
+// Patch lqSubmitAttempt to add save button in results
+(function _patchLqResultsWithSave() {
+  var _origLqViewResult = window.lqViewResult;
+  if (typeof _origLqViewResult !== 'function') return;
+  window.lqViewResult = async function(quizId) {
+    await _origLqViewResult.apply(this, arguments);
+    // Add "Save Question" button to each question card in results
+    var body = document.getElementById('lqResultBody');
+    if (!body) return;
+    var q = (window._lqAllQuizzes||[]).find(function(x){return x.id===quizId;});
+    if (!q || !q.questions) return;
+    // Find question detail divs and add save buttons
+    var qDivs = body.querySelectorAll('[style*="border-radius:10px"]');
+    qDivs.forEach(function(div, i) {
+      var questionObj = q.questions[i];
+      if (!questionObj) return;
+      if (div.querySelector('.lq-save-q-btn')) return; // already added
+      var saveBtn = document.createElement('button');
+      saveBtn.className = 'btn btn-xs btn-outline lq-save-q-btn';
+      saveBtn.style.cssText = 'margin-top:6px;font-size:0.68rem;color:var(--purple);border-color:rgba(74,20,140,0.3);';
+      saveBtn.innerHTML = '📌 Save';
+      saveBtn.onclick = function() { window.openSaveQuestionModal(questionObj, q.title); };
+      div.appendChild(saveBtn);
+    });
+  };
+})();
+
+// ══════════════════════════════════════════════════════════════════════
+// FEATURE: CROSS-DEVICE SYNC INDICATOR ENHANCEMENT
+// User ko batao ki sync ho raha hai
+// ══════════════════════════════════════════════════════════════════════
+(function _enhanceSyncIndicator() {
+  // Patch saveToFirebase to show sync animation
+  var _origSaveToFirebase = window.saveToFirebase;
+  if (typeof _origSaveToFirebase !== 'function') return;
+  window.saveToFirebase = function() {
+    _showSyncingDot();
+    var result = _origSaveToFirebase.apply(this, arguments);
+    if (result && typeof result.then === 'function') {
+      result.then(function() { _showSyncedDot(); }).catch(function() { _showSyncErrorDot(); });
+    } else {
+      setTimeout(_showSyncedDot, 1500);
+    }
+    return result;
+  };
+})();
+
+function _showSyncingDot() {
+  var dots = document.querySelectorAll('#syncDot, .topbar-user-btn .sync-dot');
+  dots.forEach(function(d) { d.style.background = '#ff9800'; d.title = 'Sync ho raha hai...'; });
+}
+function _showSyncedDot() {
+  var dots = document.querySelectorAll('#syncDot, .topbar-user-btn .sync-dot');
+  dots.forEach(function(d) { d.style.background = '#4caf50'; d.title = 'Synced ✓'; });
+}
+function _showSyncErrorDot() {
+  var dots = document.querySelectorAll('#syncDot, .topbar-user-btn .sync-dot');
+  dots.forEach(function(d) { d.style.background = '#f44336'; d.title = 'Sync error'; });
+}
 </script>
 
 <!-- Floating Text-Copy Button (Browse mode) -->
 <button id="browseFloatingCopy" onclick="browseFloatingCopyAction()">📋 Copy Selection</button>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- LIVE QUIZ POPUP NOTIFICATION (top of screen) -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="lq-popup-notif" id="lqPopupNotif" onclick="goToLiveQuizFromPopup()">
+  <div class="lq-popup-dot"></div>
+  <div class="lq-popup-text">
+    <div class="lq-popup-title">⚡ Live Quiz Alert</div>
+    <div class="lq-popup-sub">Loading...</div>
+  </div>
+  <button class="lq-popup-join" onclick="event.stopPropagation();goToLiveQuizFromPopup()">Join ▶</button>
+  <button class="lq-popup-close" onclick="event.stopPropagation();dismissLqPopup()" title="Dismiss">✕</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- HELP OVERLAY — App Guide -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="help-overlay" id="appHelpOverlay" onclick="if(event.target===this)closeHelpOverlay()">
+  <div class="help-panel">
+    <div class="help-header">
+      <div>
+        <div class="help-header-title">🏛️ Exam Prep Pro — Guide</div>
+        <div class="help-header-sub">App ke saare features ki jankari</div>
+      </div>
+      <button class="help-close-btn" onclick="closeHelpOverlay()">✕</button>
+    </div>
+    <div class="help-body">
+
+      <div class="help-section">
+        <div class="help-section-title">📖 Padhna — Study Features</div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🏛️</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Library</div>
+            <div class="help-feature-desc">Subject → Section → Topic hierarchy mein notes organize karo. Kisi bhi topic ko click karo aur notes padho, edit karo, flashcards dekho.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🧠</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Smart Notes</div>
+            <div class="help-feature-desc">AI automatically notes ko points mein convert karta hai. Exam ke liye important points highlight hote hain.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">📌</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Saved Facts</div>
+            <div class="help-feature-desc">Quiz ya notes padhte waqt jo important facts save karo, sab yahan dikhai dete hain. Quick revision ke liye best.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🤖</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">AI Chat</div>
+            <div class="help-feature-desc">Koi bhi topic ke baare mein AI se poochho. Notes editor aur canvas ke saath side-by-side use karo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <div class="help-section-title">⚔️ Practice — Quiz Features</div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">⚡</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Live Quiz</div>
+            <div class="help-feature-desc">Admin scheduled quizzes — sab ek saath attempt karo aur leaderboard mein rank dekho. Jab quiz start ho, screen par notification aata hai.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">📝</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Quiz</div>
+            <div class="help-feature-desc">Apne notes se AI quiz generate karo. Subject, topic, count aur difficulty set karo. AI Director se custom quiz banwao.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🗄️</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Quiz Vault</div>
+            <div class="help-feature-desc">Saare generated questions store rehte hain. Wrong, saved, doubt wale filter karke review karo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <div class="help-section-title">🎨 Notes Editor — Writing Tools</div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">✏️</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Notes Editor</div>
+            <div class="help-feature-desc">Rich text editor mein notes likhो ya edit karo. Highlight, drawing, tables, mind maps — sab possible hai.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🎨</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Study Canvas</div>
+            <div class="help-feature-desc">Visual slides banao — text blocks, drawing, mind map (QMap). Notes se content directly canvas par bhejo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="help-section">
+        <div class="help-section-title">☁️ Cloud Sync & Account</div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🔄</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Cross-Device Sync</div>
+            <div class="help-feature-desc">Same Gmail se login karo — sabhi devices par data automatically sync hota hai. Topbar par green dot = synced.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">👤</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Profile & Settings</div>
+            <div class="help-feature-desc">Topbar ya sidebar mein apna icon tap karo — profile pic upload karo, settings dekho, logout karo.</div>
+          </div>
+        </div>
+        <div class="help-feature-card">
+          <div class="help-feature-icon">🌙</div>
+          <div class="help-feature-info">
+            <div class="help-feature-name">Night Mode</div>
+            <div class="help-feature-desc">Sidebar ke neeche "Night Mode" button — raat ko aankhon ke liye dark theme on karo.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;padding:8px 0 4px;">
+        <button class="btn btn-primary" onclick="closeHelpOverlay()" style="min-width:160px;">
+          ✅ Samajh Gaya — Shuru Karo!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- RULES OVERLAY -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="rules-overlay" id="rulesOverlay" onclick="if(event.target===this)closeRulesSection()">
+  <div class="rules-panel">
+    <div class="rules-header">
+      <div>
+        <div class="rules-title">📋 App Rules</div>
+        <div style="font-size:0.72rem;color:var(--text2);margin-top:2px;">Admin ke instructions — dhyan se padho</div>
+      </div>
+      <button class="btn btn-outline btn-sm" onclick="closeRulesSection()">✕ Close</button>
+    </div>
+    <div class="rules-body">
+      <div id="rulesList">
+        <div class="rules-empty">⏳ Loading...</div>
+      </div>
+      <!-- Admin-only add section -->
+      <div id="rulesAdminSection" style="display:none;margin-top:16px;border-top:1.5px solid var(--border);padding-top:14px;">
+        <div style="font-size:0.78rem;font-weight:800;color:var(--accent);margin-bottom:8px;">👑 Admin — Rule Add Karo</div>
+        <div class="rule-add-row">
+          <input type="text" class="rule-add-input" id="ruleAddInput" placeholder="Naya rule likhein... (jaise: Notes copy mat karo)" />
+          <button class="btn btn-primary btn-sm" onclick="addRule()">➕ Add</button>
+        </div>
+        <div style="font-size:0.7rem;color:var(--text2);margin-top:6px;">💡 Rules Firebase mein save hote hain — sab users dekh sakte hain</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SAVE QUESTION TO TOPIC / FLASHCARD MODAL -->
+<!-- ══════════════════════════════════════════════════════════════ -->
+<div class="save-q-overlay" id="saveQOverlay" onclick="if(event.target===this)closeSaveQuestionModal()">
+  <div class="save-q-panel">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div style="font-family:'Baloo 2',sans-serif;font-size:1rem;font-weight:800;color:var(--accent);">📌 Question Save Karo</div>
+      <button class="btn btn-outline btn-sm" onclick="closeSaveQuestionModal()">✕</button>
+    </div>
+    <!-- Question preview -->
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:0.8rem;color:var(--text);line-height:1.6;max-height:80px;overflow:hidden;" id="saveQPreview"></div>
+    <!-- Topic selection -->
+    <div class="field-group">
+      <label class="field-label">📗 Subject:</label>
+      <select class="inp" id="saveQSubjectSel"><option value="">-- Subject chunno --</option></select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">📙 Topic:</label>
+      <select class="inp" id="saveQTopicSel"><option value="">-- Pehle subject chunno --</option></select>
+    </div>
+    <!-- Save options -->
+    <div style="display:flex;gap:8px;margin-top:14px;">
+      <button class="btn btn-purple" style="flex:1;" onclick="saveQuestionToTopic(false)">
+        📌 Saved Facts mein
+      </button>
+      <button class="btn btn-orange" style="flex:1;" onclick="saveQuestionToTopic(true)">
+        🃏 Flashcard banao
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════ -->
+<!-- SCHEDULE MODAL ENHANCEMENT — already added in modal HTML above -->
+<!-- ══════════════════════════════════════════════════════════════ -->
 
 </body>
 </html>
