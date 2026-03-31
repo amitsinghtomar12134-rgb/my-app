@@ -863,6 +863,28 @@ textarea:focus{border-color:var(--accent);background:var(--surface);}
 .user-info-pill{display:flex;align-items:center;gap:6px;background:var(--surface2);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:0.74rem;cursor:pointer;}
 .user-avatar{width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;flex-shrink:0;}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:#ccc;flex-shrink:0;}
+
+/* ── Browse Page ── */
+.browse-member-card{background:var(--surface);border:1.5px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:all 0.18s;}
+.browse-member-card:hover,.browse-member-card:active{border-color:var(--accent);background:rgba(21,101,192,0.04);transform:translateY(-1px);box-shadow:0 4px 14px rgba(21,101,192,0.1);}
+.browse-member-avatar{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent3));color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:800;flex-shrink:0;}
+.browse-member-name{font-weight:800;font-size:0.9rem;color:var(--text);}
+.browse-member-meta{font-size:0.72rem;color:var(--text2);margin-top:2px;}
+.browse-subject-block{background:var(--surface);border:1.5px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
+.browse-subject-header{padding:11px 14px;font-weight:800;font-size:0.88rem;color:var(--accent);display:flex;align-items:center;justify-content:space-between;cursor:pointer;background:var(--surface2);}
+.browse-section-header{padding:8px 14px 8px 18px;font-weight:700;font-size:0.8rem;color:var(--text2);background:var(--surface);border-top:1px solid var(--border);}
+.browse-topic-row{padding:8px 14px 8px 24px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(0,0,0,0.04);cursor:pointer;transition:background 0.15s;}
+.browse-topic-row:hover{background:rgba(21,101,192,0.04);}
+.browse-topic-name{font-size:0.82rem;color:var(--text);font-weight:600;flex:1;}
+.browse-copy-topic-btn{font-size:0.68rem;padding:3px 9px;background:rgba(21,101,192,0.1);border:1px solid rgba(21,101,192,0.25);border-radius:20px;color:var(--accent);cursor:pointer;font-weight:700;white-space:nowrap;flex-shrink:0;}
+.browse-note-card{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:7px;}
+.browse-note-name{font-weight:700;font-size:0.82rem;color:var(--text);margin-bottom:5px;}
+.browse-note-content{font-size:0.8rem;line-height:1.75;color:var(--text);white-space:pre-wrap;word-break:break-word;user-select:text;-webkit-user-select:text;}
+.browse-note-actions{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;}
+.browse-copy-note-btn{font-size:0.73rem;padding:4px 12px;background:var(--accent);color:#fff;border:none;border-radius:20px;cursor:pointer;font-weight:700;font-family:inherit;}
+/* Floating text-copy button */
+#browseFloatingCopy{position:fixed;display:none;z-index:9000;background:var(--accent);color:#fff;border:none;border-radius:20px;padding:7px 16px;font-size:0.8rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,0.25);font-family:inherit;white-space:nowrap;}
+#browseFloatingCopy.show{display:block;animation:fadeIn 0.15s ease;}
 .sync-dot.synced{background:var(--green);}
 .sync-dot.syncing{background:var(--accent2);animation:pulse 1s infinite;}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
@@ -4004,6 +4026,10 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
     </div>
 
     <div class="sb-group-title">More</div>
+    <div class="nav-item" id="browseNavItem" onclick="showPage('browse',this)" data-page="browse">
+      <span class="sb-icon">👥</span>
+      <span class="sb-label">Sabke Notes</span>
+    </div>
     <div class="nav-item" onclick="showPage('settings',this)" data-page="settings">
       <span class="sb-icon">⚙️</span>
       <span class="sb-label">Settings</span>
@@ -4622,6 +4648,63 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
       </div>
 
     </div><!-- /page-adminpanel -->
+
+    <!-- ══════════════════════════════════════ -->
+    <!-- BROWSE PAGE — Sabke Notes              -->
+    <!-- ══════════════════════════════════════ -->
+    <div id="page-browse" class="page">
+      <div class="page-header">
+        <div>
+          <div class="page-title">👥 Sabke Notes</div>
+          <div class="page-subtitle" id="browseSubtitle">Members list load ho rahi hai...</div>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="browseLoadMembers()">🔄</button>
+      </div>
+
+      <!-- Members List (shown initially) -->
+      <div id="browseMemberListArea">
+        <div id="browseMemberList" style="margin-top:4px;">
+          <div style="text-align:center;padding:40px;color:var(--text2);">⏳ Loading members...</div>
+        </div>
+      </div>
+
+      <!-- Member's Library Tree (shown after clicking a member) -->
+      <div id="browseMemberContent" style="display:none;">
+        <!-- Back button + member name header -->
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding:10px 0;border-bottom:1.5px solid var(--border);">
+          <button onclick="browseBackToList()" class="btn btn-outline btn-sm">‹ Wapas</button>
+          <div>
+            <div id="browseViewingName" style="font-weight:800;font-size:0.9rem;color:var(--accent);">Member</div>
+            <div style="font-size:0.72rem;color:var(--text2);">Read Only — Copy kar sakte ho apne deck mein</div>
+          </div>
+        </div>
+
+        <!-- Copy All Toast info -->
+        <div style="background:rgba(21,101,192,0.06);border:1.5px solid rgba(21,101,192,0.2);border-radius:10px;padding:9px 13px;margin-bottom:12px;font-size:0.77rem;color:var(--text2);line-height:1.6;">
+          💡 <strong>Copy karne ke 3 tarike:</strong><br>
+          1️⃣ Note card pe <strong>"📋 Copy"</strong> button — poora note copy<br>
+          2️⃣ Topic ke upar <strong>"📥 Topic Copy"</strong> — poora topic apne deck mein<br>
+          3️⃣ Text select karo → <strong>floating Copy button</strong> aayega
+        </div>
+
+        <!-- Library tree for selected member -->
+        <div id="browseMemberTree"></div>
+      </div>
+
+      <!-- Topic View Modal for Browse (read-only) -->
+      <div id="browseTopicModal" style="display:none;position:fixed;inset:0;background:var(--bg);z-index:800;flex-direction:column;">
+        <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1.5px solid var(--border);background:var(--surface);flex-shrink:0;">
+          <button onclick="closeBrowseTopicModal()" class="btn btn-outline btn-sm">‹ Wapas</button>
+          <div style="flex:1;min-width:0;">
+            <div id="browseTopicTitle" style="font-weight:800;font-size:0.9rem;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+            <div style="font-size:0.68rem;color:var(--text2);">Read Only Mode 🔒</div>
+          </div>
+          <button onclick="browseCopyFullTopic()" class="btn btn-primary btn-sm" style="font-size:0.75rem;flex-shrink:0;">📥 Topic Copy</button>
+        </div>
+        <div id="browseTopicContent" style="flex:1;overflow-y:auto;padding:14px;-webkit-overflow-scrolling:touch;"></div>
+      </div>
+
+    </div><!-- /page-browse -->
 
   </div><!-- /page-area -->
 </div><!-- /main-content -->
@@ -6202,7 +6285,7 @@ function saveApiKey2(){
 function showApiStatus(m,t){document.getElementById('apiStatus').innerHTML=`<span style="font-size:0.76rem;padding:3px 9px;border-radius:20px;display:inline-block;background:${t==='saved'?'rgba(46,125,50,0.1)':'rgba(198,40,40,0.1)'};color:${t==='saved'?'var(--green)':'var(--red)'};">${m}</span>`;}
 
 // ==================== TABS ====================
-const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History','adminpanel':'👑 Admin Panel'};
+const PAGE_TITLES={'library':'📚 Library','savedFacts':'📌 Saved Facts','exams':'🎯 Exam Profiles','quiz':'❓ Quiz','quizvault':'🗄️ Quiz Vault','history':'📜 History','smartnotes':'🧠 Smart Notes','stats':'📊 Stats','settings':'⚙️ Settings','aichathistory':'💬 AI Chat History','adminpanel':'👑 Admin Panel','browse':'👥 Sabke Notes'};
 function showPage(p,el,_skipHistory){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
@@ -6224,6 +6307,9 @@ function showPage(p,el,_skipHistory){
   if(p==='adminpanel'){
     adminLoadPending();
     adminLoadMembers();
+  }
+  if(p==='browse'){
+    browseLoadMembers();
   }
   if(window.innerWidth<=768){document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('show');}
   if(!_skipHistory){history.pushState({type:'page',page:p},'');}
@@ -12472,9 +12558,352 @@ async function choosePersonalMode(){
   showToast('Mera Deck khul gaya! 👤', 'success');
 }
 
+// ══════════════════════════════════════════════════════
+// PHASE 2 — BROWSE MODE (Sabke Notes — Read + Copy)
+// ══════════════════════════════════════════════════════
+
+let _browseCurrentMember = null; // {uid, name, subjects:[]}
+let _browseCurrentTopic  = null; // topic object being viewed
+let _browseSelectedText  = '';   // for floating copy button
+
 async function chooseBrowseMode(){
-  // Phase 2 feature — abhi placeholder
-  showToast('Yeh feature jald aayega! (Phase 2) 🚧', 'info');
+  // Keep _appMode = 'personal' so sync still works
+  // Browse is just a read-view, personal deck editing unaffected
+  if(_appMode !== 'personal') _appMode = 'personal';
+  hideModeScreen();
+  // Navigate to browse page
+  const browseNav = document.querySelector('[data-page="browse"]');
+  showPage('browse', browseNav);
+  showToast('Sabke Notes khul gaye! 👥', 'success');
+}
+
+// ── Load all approved members list ──
+async function browseLoadMembers(){
+  if(!_db || !_currentUser){ return; }
+  const el = document.getElementById('browseMemberList');
+  const sub = document.getElementById('browseSubtitle');
+  if(el) el.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">⏳ Members load ho rahe hain...</div>';
+  try{
+    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
+      ()=> _db.collection('app_config').doc('security').get()
+    );
+    if(!cfgDoc.exists){ if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">Config nahi mila.</div>'; return; }
+    const cfg = cfgDoc.data();
+    const memberKeys = cfg.member_keys || {};
+    const memberNames = cfg.member_names || {};
+    const revokedUids = cfg.revoked_uids || [];
+    // All members who have keys (approved) + not revoked
+    const uids = Object.keys(memberKeys).filter(uid => !revokedUids.includes(uid));
+    if(sub) sub.textContent = uids.length + ' members available';
+    if(!el) return;
+    if(uids.length === 0){
+      el.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text2);">Abhi koi member nahi hai.</div>';
+      return;
+    }
+    el.innerHTML = uids.map(uid => {
+      const name = memberNames[uid] || 'Member';
+      const isMe = uid === (_currentUser ? _currentUser.uid : '');
+      const isAdmin = uid === OWNER_UID;
+      const initials = name.substring(0,2).toUpperCase();
+      return `<div class="browse-member-card" onclick="browseOpenMember('${uid}','${name.replace(/'/g,"\\'")}')">
+        <div class="browse-member-avatar">${initials}</div>
+        <div style="flex:1;min-width:0;">
+          <div class="browse-member-name">${isAdmin?'👑 ':''}${name}${isMe?' (Tum)':''}</div>
+          <div class="browse-member-meta">${isAdmin ? 'Admin — Owner notes' : 'Member notes'} • Click to browse</div>
+        </div>
+        <span style="font-size:1.2rem;color:var(--text2);">›</span>
+      </div>`;
+    }).join('');
+  }catch(e){
+    if(el) el.innerHTML = '❌ Error: ' + e.message;
+  }
+}
+
+// ── Open a specific member's library ──
+async function browseOpenMember(uid, name){
+  if(!_db){ showToast('Connection error!','error'); return; }
+  const listArea = document.getElementById('browseMemberListArea');
+  const contentArea = document.getElementById('browseMemberContent');
+  const treeEl = document.getElementById('browseMemberTree');
+  const nameEl = document.getElementById('browseViewingName');
+  if(nameEl) nameEl.textContent = name + ' ke Notes';
+  if(listArea) listArea.style.display = 'none';
+  if(contentArea) contentArea.style.display = 'block';
+  if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">⏳ Notes load ho rahe hain...</div>';
+  _browseCurrentMember = {uid, name, subjects:[]};
+  try{
+    // Load subject shells
+    const metaDoc = await _db.collection('users').doc(uid).get();
+    if(!metaDoc.exists){
+      if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Is member ke abhi koi notes nahi hain.</div>';
+      return;
+    }
+    const meta = metaDoc.data();
+    const subjectIds = meta.subjectIds || [];
+    if(subjectIds.length === 0){
+      if(treeEl) treeEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Is member ke abhi koi notes nahi hain.</div>';
+      return;
+    }
+    // Load all subject shells
+    const shellDocs = await Promise.all(
+      subjectIds.map(id => _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get())
+    );
+    // Load all topics
+    const topicDocs = await _db.collection('users').doc(uid).collection('topics').get();
+    const topicMap = {};
+    topicDocs.forEach(d => {
+      const td = d.data();
+      if(td && td.topic) topicMap[String(td.topic.id)] = td.topic;
+    });
+    // Reassemble subjects
+    const subjects = shellDocs.filter(d => d.exists).map(d => {
+      const shell = d.data().shell;
+      if(!shell) return null;
+      shell.sections = (shell.sectionMeta||[]).map(sm => {
+        sm.topics = (sm.topicIds||[]).map(tid => topicMap[String(tid)]).filter(Boolean);
+        delete sm.topicIds;
+        return sm;
+      });
+      delete shell.sectionMeta;
+      return shell;
+    }).filter(Boolean);
+    _browseCurrentMember.subjects = subjects;
+    browseRenderTree(subjects, uid, name, treeEl);
+  }catch(e){
+    if(treeEl) treeEl.innerHTML = '❌ Error loading: ' + e.message;
+    showToast('Load error: '+e.message,'error');
+  }
+}
+
+// ── Render library tree for a member ──
+function browseRenderTree(subjects, uid, memberName, container){
+  if(!container) return;
+  if(!subjects || subjects.length === 0){
+    container.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text2);">Koi data nahi mila.</div>';
+    return;
+  }
+  container.innerHTML = subjects.map((subj, si) => {
+    const sections = (subj.sections||[]).map((sec, sei) => {
+      const topics = (sec.topics||[]).map((t, ti) => {
+        const noteCount = (t.notes||[]).length;
+        const fcCount = (t.flashcards||[]).length;
+        return `<div class="browse-topic-row" onclick="browseOpenTopic(${si},${sei},${ti})">
+          <div class="browse-topic-name">📄 ${t.name||'Topic'} <span style="font-size:0.65rem;color:var(--text2);">${noteCount>0?noteCount+' notes ':''}</span></div>
+          <button class="browse-copy-topic-btn" onclick="event.stopPropagation();browseCopyTopicDirect(${si},${sei},${ti})">📥 Copy</button>
+        </div>`;
+      }).join('');
+      return `<div class="browse-section-header">📁 ${sec.name||'Section'}</div>${topics}`;
+    }).join('');
+    return `<div class="browse-subject-block">
+      <div class="browse-subject-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'block':'none'">
+        <span>📚 ${subj.name||'Subject'}</span>
+        <span style="font-size:0.7rem;font-weight:400;color:var(--text2);">▼</span>
+      </div>
+      <div>${sections}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── Go back to member list ──
+function browseBackToList(){
+  _browseCurrentMember = null;
+  document.getElementById('browseMemberListArea').style.display = 'block';
+  document.getElementById('browseMemberContent').style.display = 'none';
+  browseHideFloatingCopy();
+}
+
+// ── Open topic in read-only modal ──
+function browseOpenTopic(si, sei, ti){
+  if(!_browseCurrentMember) return;
+  const subj = _browseCurrentMember.subjects[si];
+  const sec = subj && subj.sections[sei];
+  const t = sec && sec.topics[ti];
+  if(!t) return;
+  _browseCurrentTopic = {topic: t, si, sei, ti, subjName: subj.name, secName: sec.name};
+  document.getElementById('browseTopicTitle').textContent = t.name;
+  const modal = document.getElementById('browseTopicModal');
+  modal.style.display = 'flex';
+  const content = document.getElementById('browseTopicContent');
+  // Render all note cards + final notes + facts
+  let html = '';
+  // Final Notes
+  if(t.finalNotes && t.finalNotes.length > 0){
+    html += `<div style="font-weight:800;font-size:0.85rem;color:var(--accent);margin-bottom:8px;margin-top:4px;">⭐ Final Notes</div>`;
+    html += `<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:12px;margin-bottom:12px;">`;
+    html += `<div class="browse-note-content" id="browseFinNotes">${(t.finalNotesHTML || t.finalNotes.map(p=>p.text||p).join('\n'))}</div>`;
+    html += `<div class="browse-note-actions">
+      <button class="browse-copy-note-btn" onclick="browseCopyText(document.getElementById('browseFinNotes').innerText,'Final Notes')">📋 Poora Copy</button>
+    </div></div>`;
+  }
+  // Raw Notes
+  if(t.notes && t.notes.length > 0){
+    html += `<div style="font-weight:800;font-size:0.85rem;color:var(--accent);margin-bottom:8px;">📄 Raw Notes (${t.notes.length})</div>`;
+    t.notes.forEach((n, ni) => {
+      const noteText = n.editorRichHTML ? _stripHTML(n.editorRichHTML) : (n.content||'');
+      html += `<div class="browse-note-card">
+        <div class="browse-note-name">📝 ${n.name||'Note '+(ni+1)}</div>
+        <div class="browse-note-content" id="brnote_${ni}">${noteText||'(Khaali note)'}</div>
+        <div class="browse-note-actions">
+          <button class="browse-copy-note-btn" onclick="browseCopyText(document.getElementById('brnote_${ni}').innerText,'${(n.name||'Note').replace(/'/g,"\\'")}')">📋 Copy Note</button>
+        </div>
+      </div>`;
+    });
+  }
+  // Saved Facts
+  if(t.savedFacts && t.savedFacts.length > 0){
+    html += `<div style="font-weight:800;font-size:0.85rem;color:#e65100;margin-bottom:8px;margin-top:10px;">📌 Saved Facts (${t.savedFacts.length})</div>`;
+    t.savedFacts.forEach((f, fi) => {
+      const ftxt = f.text || f;
+      html += `<div class="browse-note-card" style="border-color:rgba(230,81,0,0.25);">
+        <div class="browse-note-content" id="brfact_${fi}">${ftxt}</div>
+        <div class="browse-note-actions">
+          <button class="browse-copy-note-btn" style="background:#e65100;" onclick="browseCopyText('${ftxt.replace(/'/g,"\\'")}','Fact')">📋 Copy</button>
+        </div>
+      </div>`;
+    });
+  }
+  if(!html) html = '<div style="text-align:center;padding:30px;color:var(--text2);">Is topic mein abhi koi content nahi hai.</div>';
+  content.innerHTML = html;
+  // Setup text selection listener
+  content.onmouseup = content.ontouchend = browseCheckTextSelection;
+}
+
+// ── Close topic modal ──
+function closeBrowseTopicModal(){
+  document.getElementById('browseTopicModal').style.display = 'none';
+  _browseCurrentTopic = null;
+  browseHideFloatingCopy();
+}
+
+// ── Strip HTML tags for display ──
+function _stripHTML(html){
+  const d = document.createElement('div');
+  d.innerHTML = html;
+  return d.innerText || d.textContent || '';
+}
+
+// ══════════════════════════════════════════
+// COPY SYSTEM
+// ══════════════════════════════════════════
+
+// ── Copy text to clipboard + show toast ──
+function browseCopyText(text, label){
+  if(!text || !text.trim()){ showToast('Copy karne ke liye koi text nahi!','error'); return; }
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast('📋 ' + (label||'Text') + ' clipboard mein copy ho gaya!', 'success');
+  }).catch(()=>{
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    showToast('📋 Copy ho gaya!', 'success');
+  });
+}
+
+// ── Copy topic directly from tree row ──
+function browseCopyTopicDirect(si, sei, ti){
+  if(!_browseCurrentMember) return;
+  const t = _browseCurrentMember.subjects[si]?.sections[sei]?.topics[ti];
+  if(!t){ showToast('Topic nahi mila!','error'); return; }
+  browseCopyTopicToMyDeck(t, _browseCurrentMember.subjects[si], _browseCurrentMember.subjects[si].sections[sei]);
+}
+
+// ── Copy full topic from modal ──
+function browseCopyFullTopic(){
+  if(!_browseCurrentTopic){ showToast('Pehle topic open karo!','error'); return; }
+  const {topic:t, si, sei} = _browseCurrentTopic;
+  const subj = _browseCurrentMember.subjects[si];
+  const sec = subj.sections[sei];
+  browseCopyTopicToMyDeck(t, subj, sec);
+}
+
+// ── Core: Copy topic to user's personal deck ──
+async function browseCopyTopicToMyDeck(t, subj, sec){
+  if(!_currentUser){ showToast('Login karo pehle!','error'); return; }
+  // Find or create subject in personal deck
+  let mySubj = S.subjects.find(s => s.name === subj.name);
+  if(!mySubj){
+    mySubj = {id: Date.now(), name: subj.name, sections:[], facts:[]};
+    S.subjects.push(mySubj);
+  }
+  // Find or create section
+  let mySec = mySubj.sections.find(s => s.name === sec.name);
+  if(!mySec){
+    mySec = {id: Date.now()+1, name: sec.name, topics:[], facts:[]};
+    mySubj.sections.push(mySec);
+  }
+  // Check if topic already exists
+  const exists = mySec.topics.find(tp => tp.name === t.name);
+  if(exists){
+    if(!confirm('Yeh topic "'+t.name+'" pehle se hai. Overwrite karna hai?')) return;
+    const idx = mySec.topics.indexOf(exists);
+    mySec.topics[idx] = deepCopyTopic(t);
+  } else {
+    mySec.topics.push(deepCopyTopic(t));
+  }
+  save();
+  showToast('✅ "'+t.name+'" aapke deck mein copy ho gaya!', 'success');
+  // Auto-sync to Firebase (works in personal mode)
+  if(_db && _currentUser){
+    setTimeout(()=>{ if(typeof saveToFirebase==='function') saveToFirebase(); }, 1500);
+  }
+}
+
+// ── Deep copy topic (new IDs to avoid collision) ──
+function deepCopyTopic(t){
+  const copy = JSON.parse(JSON.stringify(t));
+  const newId = Date.now() + Math.floor(Math.random()*10000);
+  copy.id = newId;
+  copy.name = copy.name; // keep name
+  // Reset personal progress data
+  copy.wrongBank = [];
+  copy.flashcards = copy.flashcards || [];
+  copy.highlights = [];
+  copy.savedFacts = copy.savedFacts || [];
+  copy.finalNotes = copy.finalNotes || '';
+  copy.finalNotesHTML = copy.finalNotesHTML || null;
+  // Keep notes, rename ids
+  (copy.notes||[]).forEach((n,i) => { n.id = newId + i + 1; });
+  copy.copiedFrom = _browseCurrentMember ? _browseCurrentMember.name : 'Unknown';
+  copy.copiedAt = new Date().toLocaleDateString('hi-IN');
+  return copy;
+}
+
+// ══════════════════════════════════════════
+// FLOATING TEXT COPY BUTTON
+// ══════════════════════════════════════════
+
+function browseCheckTextSelection(){
+  const sel = window.getSelection();
+  const text = sel ? sel.toString().trim() : '';
+  if(text && text.length > 2){
+    _browseSelectedText = text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const btn = document.getElementById('browseFloatingCopy');
+    if(btn){
+      btn.style.top = (rect.top + window.scrollY - 48) + 'px';
+      btn.style.left = Math.max(8, rect.left + rect.width/2 - 70) + 'px';
+      btn.classList.add('show');
+    }
+  } else {
+    browseHideFloatingCopy();
+  }
+}
+
+function browseHideFloatingCopy(){
+  const btn = document.getElementById('browseFloatingCopy');
+  if(btn) btn.classList.remove('show');
+  _browseSelectedText = '';
+}
+
+function browseFloatingCopyAction(){
+  if(!_browseSelectedText){ browseHideFloatingCopy(); return; }
+  browseCopyText(_browseSelectedText, 'Selected text');
+  browseHideFloatingCopy();
+  window.getSelection()?.removeAllRanges();
 }
 
 async function chooseAdminMode(){
@@ -19673,6 +20102,19 @@ registerSW();
 initPWA();
 init();
 history.replaceState({type:'page',page:'library'},'');
+
+// Hide floating copy button when clicking elsewhere
+document.addEventListener('mousedown', function(e){
+  const btn = document.getElementById('browseFloatingCopy');
+  if(btn && !btn.contains(e.target)) browseHideFloatingCopy();
+});
+document.addEventListener('touchstart', function(e){
+  const btn = document.getElementById('browseFloatingCopy');
+  if(btn && !btn.contains(e.target)){
+    const sel = window.getSelection();
+    if(!sel || !sel.toString().trim()) browseHideFloatingCopy();
+  }
+}, {passive:true});
 // Firebase init -- retry mechanism with progressive delays
 (function tryInitFirebase(attempt) {
   attempt = attempt || 1;
@@ -31155,6 +31597,9 @@ function _neRmSyncButtons() {
   if(pill) pill.textContent = (hlOn||esOn) ? (hlOn?'🖊':'🧹') : '🖊';
 }
 </script>
+
+<!-- Floating Text-Copy Button (Browse mode) -->
+<button id="browseFloatingCopy" onclick="browseFloatingCopyAction()">📋 Copy Selection</button>
 
 </body>
 </html>
