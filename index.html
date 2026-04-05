@@ -14900,13 +14900,11 @@ function initFirebase(){
     }
     _auth = firebase.auth();
     _db = firebase.firestore();
-    // Offline persistence enable karo - network nahi ho tab bhi kaam kare
-    _db.enableMultiTabIndexedDbPersistence().catch(err=>{
-      if(err.code === 'failed-precondition' || err.code === 'unimplemented'){
-        // Multiple tabs ya unsupported browser — ignore
-      }
-    });
-    _fbReady = true;
+    _fbReady = true; // Pehle ready mark karo — persistence fail hone par bhi login kaam kare
+    // Offline persistence — alag try-catch mein taaki init fail na kare
+    try{
+      _db.enableMultiTabIndexedDbPersistence().catch(()=>{});
+    }catch(pe){ /* already initialized — ignore */ }
 
     // Auth state listener
     _auth.onAuthStateChanged(async user => {
