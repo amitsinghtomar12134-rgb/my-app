@@ -21,6 +21,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <!-- Tesseract.js for scanned PDF OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<!-- Mammoth.js for Word (.docx) file reading -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
 <!-- Firebase SDK v11.6.0 — WebChannel fix for cross-device sync -->
 <script src="https://www.gstatic.com/firebasejs/11.6.0/firebase-app-compat.js"></script>
@@ -36,73 +38,73 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 :root{
-  /* ── Professional UPSC Premium Theme ── */
-  --bg:#f8faf8;           /* Clean off-white background */
-  --bg2:#eef4ee;          /* Subtle green tint for sections */
+  /* ── Professional Study App Theme (Family Edition) ── */
+  --bg:#f4f8f4;           /* Clean light background */
+  --bg2:#e8f2e8;          /* Subtle section tint */
   --surface:#ffffff;       /* Pure white cards */
-  --surface2:#f5f9f5;      /* Secondary surface */
-  --accent:#0d6832;        /* Professional Forest Green */
-  --accent2:#d4a835;       /* Refined Gold */
-  --accent3:#148a47;       /* Vibrant Green */
-  --gold:#d4a835;          /* Main Gold */
-  --gold-light:#e8c860;    /* Light Gold */
-  --gold-dark:#9a7520;     /* Dark Gold for text */
-  --green:#148a47;
-  --green-light:#2ca658;
+  --surface2:#f0f7f0;      /* Secondary surface */
+  --accent:#1a6b3c;        /* Professional deep green - readable */
+  --accent2:#c47c00;       /* Warm amber - not too gold */
+  --accent3:#228b50;       /* Mid green */
+  --gold:#c47c00;
+  --gold-light:#d99c20;
+  --gold-dark:#8a5600;
+  --green:#1e7d46;
+  --green-light:#2da05b;
   --red:#c62828;
   --purple:#5e35b1;
-  --teal:#00897b;
-  --text:#1a2e1a;          /* Deep readable text */
-  --text2:#547854;         /* Secondary text - more contrast */
-  --border:#d4e4d0;        /* Softer border */
+  --teal:#00796b;
+  --text:#1a2b1a;          /* Deep readable text */
+  --text2:#4a6b4a;         /* Secondary text */
+  --border:#c8dfc8;        /* Clean border */
   --card:#ffffff;
-  --shadow:0 2px 12px rgba(13,104,50,0.08);
-  --shadow-gold:0 2px 12px rgba(212,168,53,0.12);
+  --shadow:0 2px 12px rgba(26,107,60,0.08);
+  --shadow-gold:0 2px 12px rgba(196,124,0,0.10);
   --highlight:#fffce8;
-  --new-bg:#e6f4ea;
+  --new-bg:#e8f5ee;
   --new-border:#81c784;
   --sidebar-w:240px;
-  --user-highlight:#fff9e6;
-  --user-highlight-border:#e8c860;
+  --user-highlight:#fff8e6;
+  --user-highlight-border:#f0c060;
   --save-color:#6d4c41;
   --radius:12px;
   --radius-lg:18px;
   --transition:0.2s ease;
   /* Premium additions */
-  --glass:rgba(255,255,255,0.85);
+  --glass:rgba(255,255,255,0.90);
   --topbar-h:56px;
-  --btn-shadow:0 2px 10px rgba(13,104,50,0.18);
-  --card-shadow:0 4px 20px rgba(13,104,50,0.06);
+  --btn-shadow:0 2px 10px rgba(26,107,60,0.16);
+  --card-shadow:0 4px 20px rgba(26,107,60,0.06);
 }
 
 /* ===== NIGHT MODE -- body.night-mode se sab kuch badalta hai ===== */
 body.night-mode {
-  --bg:#0c140c;
-  --bg2:#101c10;
-  --surface:#162116;
-  --surface2:#1c2a1c;
-  --accent:#4caf50;
-  --accent2:#e8c860;
-  --accent3:#66bb6a;
-  --gold:#e8c860;
-  --gold-light:#f5d87a;
-  --gold-dark:#c9a835;
-  --green:#66bb6a;
-  --green-light:#81c784;
+  --bg:#111a11;
+  --bg2:#162016;
+  --surface:#1a2a1a;
+  --surface2:#203020;
+  --accent:#52c47a;
+  --accent2:#d4a040;
+  --accent3:#6ed48a;
+  --gold:#d4a040;
+  --gold-light:#e8b860;
+  --gold-dark:#b08020;
+  --green:#6ed48a;
+  --green-light:#88e0a0;
   --red:#ef5350;
   --purple:#b39ddb;
   --teal:#4db6ac;
-  --text:#e8f5e9;
-  --text2:#98c495;
-  --border:#2c4228;
-  --card:#162116;
+  --text:#e0f0e0;
+  --text2:#8ab88a;
+  --border:#2e442e;
+  --card:#1a2a1a;
   --shadow:0 2px 12px rgba(0,0,0,0.4);
-  --shadow-gold:0 2px 12px rgba(232,200,96,0.1);
+  --shadow-gold:0 2px 12px rgba(212,160,64,0.1);
   --highlight:rgba(255,252,232,0.06);
-  --new-bg:rgba(76,175,80,0.12);
-  --new-border:rgba(76,175,80,0.35);
-  --user-highlight:rgba(255,249,230,0.08);
-  --user-highlight-border:rgba(232,200,96,0.25);
+  --new-bg:rgba(82,196,122,0.12);
+  --new-border:rgba(82,196,122,0.35);
+  --user-highlight:rgba(255,248,230,0.08);
+  --user-highlight-border:rgba(212,160,64,0.25);
   --save-color:#a1887f;
   color-scheme: dark;
 }
@@ -1991,6 +1993,8 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
 .toolbar-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(21,101,192,0.05);}
 .toolbar-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .toolbar-btn.highlight-active{background:#fff176;color:#5d4037;border-color:#f9a825;}
+#noteRichEditor:empty:before{content:attr(data-placeholder);color:var(--text2);pointer-events:none;font-size:0.82rem;}
+#noteRichToolbar button:hover{background:var(--bg2);border-color:var(--accent);}
 .toolbar-btn.bold-active{background:var(--text);color:#fff;border-color:var(--text);}
 .notes-editor-modes{padding:8px 14px;border-bottom:1.5px solid var(--border);display:flex;gap:7px;align-items:center;flex-shrink:0;background:#f8fbff;}
 .mode-tab{padding:5px 13px;border-radius:20px;font-size:0.76rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--text2);transition:all 0.15s;font-family:'Noto Sans Devanagari',sans-serif;}
@@ -4583,9 +4587,51 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
               <label class="field-label">📄 Source/Book ka Naam:</label>
               <input type="text" class="inp" id="noteName" placeholder="Jaise: Lucent, R.S. Aggarwal..." />
             </div>
+            <!-- File Upload Area -->
             <div class="field-group">
-              <label class="field-label">📋 Notes Content:</label>
-              <textarea id="noteContent" rows="6" placeholder="Yahaan notes paste karo..."></textarea>
+              <label class="field-label">📁 File Upload (Word/PDF/TXT) — Optional:</label>
+              <div id="noteFileDropZone"
+                onclick="document.getElementById('noteFileInput').click()"
+                ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='rgba(13,104,50,0.08)';"
+                ondragleave="this.style.borderColor='var(--border)';this.style.background='var(--surface2)';"
+                ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='var(--surface2)';if(event.dataTransfer.files[0]){var inp=document.getElementById('noteFileInput');inp.files=event.dataTransfer.files;handleNoteFileUpload(inp);}"
+                style="border:2px dashed var(--border);border-radius:10px;padding:12px 10px;text-align:center;cursor:pointer;background:var(--surface2);transition:border-color 0.2s,background 0.2s;font-size:0.78rem;color:var(--text2);">
+                📂 Yahan click karo ya file drag &amp; drop karo<br>
+                <span style="font-size:0.7rem;color:var(--text2);">.docx, .pdf, .txt, .html support</span>
+              </div>
+              <input type="file" id="noteFileInput" accept=".txt,.pdf,.docx,.html,.htm" style="display:none;" onchange="handleNoteFileUpload(this)">
+              <div id="noteFileStatus" style="display:none;font-size:0.75rem;padding:6px 8px;border-radius:7px;margin-top:5px;"></div>
+            </div>
+            <!-- Rich Text Editor for Notes -->
+            <div class="field-group">
+              <label class="field-label">📋 Notes Content (Paste ya Type karo):</label>
+              <!-- Mini Toolbar -->
+              <div id="noteRichToolbar" style="display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;background:var(--surface2);border:1.5px solid var(--border);border-bottom:none;border-radius:10px 10px 0 0;">
+                <button type="button" onclick="noteRichCmd('bold')" title="Bold" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-weight:700;font-size:0.78rem;">B</button>
+                <button type="button" onclick="noteRichCmd('italic')" title="Italic" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-style:italic;font-size:0.78rem;">I</button>
+                <button type="button" onclick="noteRichCmd('underline')" title="Underline" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;text-decoration:underline;font-size:0.78rem;">U</button>
+                <button type="button" onclick="noteRichCmd('insertUnorderedList')" title="Bullet List" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">• List</button>
+                <button type="button" onclick="noteRichCmd('insertOrderedList')" title="Numbered List" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">1. List</button>
+                <select onchange="noteRichCmd('fontSize', this.value); this.selectedIndex=0;" style="padding:3px 5px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.75rem;color:var(--text);">
+                  <option value="">Size</option>
+                  <option value="1">XS</option>
+                  <option value="2">S</option>
+                  <option value="3">M</option>
+                  <option value="4">L</option>
+                  <option value="5">XL</option>
+                </select>
+                <input type="color" onchange="noteRichCmd('foreColor', this.value)" title="Text Color" style="width:28px;height:26px;padding:1px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:var(--surface);" value="#000000">
+                <input type="color" onchange="noteRichCmd('hiliteColor', this.value)" title="Highlight" style="width:28px;height:26px;padding:1px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:#fff176;" value="#fff176">
+                <button type="button" onclick="noteRichCmd('removeFormat')" title="Format hatao" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">✕ Format</button>
+                <button type="button" onclick="clearNoteRichEditor()" title="Sab saaf karo" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;color:var(--red);">🗑 Clear</button>
+              </div>
+              <div id="noteRichEditor" contenteditable="true"
+                style="min-height:140px;max-height:320px;overflow-y:auto;border:1.5px solid var(--border);border-radius:0 0 10px 10px;padding:10px 12px;background:var(--surface);font-size:0.85rem;line-height:1.75;color:var(--text);outline:none;font-family:inherit;word-break:break-word;"
+                onpaste="handleNoteRichPaste(event)"
+                data-placeholder="Yahaan notes paste karo ya type karo — formatting apne aap preserve hogi! (Tables, Colors, Bullets sab kuch)"
+              ></div>
+              <!-- Hidden textarea for backward compat -->
+              <textarea id="noteContent" style="display:none;"></textarea>
             </div>
             <div class="btn-row">
               <button class="btn btn-primary" onclick="addNote()">💾 Save Notes</button>
@@ -7051,19 +7097,134 @@ function addTopic(){
 }
 
 // ==================== NOTES ====================
+// ===== Rich text editor helper functions =====
+function noteRichCmd(cmd, val) {
+  document.getElementById('noteRichEditor').focus();
+  document.execCommand(cmd, false, val || null);
+}
+function clearNoteRichEditor() {
+  if(confirm('Editor saaf kar dein?')) {
+    document.getElementById('noteRichEditor').innerHTML = '';
+    document.getElementById('noteFileStatus').style.display = 'none';
+  }
+}
+function handleNoteRichPaste(e) {
+  setTimeout(() => {
+    const editor = document.getElementById('noteRichEditor');
+    editor.innerHTML = editor.innerHTML
+      .replace(/<!--[\s\S]*?-->/g, '')
+      .replace(/<o:p[^>]*>[\s\S]*?<\/o:p>/gi, '')
+      .replace(/<w:[^>]+>[\s\S]*?<\/w:[^>]+>/gi, '')
+      .replace(/<m:[^>]+>[\s\S]*?<\/m:[^>]+>/gi, '');
+  }, 10);
+}
+function handleNoteFileUpload(input) {
+  const file = input.files[0];
+  if(!file) return;
+  const statusEl = document.getElementById('noteFileStatus');
+  const editor = document.getElementById('noteRichEditor');
+  statusEl.style.display = 'block';
+  statusEl.style.background = 'rgba(13,104,50,0.08)';
+  statusEl.style.color = 'var(--accent)';
+  statusEl.textContent = '⏳ File pad raha hoon...';
+  const ext = file.name.split('.').pop().toLowerCase();
+  if(ext === 'txt') {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const text = e.target.result;
+      const html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+      editor.innerHTML = html;
+      statusEl.textContent = '✅ TXT file load ho gayi! (' + file.name + ')';
+      statusEl.style.color = 'var(--green)';
+    };
+    reader.readAsText(file);
+  } else if(ext === 'pdf') {
+    if(typeof pdfjsLib === 'undefined') {
+      statusEl.textContent = '❌ PDF library load nahi hui. Page reload karo.';
+      statusEl.style.color = 'var(--red)'; return;
+    }
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const pdf = await pdfjsLib.getDocument({data: new Uint8Array(e.target.result)}).promise;
+        let fullHtml = '';
+        for(let i = 1; i <= pdf.numPages; i++) {
+          const page = await pdf.getPage(i);
+          const tc = await page.getTextContent();
+          let pageText = '';
+          tc.items.forEach(item => { pageText += item.str + (item.hasEOL ? '\n' : ' '); });
+          fullHtml += '<p><strong>— Page ' + i + ' —</strong></p>' +
+            pageText.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+        }
+        editor.innerHTML = fullHtml;
+        statusEl.textContent = '✅ PDF load ho gayi! (' + pdf.numPages + ' pages, ' + file.name + ')';
+        statusEl.style.color = 'var(--green)';
+      } catch(err) {
+        statusEl.textContent = '❌ PDF read nahi hua: ' + err.message;
+        statusEl.style.color = 'var(--red)';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  } else if(ext === 'docx') {
+    if(typeof mammoth === 'undefined') {
+      statusEl.textContent = '❌ Mammoth library load nahi hui. Page reload karo.';
+      statusEl.style.color = 'var(--red)'; return;
+    }
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+      try {
+        const result = await mammoth.convertToHtml({arrayBuffer: e.target.result});
+        editor.innerHTML = result.value;
+        statusEl.textContent = '✅ Word file load ho gayi! (' + file.name + ')';
+        statusEl.style.color = 'var(--green)';
+      } catch(err) {
+        statusEl.textContent = '❌ DOCX read nahi hua: ' + err.message;
+        statusEl.style.color = 'var(--red)';
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  } else if(ext === 'html' || ext === 'htm') {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(e.target.result, 'text/html');
+      editor.innerHTML = doc.body ? doc.body.innerHTML : e.target.result;
+      statusEl.textContent = '✅ HTML file load ho gayi! (' + file.name + ')';
+      statusEl.style.color = 'var(--green)';
+    };
+    reader.readAsText(file);
+  } else {
+    statusEl.textContent = '❌ Sirf .txt, .pdf, .docx, .html support hai';
+    statusEl.style.color = 'var(--red)';
+  }
+}
+
 function addNote(){
   if(!S.ui.tid){showToast('Topic select karo!','error');return;}
   const name=document.getElementById('noteName').value.trim();
-  const content=document.getElementById('noteContent').value.trim();
+  const richEditor = document.getElementById('noteRichEditor');
+  const richHTML = richEditor ? richEditor.innerHTML.trim() : '';
+  const plainText = richEditor ? (richEditor.innerText || richEditor.textContent || '').trim() : '';
   if(!name){showToast('Source naam daalo!','error');return;}
-  if(!content||content.length<20){showToast('Zyada content daalo!','error');return;}
+  if(!richHTML || plainText.length < 10){showToast('Zyada content daalo!','error');return;}
   const t=getTop(S.ui.sid,S.ui.secid,S.ui.tid);
   const hadFinalNotes=!!t.finalNotes;
-  t.notes.push({id:Date.now(),name,content,addedAt:new Date().toLocaleDateString('hi-IN'),wordCount:content.split(/\s+/).length});
+  t.notes.push({
+    id: Date.now(),
+    name: name,
+    content: plainText,
+    richHTML: richHTML,
+    editorRichHTML: richHTML,
+    addedAt: new Date().toLocaleDateString('hi-IN'),
+    wordCount: plainText.split(/\s+/).filter(Boolean).length,
+    editorHighlights: []
+  });
   save(); renderLibraryTree();
-  document.getElementById('noteName').value=''; document.getElementById('noteContent').value='';
+  if(richEditor) richEditor.innerHTML = '';
+  document.getElementById('noteName').value = '';
+  document.getElementById('noteFileStatus').style.display = 'none';
   showToast(`"${name}" save ho gaya! ✅`,'success');
-  // If final notes exist, offer refresh
   if(hadFinalNotes){
     setTimeout(()=>{
       if(confirm(`"${t.name}" ke final notes pehle se hain. Naye notes se update karna hai? (Naye points highlighted rahenge, aapke highlights safe rahenge)`)){
