@@ -7039,6 +7039,7 @@ function showPage(p,el,_skipHistory){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   if(el)el.classList.add('active');
+  const _pa=document.querySelector('.page-area');if(_pa)_pa.scrollTop=0;
   document.getElementById('topbarTitle').textContent=PAGE_TITLES[p]||p;
   if(p==='stats')renderStats();
   if(p==='history')renderHistory();
