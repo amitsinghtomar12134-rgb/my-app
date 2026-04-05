@@ -14821,6 +14821,34 @@ let _knownTopicWriteIds = {}; // {tid: writeId} — last seen per topic
 let _syncInProgress = false;  // Full-reload guard
 let _activeEditTid = null;    // Currently editing topic (preserve its local data)
 
+// ── Global app_config/security cache ──
+// Session mein baar baar Firestore se fetch band — memory cache use karo
+let _appSecurityCache = null;
+let _appSecurityCacheTime = 0;
+const _APP_SECURITY_CACHE_TTL = 3 * 60 * 1000; // 3 minutes
+
+async function _fetchSecurityConfig(forceServer){
+  if(!_db) throw new Error('DB not ready');
+  const now = Date.now();
+  if(!forceServer && _appSecurityCache && (now - _appSecurityCacheTime) < _APP_SECURITY_CACHE_TTL){
+    return _appSecurityCache; // cache hit — no Firestore read
+  }
+  const cfgDoc = await _db.collection('app_config').doc('security')
+    .get({source:'server'})
+    .catch(()=> _db.collection('app_config').doc('security').get());
+  if(cfgDoc.exists){
+    _appSecurityCache = cfgDoc.data();
+    _appSecurityCacheTime = now;
+    return _appSecurityCache;
+  }
+  return null;
+}
+
+function _invalidateSecurityCache(){
+  _appSecurityCache = null;
+  _appSecurityCacheTime = 0;
+}
+
 // Firebase config localStorage se load karo
 function getFbConfig(){
   try{
@@ -14873,11 +14901,9 @@ function initFirebase(){
     _auth = firebase.auth();
     _db = firebase.firestore();
     // Offline persistence enable karo - network nahi ho tab bhi kaam kare
-    _db.enablePersistence({synchronizeTabs:true}).catch(err=>{
-      if(err.code === 'failed-precondition') {
-        // Multiple tabs open - ignore
-      } else if(err.code === 'unimplemented') {
-        // Browser support nahi - ignore
+    _db.enableMultiTabIndexedDbPersistence().catch(err=>{
+      if(err.code === 'failed-precondition' || err.code === 'unimplemented'){
+        // Multiple tabs ya unsupported browser — ignore
       }
     });
     _fbReady = true;
@@ -15088,16 +15114,12 @@ function showPendingScreen(){
 async function checkUserAccessStatus(user){
   if(!_db){ showPendingScreen(); return; }
   try{
-    // Always read from server so latest key assignments are visible
-    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
-      ()=> _db.collection('app_config').doc('security').get()
-    );
-    if(!cfgDoc.exists){
-      // No config yet — show pending
+    // Login pe hamesha server se fresh read (forceServer=true)
+    const cfg = await _fetchSecurityConfig(true);
+    if(!cfg){
       showPendingScreen();
       return;
     }
-    const cfg = cfgDoc.data();
     const memberKeys = cfg.member_keys || {};
     const revokedUids = cfg.revoked_uids || [];
     // Check if revoked
@@ -15132,12 +15154,9 @@ async function submitSecurityKey(){
   const btn = document.getElementById('securityKeyBtn');
   btn.disabled = true; btn.textContent = '⏳ Verify ho raha hai...';
   try{
-    // Force server read — bypass Firestore offline cache
-    const cfgDoc = await _db.collection('app_config').doc('security').get({source:'server'}).catch(
-      ()=> _db.collection('app_config').doc('security').get() // fallback to cache if offline
-    );
-    if(!cfgDoc.exists){ errEl.textContent = '❌ Config nahi mila! Admin se bolo.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
-    const cfg = cfgDoc.data();
+    // Key verify karte waqt force server read — security ke liye zaroori
+    const cfg = await _fetchSecurityConfig(true);
+    if(!cfg){ errEl.textContent = '❌ Config nahi mila! Admin se bolo.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
     const memberKeys = cfg.member_keys || {};
     const assignedKey = memberKeys[_currentUser.uid];
     if(!assignedKey){ errEl.textContent = '❌ Aapke liye abhi key set nahi hui! Admin se maango.'; btn.disabled=false; btn.textContent='🔓 Verify Karo'; return; }
@@ -39995,8 +40014,9 @@ async function submitImportCode(){
   btn.disabled = true; btn.textContent = '⏳ Check ho raha hai...';
 
   try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
-    const cfg = cfgDoc.data();
+    // Cache use karo (import code rarely changes)
+    const cfg = await _fetchSecurityConfig(false);
+    if(!cfg){ errEl.textContent = '❌ Config nahi mila!'; btn.disabled=false; btn.textContent='✅ Unlock & Import'; return; }
     if(code === cfg.import_code){
       // Correct!
       closeModal('importCodeModal');
@@ -40045,19 +40065,9 @@ async function browseLoadMembers(){
   if(el) el.innerHTML = _browseSkeleton(3);
 
   try{
-    // Use cached config if fresh (< 2 min)
-    let cfg;
-    const now = Date.now();
-    if(_browseConfigCache && (now - _browseConfigLoadedAt) < 120000){
-      cfg = _browseConfigCache;
-    } else {
-      const cfgDoc = await _db.collection('app_config').doc('security')
-        .get({source:'server'}).catch(()=> _db.collection('app_config').doc('security').get());
-      if(!cfgDoc.exists){ if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">Config nahi mila.</div>'; return; }
-      cfg = cfgDoc.data();
-      _browseConfigCache = cfg;
-      _browseConfigLoadedAt = now;
-    }
+    // Global security cache use karo (3 min TTL)
+    const cfg = await _fetchSecurityConfig(false);
+    if(!cfg){ if(el) el.innerHTML = '<div style="color:var(--text2);padding:20px;">Config nahi mila.</div>'; return; }
 
     const memberKeys = cfg.member_keys || {};
     const memberNames = cfg.member_names || {};
@@ -41241,10 +41251,8 @@ async function adminLoadPending(){
   const el = document.getElementById('adminPendingList');
   if(el) el.innerHTML = '⏳ Loading...';
   try{
-    // Get all users who have logged in but have no key assigned yet
-    // We track this in app_config/security → pending_uids[]
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
-    const cfg = cfgDoc.exists ? cfgDoc.data() : {};
+    // Admin: force server read taaki latest pending users dikhein, cache bhi update ho
+    const cfg = await _fetchSecurityConfig(true) || {};
     const pending = cfg.pending_uids || [];
     const memberKeys = cfg.member_keys || {};
     const memberNames = cfg.member_names || {};
@@ -41275,8 +41283,8 @@ async function adminLoadMembers(){
   const el = document.getElementById('adminMemberList');
   if(el) el.innerHTML = '⏳ Loading...';
   try{
-    const cfgDoc = await _db.collection('app_config').doc('security').get();
-    const cfg = cfgDoc.exists ? cfgDoc.data() : {};
+    // Admin: force server read taaki latest member list dikhein
+    const cfg = await _fetchSecurityConfig(true) || {};
     const memberKeys = cfg.member_keys || {};
     const memberNames = cfg.member_names || {};
     const revokedUids = cfg.revoked_uids || [];
@@ -41346,7 +41354,7 @@ async function adminSetMemberKey(){
     document.getElementById('adminKeyUid').value = '';
     document.getElementById('adminKeyName').value = '';
     document.getElementById('adminKeyValue').value = '';
-    // Small delay so Firestore write propagates before re-read
+    _invalidateSecurityCache(); // cache reset — fresh data load hoga
     setTimeout(()=>{ adminLoadMembers(); adminLoadPending(); }, 800);
   }catch(e){
     statusEl.innerHTML = '❌ Error: ' + e.message;
@@ -41386,6 +41394,7 @@ async function adminRevokeDirect(uid){
       revoked_uids: firebase.firestore.FieldValue.arrayUnion(uid)
     }, {merge:true});
     showToast('Access revoke ho gaya!', 'success');
+    _invalidateSecurityCache();
     adminLoadMembers();
   }catch(e){
     showToast('Error: '+e.message,'error');
@@ -41398,6 +41407,7 @@ async function adminRestoreAccess(uid){
       revoked_uids: firebase.firestore.FieldValue.arrayRemove(uid)
     });
     showToast('Access restore ho gaya! ♻️', 'success');
+    _invalidateSecurityCache();
     adminLoadMembers();
   }catch(e){
     showToast('Error: '+e.message,'error');
@@ -41410,6 +41420,7 @@ async function adminDismissPending(uid){
       pending_uids: firebase.firestore.FieldValue.arrayRemove(uid)
     });
     showToast('Pending list se hata diya!', 'success');
+    _invalidateSecurityCache();
     adminLoadPending();
   }catch(e){
     showToast('Error: '+e.message,'error');
