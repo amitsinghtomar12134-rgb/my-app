@@ -3509,7 +3509,31 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
 .hist-progress-bar{background:var(--bg2);height:4px;border-radius:10px;overflow:hidden;margin-bottom:5px;}
 .hist-progress-fill{height:100%;border-radius:10px;transition:width 0.3s;}
 
-
+/* ===== ONBOARDING TOUR CSS ===== */
+#langSelectOverlay{position:fixed;inset:0;z-index:99998;background:linear-gradient(135deg,#0a1929 0%,#1565c0 55%,#0d2644 100%);display:none;align-items:center;justify-content:center;padding:24px;}
+#langSelectBox{background:#fff;border-radius:24px;padding:36px 24px 28px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.5);animation:slideUpFade 0.4s ease;}
+@keyframes slideUpFade{from{transform:translateY(28px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+.lang-opt-btn{display:flex;align-items:center;width:100%;padding:15px 18px;border-radius:14px;border:2px solid #e0e8f4;background:#f5f8fe;cursor:pointer;margin-bottom:12px;font-family:'Baloo 2',sans-serif;font-size:0.98rem;font-weight:700;transition:all 0.18s;-webkit-tap-highlight-color:transparent;color:#0d1b2a;text-align:left;gap:14px;}
+.lang-opt-btn:hover,.lang-opt-btn:active{border-color:#1565c0;background:#e3eeff;color:#1565c0;}
+.lang-opt-flag{font-size:1.7rem;flex-shrink:0;}
+.lang-opt-info{flex:1;}
+.lang-opt-name{font-size:1rem;font-weight:800;line-height:1.2;}
+.lang-opt-sub{font-size:0.72rem;font-weight:500;color:#8899aa;margin-top:2px;}
+.lang-opt-arr{opacity:0.35;font-size:1rem;}
+#tourOverlay{position:fixed;inset:0;z-index:99997;display:none;pointer-events:none;}
+#tourOverlay.active{display:block;pointer-events:auto;}
+#tourBg{position:absolute;inset:0;background:rgba(0,0,0,0.74);transition:opacity 0.3s;}
+#tourTooltip{position:fixed;left:50%;transform:translateX(-50%);bottom:20px;background:#fff;border-radius:18px;padding:20px 20px 16px;max-width:340px;width:calc(100% - 32px);box-shadow:0 14px 50px rgba(0,0,0,0.38);z-index:99999;display:none;animation:tooltipSlideUp 0.3s ease;}
+@keyframes tooltipSlideUp{from{transform:translateX(-50%) translateY(18px);opacity:0;}to{transform:translateX(-50%) translateY(0);opacity:1;}}
+.tour-step-num{font-size:0.67rem;font-weight:800;color:#1565c0;text-transform:uppercase;letter-spacing:1.1px;margin-bottom:6px;}
+.tour-feat-title{font-family:'Baloo 2',sans-serif;font-size:1.06rem;font-weight:800;color:#0d1b2a;margin-bottom:8px;}
+.tour-feat-desc{font-size:0.81rem;line-height:1.68;color:#37526d;margin-bottom:16px;}
+.tour-btn-row{display:flex;gap:10px;align-items:center;}
+#tourNextBtn{flex:1;padding:12px 18px;background:var(--accent);color:#fff;border:none;border-radius:11px;font-family:'Baloo 2',sans-serif;font-size:0.88rem;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background 0.15s;}
+#tourNextBtn:active{background:#0d47a1;}
+#tourSkipBtn{padding:11px 13px;background:transparent;color:#8899aa;border:1.5px solid #d8e2ec;border-radius:11px;font-family:'Baloo 2',sans-serif;font-size:0.8rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;white-space:nowrap;}
+.tour-highlight{position:relative!important;z-index:99998!important;border-radius:10px!important;box-shadow:0 0 0 3px #fff,0 0 0 6px #42a5f5,0 0 28px 10px rgba(66,165,245,0.55)!important;animation:tourGlow 1.6s ease-in-out infinite!important;}
+@keyframes tourGlow{0%,100%{box-shadow:0 0 0 3px #fff,0 0 0 6px #42a5f5,0 0 28px 10px rgba(66,165,245,0.55);}50%{box-shadow:0 0 0 3px #fff,0 0 0 9px #1976d2,0 0 36px 14px rgba(25,118,210,0.7);}}
 </style>
 </head>
 <body>
@@ -4469,6 +4493,40 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   </div>
 
 </aside>
+
+<!-- ===== LANGUAGE SELECTOR OVERLAY ===== -->
+<div id="langSelectOverlay">
+  <div id="langSelectBox">
+    <div style="font-size:2.6rem;margin-bottom:10px;">👋</div>
+    <div style="font-family:'Baloo 2',sans-serif;font-size:1.25rem;font-weight:800;color:#0d1b2a;margin-bottom:5px;">Welcome!</div>
+    <div style="font-size:0.83rem;color:#37526d;line-height:1.6;margin-bottom:26px;">App tour ke liye language choose karo<br><span style="color:#aaa;font-size:0.75rem;">Choose your language for the guided tour</span></div>
+    <button class="lang-opt-btn" onclick="selectTourLang('en')">
+      <span class="lang-opt-flag">🇬🇧</span>
+      <span class="lang-opt-info"><div class="lang-opt-name">English</div><div class="lang-opt-sub">Standard English tour</div></span>
+      <span class="lang-opt-arr">›</span>
+    </button>
+    <button class="lang-opt-btn" onclick="selectTourLang('hi')">
+      <span class="lang-opt-flag">🇮🇳</span>
+      <span class="lang-opt-info"><div class="lang-opt-name">Hinglish</div><div class="lang-opt-sub">Hindi + English (recommended)</div></span>
+      <span class="lang-opt-arr">›</span>
+    </button>
+    <div style="font-size:0.7rem;color:#bbb;margin-top:8px;">Sirf ek baar — baad mein nahi aayega</div>
+  </div>
+</div>
+
+<!-- ===== TOUR OVERLAY ===== -->
+<div id="tourOverlay">
+  <div id="tourBg"></div>
+  <div id="tourTooltip">
+    <div class="tour-step-num" id="tourStepNum">Step 1 of 15</div>
+    <div class="tour-feat-title" id="tourTitleEl">Feature Name</div>
+    <div class="tour-feat-desc" id="tourDescEl">Description here.</div>
+    <div class="tour-btn-row">
+      <button id="tourSkipBtn" onclick="tourSkip()">Skip Tour</button>
+      <button id="tourNextBtn" onclick="tourNext()">Next →</button>
+    </div>
+  </div>
+</div>
 
 <!-- MAIN CONTENT -->
 <div class="main-content">
@@ -7039,7 +7097,6 @@ function showPage(p,el,_skipHistory){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
   if(el)el.classList.add('active');
-  const _pa=document.querySelector('.page-area');if(_pa)_pa.scrollTop=0;
   document.getElementById('topbarTitle').textContent=PAGE_TITLES[p]||p;
   if(p==='stats')renderStats();
   if(p==='history')renderHistory();
@@ -14983,6 +15040,7 @@ function hideAllOverlayScreens(){
     const el = document.getElementById(id);
     if(el) el.style.display = 'none';
   });
+  setTimeout(function(){ checkAndStartOnboarding(); }, 1400);
 }
 function showModeScreen(){
   hideAllOverlayScreens();
@@ -48774,6 +48832,138 @@ function _showSyncedDot() {
 function _showSyncErrorDot() {
   var dots = document.querySelectorAll('#syncDot, .topbar-user-btn .sync-dot');
   dots.forEach(function(d) { d.style.background = '#f44336'; d.title = 'Sync error'; });
+}
+
+// ═══════════════════════════════════════════════════
+// ONBOARDING TOUR — Language Select + Feature Guide
+// ═══════════════════════════════════════════════════
+var _tourStep = 0;
+var _tourLang = localStorage.getItem('appLang') || 'hi';
+var _tourActive = false;
+
+var _TOUR_STEPS = {
+  en: [
+    { sel:'[data-page="library"]',    title:'📚 Library',        desc:'Your main study hub. Add Subjects → Sections → Topics with notes, PDFs, and Word docs. All your content lives here.' },
+    { sel:'[data-page="savedFacts"]', title:'📌 Saved Facts',    desc:'Bookmark important facts from your notes for quick revision. Tap the pin icon anywhere in your notes to save.' },
+    { sel:'[data-page="smartnotes"]', title:'🧠 Smart Notes',    desc:'AI automatically extracts concise notes from your uploaded content. Perfect for last-minute revision before an exam.' },
+    { sel:'[data-page="aichathistory"]',title:'💬 AI Chat',      desc:'Ask any study question and get instant AI answers. Your complete conversation history is saved here for later review.' },
+    { sel:'[data-page="quiz"]',       title:'❓ Quiz',            desc:'Practice with AI-generated MCQ questions from your own notes. Select subject, section, or topic for focused practice.' },
+    { sel:'[data-page="quizvault"]',  title:'🗄️ Quiz Vault',    desc:'Save important questions here to build your personal question bank. Review them anytime before an exam.' },
+    { sel:'[data-page="history"]',    title:'📜 History',        desc:'View all past quiz sessions — review scores, revisit wrong answers, and track your improvement over time.' },
+    { sel:'[data-page="stats"]',      title:'📊 Stats',          desc:'Your visual progress dashboard. See accuracy rates, topic-wise performance, and overall study statistics at a glance.' },
+    { sel:'[data-page="exams"]',      title:'🎯 Exam Profiles',  desc:'Create separate profiles for different exams (UPSC, SSC, etc.). Switch between them from the top of the sidebar.' },
+    { sel:'.sb-coach-item',           title:'🎓 Study Coach',    desc:'Your personal AI coach. Get a personalized study plan, weak area analysis, and daily targets tailored just for you.' },
+    { sel:'[data-page="livequiz"]',   title:'⚡ Live Quiz',      desc:'Admin schedules a family quiz — everyone participates live at the same time. Real-time leaderboard and competition!' },
+    { sel:'[data-page="browse"]',     title:'👥 Browse Notes',   desc:'Read notes uploaded by other family members. Learn from each other\'s material and copy useful content.' },
+    { sel:'[data-page="groupchat"]',  title:'💬 Group Chat',     desc:'Family study group. Share doubts, discuss topics, and motivate each other — all in one place.' },
+    { sel:'[data-page="settings"]',   title:'⚙️ Settings',       desc:'Set your Groq AI API key, manage cloud sync, backup or restore your data, and install the app on your phone.' },
+    { sel:'.sb-night-btn',            title:'🌙 Night Mode',     desc:'Switch between light and dark theme with one tap. Your preference is saved automatically.' }
+  ],
+  hi: [
+    { sel:'[data-page="library"]',    title:'📚 Library',        desc:'Yahan apna poora study material rakho. Subject → Section → Topic mein organize karo. Notes, PDF, Word sab yahan milenge.' },
+    { sel:'[data-page="savedFacts"]', title:'📌 Saved Facts',    desc:'Zaroori facts yahan pin karo quick revision ke liye. Notes mein kahin bhi pin icon tap karo — save ho jaayega.' },
+    { sel:'[data-page="smartnotes"]', title:'🧠 Smart Notes',    desc:'AI khud apke content se short notes banata hai. Exam se pehle last minute revision ke liye ekdum perfect.' },
+    { sel:'[data-page="aichathistory"]',title:'💬 AI Chat',      desc:'Koi bhi study sawaal poocho, AI turant jawab dega. Puri conversation history yahan save rehti hai.' },
+    { sel:'[data-page="quiz"]',       title:'❓ Quiz',            desc:'Apne notes se AI-generated MCQ practice karo. Subject, section ya topic choose karo — targeted practice milegi.' },
+    { sel:'[data-page="quizvault"]',  title:'🗄️ Quiz Vault',    desc:'Important questions save karo apna personal question bank banane ke liye. Kabhi bhi review karo.' },
+    { sel:'[data-page="history"]',    title:'📜 History',        desc:'Purane saare quiz sessions dekho — score check karo, galat jawab review karo aur improvement track karo.' },
+    { sel:'[data-page="stats"]',      title:'📊 Stats',          desc:'Visual progress dashboard. Accuracy, topic-wise performance aur overall study stats ek hi jagah dekho.' },
+    { sel:'[data-page="exams"]',      title:'🎯 Exam Profiles',  desc:'Alag exams (UPSC, SSC etc.) ke liye alag profiles banao. Sidebar ke upar se ek click mein switch karo.' },
+    { sel:'.sb-coach-item',           title:'🎓 Study Coach',    desc:'Tumhara personal AI coach. Personalized study plan, weak areas aur daily targets sirf tumhare liye.' },
+    { sel:'[data-page="livequiz"]',   title:'⚡ Live Quiz',      desc:'Admin puri family ke liye live quiz schedule karta hai — sab ek saath participate karte hain. Real-time competition!' },
+    { sel:'[data-page="browse"]',     title:'👥 Sabke Notes',    desc:'Dusre family members ke notes padho. Ek dusre ke material se seekho aur useful content copy karo.' },
+    { sel:'[data-page="groupchat"]',  title:'💬 Group Chat',     desc:'Family study group chat. Doubts share karo, topics discuss karo aur ek dusre ko motivate karo.' },
+    { sel:'[data-page="settings"]',   title:'⚙️ Settings',       desc:'Groq AI API key set karo, cloud sync manage karo, data backup/restore karo, aur phone pe install karo.' },
+    { sel:'.sb-night-btn',            title:'🌙 Night Mode',     desc:'Light aur dark theme ek tap mein switch karo. Tumhari preference automatically save hoti hai.' }
+  ]
+};
+
+function checkAndStartOnboarding(){
+  if(localStorage.getItem('tourDone_v1') === '1') return;
+  if(_tourActive) return;
+  var lsOverlay = document.getElementById('langSelectOverlay');
+  if(lsOverlay){ lsOverlay.style.display = 'flex'; }
+}
+
+function selectTourLang(lang){
+  _tourLang = lang;
+  localStorage.setItem('appLang', lang);
+  var lsOverlay = document.getElementById('langSelectOverlay');
+  if(lsOverlay){ lsOverlay.style.display = 'none'; }
+  setTimeout(startTour, 350);
+}
+
+function startTour(){
+  _tourStep = 0;
+  _tourActive = true;
+  var overlay = document.getElementById('tourOverlay');
+  if(overlay) overlay.classList.add('active');
+  // Open sidebar on mobile so nav items are visible
+  var sb = document.getElementById('sidebar');
+  if(sb && window.innerWidth <= 768) sb.classList.add('open');
+  var so = document.getElementById('sidebarOverlay');
+  if(so) so.classList.add('show');
+  showTourStep(0);
+}
+
+function showTourStep(idx){
+  var steps = _TOUR_STEPS[_tourLang] || _TOUR_STEPS.hi;
+  // Remove previous highlight
+  document.querySelectorAll('.tour-highlight').forEach(function(el){ el.classList.remove('tour-highlight'); });
+  if(idx >= steps.length){ tourEnd(); return; }
+  var step = steps[idx];
+  var total = steps.length;
+  var isLast = (idx === total - 1);
+  // Highlight target element
+  var target = document.querySelector(step.sel);
+  if(target){
+    target.classList.add('tour-highlight');
+    target.scrollIntoView({behavior:'smooth', block:'nearest', inline:'nearest'});
+  }
+  // Update tooltip content
+  var stepTxt = _tourLang === 'hi' ? ('Step ' + (idx+1) + ' / ' + total) : ('Step ' + (idx+1) + ' of ' + total);
+  var nextTxt = isLast ? (_tourLang==='hi' ? 'Shuru Karo! 🚀' : 'Get Started! 🚀') : (_tourLang==='hi' ? 'Aage →' : 'Next →');
+  var skipTxt = _tourLang==='hi' ? 'Skip' : 'Skip Tour';
+  document.getElementById('tourStepNum').textContent = stepTxt;
+  document.getElementById('tourTitleEl').textContent = step.title;
+  document.getElementById('tourDescEl').textContent = step.desc;
+  document.getElementById('tourNextBtn').textContent = nextTxt;
+  document.getElementById('tourSkipBtn').textContent = skipTxt;
+  // Show tooltip with re-trigger animation
+  var tt = document.getElementById('tourTooltip');
+  if(tt){
+    tt.style.display = 'none';
+    void tt.offsetHeight;
+    tt.style.display = 'block';
+  }
+}
+
+function tourNext(){
+  _tourStep++;
+  showTourStep(_tourStep);
+}
+
+function tourSkip(){
+  tourEnd();
+}
+
+function tourEnd(){
+  _tourActive = false;
+  localStorage.setItem('tourDone_v1', '1');
+  document.querySelectorAll('.tour-highlight').forEach(function(el){ el.classList.remove('tour-highlight'); });
+  var overlay = document.getElementById('tourOverlay');
+  if(overlay) overlay.classList.remove('active');
+  var tt = document.getElementById('tourTooltip');
+  if(tt) tt.style.display = 'none';
+  // Close sidebar on mobile after tour
+  if(window.innerWidth <= 768){
+    var sb = document.getElementById('sidebar');
+    if(sb) sb.classList.remove('open');
+    var so = document.getElementById('sidebarOverlay');
+    if(so) so.classList.remove('show');
+  }
+  var msg = _tourLang === 'hi' ? 'Tour complete! Study hard! 🎉' : 'Tour complete! Happy studying! 🎉';
+  if(typeof showToast === 'function') showToast(msg, 'success');
 }
 </script>
 </body>
