@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <style>/* Pull-to-refresh Chrome Android */
 :root{overscroll-behavior:none;}
+
+/* Rich editor placeholder */
+#noteRichEditor:empty:before{content:attr(data-placeholder);color:var(--text2);pointer-events:none;font-size:0.82rem;}
+/* File drop zone */
+#noteFileDropZone:hover{border-color:var(--accent);background:rgba(13,104,50,0.05);}
+#noteRichToolbar button:hover{background:var(--bg2);border-color:var(--accent);}
+
 </style>
 <title>Exam Prep Pro</title>
 
@@ -21,6 +28,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 <!-- Tesseract.js for scanned PDF OCR -->
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
 <!-- Mammoth.js for Word (.docx) file reading -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
@@ -38,80 +46,80 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap');
 :root{
-  /* ── Professional Study App Theme (Family Edition) ── */
-  --bg:#f4f8f4;           /* Clean light background */
-  --bg2:#e8f2e8;          /* Subtle section tint */
+  /* ── Professional UPSC Premium Theme ── */
+  --bg:#f8faf8;           /* Clean off-white background */
+  --bg2:#eef4ee;          /* Subtle green tint for sections */
   --surface:#ffffff;       /* Pure white cards */
-  --surface2:#f0f7f0;      /* Secondary surface */
-  --accent:#1a6b3c;        /* Professional deep green - readable */
-  --accent2:#c47c00;       /* Warm amber - not too gold */
-  --accent3:#228b50;       /* Mid green */
-  --gold:#c47c00;
-  --gold-light:#d99c20;
-  --gold-dark:#8a5600;
-  --green:#1e7d46;
-  --green-light:#2da05b;
+  --surface2:#f5f9f5;      /* Secondary surface */
+  --accent:#0d6832;        /* Professional Forest Green */
+  --accent2:#d4a835;       /* Refined Gold */
+  --accent3:#148a47;       /* Vibrant Green */
+  --gold:#d4a835;          /* Main Gold */
+  --gold-light:#e8c860;    /* Light Gold */
+  --gold-dark:#9a7520;     /* Dark Gold for text */
+  --green:#148a47;
+  --green-light:#2ca658;
   --red:#c62828;
   --purple:#5e35b1;
-  --teal:#00796b;
-  --text:#1a2b1a;          /* Deep readable text */
-  --text2:#4a6b4a;         /* Secondary text */
-  --border:#c8dfc8;        /* Clean border */
+  --teal:#00897b;
+  --text:#1a2e1a;          /* Deep readable text */
+  --text2:#4a6b4a;         /* Secondary text - readable green */
+  --border:#d4e4d0;        /* Softer border */
   --card:#ffffff;
-  --shadow:0 2px 12px rgba(26,107,60,0.08);
-  --shadow-gold:0 2px 12px rgba(196,124,0,0.10);
+  --shadow:0 2px 12px rgba(13,104,50,0.08);
+  --shadow-gold:0 2px 12px rgba(212,168,53,0.12);
   --highlight:#fffce8;
-  --new-bg:#e8f5ee;
+  --new-bg:#e6f4ea;
   --new-border:#81c784;
   --sidebar-w:240px;
-  --user-highlight:#fff8e6;
-  --user-highlight-border:#f0c060;
+  --user-highlight:#fff9e6;
+  --user-highlight-border:#e8c860;
   --save-color:#6d4c41;
   --radius:12px;
   --radius-lg:18px;
   --transition:0.2s ease;
   /* Premium additions */
-  --glass:rgba(255,255,255,0.90);
+  --glass:rgba(255,255,255,0.85);
   --topbar-h:56px;
-  --btn-shadow:0 2px 10px rgba(26,107,60,0.16);
-  --card-shadow:0 4px 20px rgba(26,107,60,0.06);
+  --btn-shadow:0 2px 10px rgba(13,104,50,0.18);
+  --card-shadow:0 4px 20px rgba(13,104,50,0.06);
 }
 
 /* ===== NIGHT MODE -- body.night-mode se sab kuch badalta hai ===== */
 body.night-mode {
-  --bg:#111a11;
-  --bg2:#162016;
-  --surface:#1a2a1a;
-  --surface2:#203020;
-  --accent:#52c47a;
-  --accent2:#d4a040;
-  --accent3:#6ed48a;
-  --gold:#d4a040;
-  --gold-light:#e8b860;
-  --gold-dark:#b08020;
-  --green:#6ed48a;
-  --green-light:#88e0a0;
+  --bg:#0c140c;
+  --bg2:#101c10;
+  --surface:#162116;
+  --surface2:#1c2a1c;
+  --accent:#4caf50;
+  --accent2:#e8c860;
+  --accent3:#66bb6a;
+  --gold:#e8c860;
+  --gold-light:#f5d87a;
+  --gold-dark:#c9a835;
+  --green:#66bb6a;
+  --green-light:#81c784;
   --red:#ef5350;
   --purple:#b39ddb;
   --teal:#4db6ac;
-  --text:#e0f0e0;
-  --text2:#8ab88a;
-  --border:#2e442e;
-  --card:#1a2a1a;
+  --text:#e8f5e9;
+  --text2:#98c495;
+  --border:#2c4228;
+  --card:#162116;
   --shadow:0 2px 12px rgba(0,0,0,0.4);
-  --shadow-gold:0 2px 12px rgba(212,160,64,0.1);
+  --shadow-gold:0 2px 12px rgba(232,200,96,0.1);
   --highlight:rgba(255,252,232,0.06);
-  --new-bg:rgba(82,196,122,0.12);
-  --new-border:rgba(82,196,122,0.35);
-  --user-highlight:rgba(255,248,230,0.08);
-  --user-highlight-border:rgba(212,160,64,0.25);
+  --new-bg:rgba(76,175,80,0.12);
+  --new-border:rgba(76,175,80,0.35);
+  --user-highlight:rgba(255,249,230,0.08);
+  --user-highlight-border:rgba(232,200,96,0.25);
   --save-color:#a1887f;
   color-scheme: dark;
 }
 
 /* Night mode: sidebar darker */
 body.night-mode .sidebar {
-  background: linear-gradient(180deg,#020a02 0%,#061206 50%,#0a1a0a 100%);
+  background: linear-gradient(180deg,#020a02 0%,#051005 50%,#071507 100%);
 }
 body.night-mode .sb-night-btn { border-color:rgba(255,255,255,0.15); }
 body.night-mode .sb-exam-select { background:rgba(255,255,255,0.05); }
@@ -230,7 +238,7 @@ body{
 /* ===== SIDEBAR -- Premium Professional Dark Green + Gold ===== */
 .sidebar{
   width:var(--sidebar-w);flex-shrink:0;
-  background:linear-gradient(180deg,#082008 0%,#0a2a0a 45%,#0d300d 100%);
+  background:linear-gradient(180deg,#0d2b18 0%,#0f3320 45%,#112d1c 100%);
   display:flex;flex-direction:column;position:fixed;left:0;top:0;bottom:0;z-index:100;
   transition:transform 0.3s cubic-bezier(0.4,0,0.2,1);
   box-shadow:4px 0 30px rgba(0,0,0,0.35);
@@ -380,7 +388,7 @@ body{
 
 /* TOP BAR - Premium Professional */
 .topbar{
-  background:linear-gradient(to right,var(--surface),rgba(248,250,248,0.97));
+  background:var(--surface);
   border-bottom:1px solid var(--border);
   padding:0 18px;
   padding-left:max(18px,env(safe-area-inset-left,18px));
@@ -1126,7 +1134,7 @@ textarea::placeholder{color:var(--text2);opacity:0.7;}
 .sepia .reading-bottombar{color:#9b7d5e;background:#f4ecd8;}
 
 /* ===== LOGIN SCREEN ===== */
-.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#0a1f0a 0%,#1b4332 55%,#1b5e20 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
+.login-screen{position:fixed;inset:0;background:linear-gradient(135deg,#071912 0%,#0d2d20 55%,#0e2a18 100%);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;}
 .login-box{background:#fff;border-radius:20px;padding:32px 24px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;}
 .login-logo{font-size:3rem;margin-bottom:8px;}
 .login-title{font-family:'Baloo 2',sans-serif;font-size:1.5rem;font-weight:800;color:var(--accent);margin-bottom:4px;}
@@ -1993,8 +2001,6 @@ body.night-mode .sc-tbtn:hover { background: rgba(255,255,255,0.15); }
 .toolbar-btn:hover{border-color:var(--accent);color:var(--accent);background:rgba(21,101,192,0.05);}
 .toolbar-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);}
 .toolbar-btn.highlight-active{background:#fff176;color:#5d4037;border-color:#f9a825;}
-#noteRichEditor:empty:before{content:attr(data-placeholder);color:var(--text2);pointer-events:none;font-size:0.82rem;}
-#noteRichToolbar button:hover{background:var(--bg2);border-color:var(--accent);}
 .toolbar-btn.bold-active{background:var(--text);color:#fff;border-color:var(--text);}
 .notes-editor-modes{padding:8px 14px;border-bottom:1.5px solid var(--border);display:flex;gap:7px;align-items:center;flex-shrink:0;background:#f8fbff;}
 .mode-tab{padding:5px 13px;border-radius:20px;font-size:0.76rem;font-weight:700;cursor:pointer;border:1.5px solid var(--border);background:transparent;color:var(--text2);transition:all 0.15s;font-family:'Noto Sans Devanagari',sans-serif;}
@@ -4590,13 +4596,13 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
             <!-- File Upload Area -->
             <div class="field-group">
               <label class="field-label">📁 File Upload (Word/PDF/TXT) — Optional:</label>
-              <div id="noteFileDropZone"
-                onclick="document.getElementById('noteFileInput').click()"
-                ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='rgba(13,104,50,0.08)';"
+              <div id="noteFileDropZone" 
+                onclick="document.getElementById('noteFileInput').click()" 
+                ondragover="event.preventDefault();this.style.borderColor='var(--accent)';this.style.background='rgba(13,104,50,0.08)';" 
                 ondragleave="this.style.borderColor='var(--border)';this.style.background='var(--surface2)';"
                 ondrop="event.preventDefault();this.style.borderColor='var(--border)';this.style.background='var(--surface2)';if(event.dataTransfer.files[0]){var inp=document.getElementById('noteFileInput');inp.files=event.dataTransfer.files;handleNoteFileUpload(inp);}"
                 style="border:2px dashed var(--border);border-radius:10px;padding:12px 10px;text-align:center;cursor:pointer;background:var(--surface2);transition:border-color 0.2s,background 0.2s;font-size:0.78rem;color:var(--text2);">
-                📂 Yahan click karo ya file drag &amp; drop karo<br>
+                📂 Yahan click karo ya file drag & drop karo<br>
                 <span style="font-size:0.7rem;color:var(--text2);">.docx, .pdf, .txt, .html support</span>
               </div>
               <input type="file" id="noteFileInput" accept=".txt,.pdf,.docx,.html,.htm" style="display:none;" onchange="handleNoteFileUpload(this)">
@@ -4605,32 +4611,25 @@ body.night-mode #drawCanvas { background: #1a1a2e; }
             <!-- Rich Text Editor for Notes -->
             <div class="field-group">
               <label class="field-label">📋 Notes Content (Paste ya Type karo):</label>
-              <!-- Mini Toolbar -->
               <div id="noteRichToolbar" style="display:flex;flex-wrap:wrap;gap:4px;padding:6px 8px;background:var(--surface2);border:1.5px solid var(--border);border-bottom:none;border-radius:10px 10px 0 0;">
-                <button type="button" onclick="noteRichCmd('bold')" title="Bold" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-weight:700;font-size:0.78rem;">B</button>
-                <button type="button" onclick="noteRichCmd('italic')" title="Italic" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-style:italic;font-size:0.78rem;">I</button>
-                <button type="button" onclick="noteRichCmd('underline')" title="Underline" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;text-decoration:underline;font-size:0.78rem;">U</button>
-                <button type="button" onclick="noteRichCmd('insertUnorderedList')" title="Bullet List" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">• List</button>
-                <button type="button" onclick="noteRichCmd('insertOrderedList')" title="Numbered List" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">1. List</button>
+                <button type="button" onclick="noteRichCmd('bold')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-weight:700;font-size:0.78rem;">B</button>
+                <button type="button" onclick="noteRichCmd('italic')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-style:italic;font-size:0.78rem;">I</button>
+                <button type="button" onclick="noteRichCmd('underline')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;text-decoration:underline;font-size:0.78rem;">U</button>
+                <button type="button" onclick="noteRichCmd('insertUnorderedList')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">• List</button>
+                <button type="button" onclick="noteRichCmd('insertOrderedList')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">1. List</button>
                 <select onchange="noteRichCmd('fontSize', this.value); this.selectedIndex=0;" style="padding:3px 5px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.75rem;color:var(--text);">
-                  <option value="">Size</option>
-                  <option value="1">XS</option>
-                  <option value="2">S</option>
-                  <option value="3">M</option>
-                  <option value="4">L</option>
-                  <option value="5">XL</option>
+                  <option value="">Size</option><option value="1">XS</option><option value="2">S</option><option value="3">M</option><option value="4">L</option><option value="5">XL</option>
                 </select>
                 <input type="color" onchange="noteRichCmd('foreColor', this.value)" title="Text Color" style="width:28px;height:26px;padding:1px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:var(--surface);" value="#000000">
                 <input type="color" onchange="noteRichCmd('hiliteColor', this.value)" title="Highlight" style="width:28px;height:26px;padding:1px;border:1px solid var(--border);border-radius:5px;cursor:pointer;background:#fff176;" value="#fff176">
-                <button type="button" onclick="noteRichCmd('removeFormat')" title="Format hatao" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">✕ Format</button>
-                <button type="button" onclick="clearNoteRichEditor()" title="Sab saaf karo" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;color:var(--red);">🗑 Clear</button>
+                <button type="button" onclick="noteRichCmd('removeFormat')" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;">✕ Format</button>
+                <button type="button" onclick="clearNoteRichEditor()" style="padding:3px 8px;border:1px solid var(--border);border-radius:5px;background:var(--surface);cursor:pointer;font-size:0.78rem;color:var(--red);">🗑 Clear</button>
               </div>
               <div id="noteRichEditor" contenteditable="true"
                 style="min-height:140px;max-height:320px;overflow-y:auto;border:1.5px solid var(--border);border-radius:0 0 10px 10px;padding:10px 12px;background:var(--surface);font-size:0.85rem;line-height:1.75;color:var(--text);outline:none;font-family:inherit;word-break:break-word;"
                 onpaste="handleNoteRichPaste(event)"
-                data-placeholder="Yahaan notes paste karo ya type karo — formatting apne aap preserve hogi! (Tables, Colors, Bullets sab kuch)"
+                data-placeholder="Yahaan notes paste karo ya type karo — formatting preserve hogi! (Tables, Colors, Bullets sab kuch)"
               ></div>
-              <!-- Hidden textarea for backward compat -->
               <textarea id="noteContent" style="display:none;"></textarea>
             </div>
             <div class="btn-row">
@@ -7096,7 +7095,7 @@ function addTopic(){
   showToast(`"${name}" topic add! 📙`,'success');
 }
 
-// ==================== NOTES ====================
+// ===== Rich text editor helper functions =====
 // ===== Rich text editor helper functions =====
 function noteRichCmd(cmd, val) {
   document.getElementById('noteRichEditor').focus();
@@ -7109,8 +7108,12 @@ function clearNoteRichEditor() {
   }
 }
 function handleNoteRichPaste(e) {
+  // Allow native paste — browser preserves formatting from Word/web
+  // We just stop any extra processing
   setTimeout(() => {
+    // Clean up MS Word extra tags if needed
     const editor = document.getElementById('noteRichEditor');
+    // Remove MS Office namespace tags but keep formatting
     editor.innerHTML = editor.innerHTML
       .replace(/<!--[\s\S]*?-->/g, '')
       .replace(/<o:p[^>]*>[\s\S]*?<\/o:p>/gi, '')
@@ -7124,7 +7127,7 @@ function handleNoteFileUpload(input) {
   const statusEl = document.getElementById('noteFileStatus');
   const editor = document.getElementById('noteRichEditor');
   statusEl.style.display = 'block';
-  statusEl.style.background = 'rgba(13,104,50,0.08)';
+  statusEl.style.background = 'rgba(21,101,192,0.08)';
   statusEl.style.color = 'var(--accent)';
   statusEl.textContent = '⏳ File pad raha hoon...';
   const ext = file.name.split('.').pop().toLowerCase();
@@ -7161,14 +7164,14 @@ function handleNoteFileUpload(input) {
         statusEl.textContent = '✅ PDF load ho gayi! (' + pdf.numPages + ' pages, ' + file.name + ')';
         statusEl.style.color = 'var(--green)';
       } catch(err) {
-        statusEl.textContent = '❌ PDF read nahi hua: ' + err.message;
+        statusEl.textContent = '❌ PDF read nahi ho saka: ' + err.message;
         statusEl.style.color = 'var(--red)';
       }
     };
     reader.readAsArrayBuffer(file);
   } else if(ext === 'docx') {
     if(typeof mammoth === 'undefined') {
-      statusEl.textContent = '❌ Mammoth library load nahi hui. Page reload karo.';
+      statusEl.textContent = '❌ DOCX library load nahi hui.';
       statusEl.style.color = 'var(--red)'; return;
     }
     const reader = new FileReader();
@@ -7179,30 +7182,51 @@ function handleNoteFileUpload(input) {
         statusEl.textContent = '✅ Word file load ho gayi! (' + file.name + ')';
         statusEl.style.color = 'var(--green)';
       } catch(err) {
-        statusEl.textContent = '❌ DOCX read nahi hua: ' + err.message;
+        statusEl.textContent = '❌ DOCX read nahi ho saka: ' + err.message;
         statusEl.style.color = 'var(--red)';
       }
     };
     reader.readAsArrayBuffer(file);
   } else if(ext === 'html' || ext === 'htm') {
+    // HTML file - load directly with formatting preserved
     const reader = new FileReader();
     reader.onload = function(e) {
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(e.target.result, 'text/html');
-      editor.innerHTML = doc.body ? doc.body.innerHTML : e.target.result;
-      statusEl.textContent = '✅ HTML file load ho gayi! (' + file.name + ')';
-      statusEl.style.color = 'var(--green)';
+      try {
+        let htmlContent = e.target.result;
+        // Extract body content if full HTML document
+        const bodyMatch = htmlContent.match(/<body[^>]*>([\s\S]*?)<\/body>/i);
+        if(bodyMatch && bodyMatch[1]) {
+          htmlContent = bodyMatch[1];
+        }
+        // Remove script tags for safety
+        htmlContent = htmlContent.replace(/<script[\s\S]*?<\/script>/gi, '');
+        // Remove style tags (but keep inline styles)
+        htmlContent = htmlContent.replace(/<style[\s\S]*?<\/style>/gi, '');
+        // Remove comments
+        htmlContent = htmlContent.replace(/<!--[\s\S]*?-->/g, '');
+        // Clean up extra whitespace but preserve structure
+        htmlContent = htmlContent.trim();
+        
+        editor.innerHTML = htmlContent;
+        statusEl.textContent = '✅ HTML file load ho gayi! (' + file.name + ')';
+        statusEl.style.color = 'var(--green)';
+      } catch(err) {
+        statusEl.textContent = '❌ HTML read nahi ho saka: ' + err.message;
+        statusEl.style.color = 'var(--red)';
+      }
     };
     reader.readAsText(file);
   } else {
     statusEl.textContent = '❌ Sirf .txt, .pdf, .docx, .html support hai';
     statusEl.style.color = 'var(--red)';
   }
+  input.value = ''; // Reset so same file re-uploadable
 }
 
 function addNote(){
   if(!S.ui.tid){showToast('Topic select karo!','error');return;}
   const name=document.getElementById('noteName').value.trim();
+  // Get rich HTML from contenteditable editor
   const richEditor = document.getElementById('noteRichEditor');
   const richHTML = richEditor ? richEditor.innerHTML.trim() : '';
   const plainText = richEditor ? (richEditor.innerText || richEditor.textContent || '').trim() : '';
@@ -7539,6 +7563,18 @@ function copyToClipboard(text) {
   navigator.clipboard.writeText(text).then(() => {
     showToast('Copy ho gaya! 📋', 'success');
   });
+}
+
+function tvCopyRawNote(sid, secid, tid, ni) {
+  var key = sid + '_' + secid + '_' + tid + '_' + ni;
+  var text = (window._tvRawNotesCopy && window._tvRawNotesCopy[key]) || '';
+  if (!text) {
+    try {
+      var t = getTop(sid, secid, tid);
+      text = (t && t.notes && t.notes[ni] && t.notes[ni].content) || '';
+    } catch(e) { text = ''; }
+  }
+  copyToClipboard(text);
 }
 
 function updateSavedBadge() {
@@ -7967,109 +8003,33 @@ function tvShowSub(catId, sid, secid, tid){
   }
 }
 
-function tvGoBack(){
-  document.getElementById('tvScreenB').classList.remove('active');
-  document.getElementById('tvScreenB').style.display='none';
-  document.getElementById('tvScreenA').classList.add('active');
-  document.getElementById('tvScreenA').style.display='block';
-}
-
-// ── Flashcard badge helper ──
-function tvGetFCBadge(tid) {
-  try {
-    var raw = localStorage.getItem('scFC_' + (tid||'default'));
-    if(!raw) return 'No flashcards yet';
-    var d = JSON.parse(raw);
-    var cards = d.cards || [];
-    if(!cards.length) return 'No flashcards yet';
-    var prog = d.progress || {};
-    var hard = 0, easy = 0, unseen = 0;
-    cards.forEach(function(c) {
-      var p = prog[c.id];
-      if(!p || (p.r+p.w)===0) unseen++;
-      else if(p.w > p.r) hard++;
-      else easy++;
-    });
-    return cards.length + ' cards · 🔴' + hard + ' 🟡' + unseen + ' 🟢' + easy;
-  } catch(e) { return 'Flashcards'; }
-}
-
-// ── Load flashcards for a topic from localStorage ──
-function tvLoadFC(tid) {
-  try {
-    var raw = localStorage.getItem('scFC_' + (tid||'default'));
-    if(!raw) return { cards:[], progress:{} };
-    var d = JSON.parse(raw);
-    return { cards: d.cards||[], progress: d.progress||{} };
-  } catch(e) { return { cards:[], progress:{} }; }
-}
-
-// ── Copy FC JSON to clipboard ──
-function tvCopyFCJson(btn) {
-  try {
-    var json = btn.getAttribute('data-json')
-      .replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&amp;/g,'&');
-    navigator.clipboard.writeText(json).then(function() {
-      if(typeof showToast==='function') showToast('📋 JSON copied!', 'success');
-    }).catch(function() {
-      // Fallback
-      var ta = document.createElement('textarea');
-      ta.value = json; ta.style.position='fixed'; ta.style.opacity='0';
-      document.body.appendChild(ta); ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      if(typeof showToast==='function') showToast('📋 JSON copied!', 'success');
-    });
-  } catch(e) { if(typeof showToast==='function') showToast('❌ Copy error: '+e.message,'error'); }
-}
-
-// ── Flashcard: Toggle Saved ──
-function tvFCToggleSaved(cardId, tid, sid, secid) {
-  _tvFCUpdateProg(cardId, tid, 'saved', function(p){ p.saved = !p.saved; });
-  tvShowSub('flashcards', sid, secid, tid);
-}
-// ── Flashcard: Toggle Doubt ──
-function tvFCToggleDoubt(cardId, tid, sid, secid) {
-  _tvFCUpdateProg(cardId, tid, 'doubt', function(p){ p.doubt = !p.doubt; });
-  tvShowSub('flashcards', sid, secid, tid);
-}
-// ── Flashcard: Toggle Tuff ──
-function tvFCToggleTuff(cardId, tid, sid, secid) {
-  _tvFCUpdateProg(cardId, tid, 'tuff', function(p){ p.tuff = !p.tuff; });
-  tvShowSub('flashcards', sid, secid, tid);
-}
-// ── Flashcard: Delete ──
-function tvFCDelete(cardId, tid, sid, secid) {
-  try {
-    var key = 'scFC_' + (tid||'default');
-    var raw = localStorage.getItem(key);
-    if(!raw) return;
-    var d = JSON.parse(raw);
-    d.cards    = (d.cards||[]).filter(function(c){ return c.id !== cardId; });
-    delete (d.progress||{})[cardId];
-    d.hash = ''; // Force rescan on next flashcard generation
-    localStorage.setItem(key, JSON.stringify(d));
-    if(typeof showToast==='function') showToast('🗑 Flashcard delete ho gaya', 'success');
-    tvShowSub('flashcards', sid, secid, tid);
-  } catch(e) { if(typeof showToast==='function') showToast('❌ Error: '+e.message,'error'); }
-}
-// ── Internal: update progress field for a card ──
-function _tvFCUpdateProg(cardId, tid, field, fn) {
+function tvFCSetConfidence(cardId, tid, sid, secid, val) {
   try {
     var key = 'scFC_' + (tid||'default');
     var raw = localStorage.getItem(key);
     if(!raw) return;
     var d = JSON.parse(raw);
     if(!d.progress) d.progress = {};
-    if(!d.progress[cardId]) d.progress[cardId] = {r:0,w:0};
-    fn(d.progress[cardId]);
+    if(!d.progress[cardId]) d.progress[cardId] = {r:0, w:0};
+    // Toggle: agar same value click kiya → unset (wapas unseen)
+    if(d.progress[cardId].confidence === val) {
+      d.progress[cardId].confidence = null;
+    } else {
+      d.progress[cardId].confidence = val;
+    }
     localStorage.setItem(key, JSON.stringify(d));
-    // Also sync to _scFC if current topic matches
+    // Sync to _scFC in-memory
     if(typeof _scFC !== 'undefined' && typeof _sc !== 'undefined' && _sc.tid == tid) {
       if(!_scFC.progress[cardId]) _scFC.progress[cardId] = {r:0,w:0};
-      fn(_scFC.progress[cardId]);
+      _scFC.progress[cardId].confidence = d.progress[cardId].confidence;
     }
-  } catch(e) {}
+    // Refresh view
+    tvShowSub('flashcards', sid, secid, tid);
+    if(typeof showToast === 'function') {
+      var labels = {sure:'✅ Sure!', notconfirm:'🤔 Not Confirm', dontknow:"❌ Don't Know", null:'↩ Rating hatai'};
+      showToast(labels[d.progress[cardId].confidence || 'null'] || 'Updated', 'success');
+    }
+  } catch(e) { console.error('tvFCSetConfidence error:', e); }
 }
 // ── Download FC JSON as file ──
 function tvDownloadFCJson(btn) {
@@ -8245,9 +8205,746 @@ function updateQuizTopics(){
   sel.innerHTML='<option value="all">Saare Topics</option>';
   if(sid!=='all'&&secid!=='all'){const sec=getSec(parseInt(sid),parseInt(secid));if(sec)sec.topics.forEach(t=>{sel.innerHTML+=`<option value="${t.id}">${t.name}</option>`;});}
 }
+function updateQuizSourceVisibility(){
+  var tid = document.getElementById('quizTopic').value;
+  var srcSel = document.getElementById('quizNotesSource');
+  if(!srcSel) return;
+  if(tid === 'all') {
+    srcSel.value = 'raw';
+    srcSel.options[1].disabled = true;
+    srcSel.options[1].text = '🎨 Canvas Notes (Topic chunno pehle)';
+  } else {
+    srcSel.options[1].disabled = false;
+    srcSel.options[1].text = '🎨 Canvas Notes (Slides ke notes)';
+  }
+  updateHlProgress();
+}
+// ═══════════════════════════════════════════════════
+// HIGHLIGHT QUIZ PROGRESS SYSTEM
+// ═══════════════════════════════════════════════════
+
+// Topic ke saare highlights collect karo as [{id, text}]
+function hlGetTopicHighlights(tid) {
+  var result = [];
+  S.subjects.forEach(function(subj){
+    subj.sections.forEach(function(sec){
+      sec.topics.forEach(function(t){
+        if(String(t.id) !== String(tid)) return;
+        (t.highlights || []).forEach(function(h, i){
+          result.push({ id: 'hl_'+String(t.id)+'_'+i, text: h.text });
+        });
+      });
+    });
+  });
+  return result;
+}
+
+// Quiz complete hone par progress update karo
+function hlUpdateProgress(cq) {
+  if(!cq._hlKey || !cq._hasHls) return;
+  if(!S.hlQuizProgress) S.hlQuizProgress = {};
+  var prog = S.hlQuizProgress[cq._hlKey] || { coveredIds: [], wrongIds: [] };
+  var allHls = cq._allHls || [];
+  var uncoveredHls = cq._uncoveredHls || [];
+  var qtype = cq.qtype;
+
+  // Determine which highlights were covered this quiz
+  // We match by position — jo highlights is quiz mein use ki gayi thi
+  var usedHls = [];
+  if(qtype === 'new' || qtype === 'all') {
+    usedHls = uncoveredHls.slice(0, cq.questions.length);
+  } else if(qtype === 'weak') {
+    usedHls = (cq._wrongHls || []).slice(0, cq.questions.length);
+  } else if(qtype === 'mixed') {
+    var half = Math.ceil(cq.questions.length / 2);
+    usedHls = [
+      ...uncoveredHls.slice(0, half),
+      ...(cq._wrongHls || []).slice(0, cq.questions.length - half)
+    ];
+  }
+
+  // Covered IDs update
+  if(qtype === 'new' || qtype === 'all' || qtype === 'mixed') {
+    var covered = prog.coveredIds || [];
+    usedHls.forEach(function(h){
+      if(covered.indexOf(h.id) === -1) covered.push(h.id);
+    });
+    prog.coveredIds = covered;
+    // Agar all covered to reset (cycle restart)
+    if(allHls.length > 0 && covered.length >= allHls.length) {
+      showToast('🎉 Sab highlights cover ho gaye! Progress reset ho rahi hai naye cycle ke liye.', 'success');
+      prog.coveredIds = [];
+    }
+  }
+
+  // Wrong IDs update — quiz ke results se
+  var wrongIds = prog.wrongIds || [];
+  var correctIds = [];
+  cq.questions.forEach(function(q, qi) {
+    var hl = usedHls[qi];
+    if(!hl) return;
+    if(!q.isCorrect) {
+      // Wrong — add to wrongIds
+      if(wrongIds.indexOf(hl.id) === -1) wrongIds.push(hl.id);
+    } else {
+      // Correct — remove from wrongIds
+      wrongIds = wrongIds.filter(function(id){ return id !== hl.id; });
+    }
+  });
+  prog.wrongIds = wrongIds;
+
+  // Also update weak type progress
+  var weakKey = cq.tid + '_weak';
+  var weakProg = S.hlQuizProgress[weakKey] || { coveredIds: [], wrongIds: wrongIds };
+  weakProg.wrongIds = wrongIds;
+  S.hlQuizProgress[weakKey] = weakProg;
+
+  S.hlQuizProgress[cq._hlKey] = prog;
+}
+
+// Progress display update
+function updateHlProgress() {
+  var tid = document.getElementById('quizTopic') ? document.getElementById('quizTopic').value : 'all';
+  var qtype = document.getElementById('quizType') ? document.getElementById('quizType').value : 'new';
+  var box = document.getElementById('hlProgressBox');
+  if(!box) return;
+
+  if(!tid || tid === 'all') { box.style.display='none'; return; }
+
+  var allHls = hlGetTopicHighlights(tid);
+  if(allHls.length === 0) { box.style.display='none'; return; }
+
+  if(!S.hlQuizProgress) S.hlQuizProgress = {};
+  var newProg  = S.hlQuizProgress[tid+'_new']  || { coveredIds:[], wrongIds:[] };
+  var weakProg = S.hlQuizProgress[tid+'_weak'] || { coveredIds:[], wrongIds:[] };
+
+  var total    = allHls.length;
+  var covered  = (newProg.coveredIds||[]).length;
+  var wrongCnt = (weakProg.wrongIds||[]).length;
+  var remaining= total - covered;
+  var pct      = total > 0 ? Math.round((covered/total)*100) : 0;
+  var pColor   = pct>=80?'#4caf50':pct>=50?'#ff9800':'#1565c0';
+
+  // Max question count limit karo
+  var maxAllowed;
+  if(qtype==='weak')      maxAllowed = Math.max(1, wrongCnt);
+  else if(qtype==='new')  maxAllowed = Math.max(1, remaining > 0 ? remaining : total);
+  else if(qtype==='mixed')maxAllowed = Math.max(1, Math.max(remaining, wrongCnt));
+  else                    maxAllowed = Math.max(1, total);
+  maxAllowed = Math.min(maxAllowed, 50);
+
+  var slider = document.getElementById('questionCount');
+  var numInp = document.getElementById('qCountNum');
+  var disp   = document.getElementById('qCountDisplay');
+  if(slider){
+    slider.max = maxAllowed;
+    var cur = parseInt(slider.value)||10;
+    if(cur > maxAllowed){ cur = Math.min(10, maxAllowed); slider.value=cur; }
+    if(numInp){ numInp.max=maxAllowed; numInp.value=cur; }
+    if(disp) disp.textContent = cur;
+  }
+
+  var typeInfo = {
+    new:   { icon:'🆕', label:'Naya Content',  stat: remaining+' remaining / '+total+' total',  color:'#1565c0' },
+    weak:  { icon:'❌', label:'Weak/Wrong',    stat: wrongCnt+' wrong highlights',               color:'#c62828' },
+    mixed: { icon:'🔀', label:'Mixed',         stat: remaining+' new + '+wrongCnt+' wrong',       color:'#6a1b9a' },
+    all:   { icon:'📚', label:'Saare Topics',  stat: total+' total highlights',                  color:'#2e7d32' }
+  };
+  var ti = typeInfo[qtype] || typeInfo.all;
+
+  box.innerHTML =
+    '<div style="font-size:0.78rem;font-weight:800;color:'+ti.color+';margin-bottom:7px;">'+ti.icon+' '+ti.label+' — Highlight Progress</div>'+
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:7px;">'+
+      '<span style="font-size:0.72rem;background:rgba(21,101,192,0.1);color:#1565c0;padding:3px 9px;border-radius:20px;font-weight:700;">📌 Total: '+total+'</span>'+
+      '<span style="font-size:0.72rem;background:rgba(76,175,80,0.1);color:#2e7d32;padding:3px 9px;border-radius:20px;font-weight:700;">✅ Cover: '+covered+'</span>'+
+      '<span style="font-size:0.72rem;background:rgba(255,152,0,0.1);color:#e65100;padding:3px 9px;border-radius:20px;font-weight:700;">⏳ Baki: '+remaining+'</span>'+
+      (wrongCnt>0?'<span style="font-size:0.72rem;background:rgba(244,67,54,0.1);color:#c62828;padding:3px 9px;border-radius:20px;font-weight:700;">❌ Wrong: '+wrongCnt+'</span>':'')+
+    '</div>'+
+    '<div style="background:var(--surface2);border-radius:20px;height:8px;overflow:hidden;margin-bottom:5px;">'+
+      '<div style="height:100%;width:'+pct+'%;background:'+pColor+';border-radius:20px;transition:width 0.4s;"></div>'+
+    '</div>'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.7rem;color:var(--text2);">'+
+      '<span>'+pct+'% complete &nbsp;|&nbsp; Max questions: <b style="color:var(--accent);">'+maxAllowed+'</b></span>'+
+      '<button onclick="hlResetProgress()" style="font-size:0.68rem;background:none;border:none;color:var(--text2);cursor:pointer;text-decoration:underline;padding:0;">🔄 Reset</button>'+
+    '</div>';
+  box.style.display = 'block';
+}
+
+function hlResetProgress() {
+  var tid = document.getElementById('quizTopic').value;
+  var qtype = document.getElementById('quizType').value;
+  if(!tid||tid==='all') return;
+  if(!confirm('Is topic ka '+qtype+' progress reset karna hai?')) return;
+  if(!S.hlQuizProgress) S.hlQuizProgress = {};
+  delete S.hlQuizProgress[tid+'_'+qtype];
+  if(qtype==='new') delete S.hlQuizProgress[tid+'_weak']; // reset wrong bhi
+  save();
+  updateHlProgress();
+  showToast('Progress reset ho gaya! 🔄','success');
+}
+
 function updateQuizModeInfo(){
   const ae=S.exams.find(e=>e.id==S.activeExamId);
   document.getElementById('quizModeInfo').textContent=ae?`${ae.name} Mode -- Sirf selected topics se quiz`:'Free Mode -- Saare topics se quiz';
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// FACT COVERAGE TRACKING SYSTEM — Quiz ke liye full area coverage
+// ═══════════════════════════════════════════════════════════════════
+
+// Content se fact lines extract karo (highlights system se alag — raw notes/canvas)
+function qfExtractFacts(content) {
+  if (!content) return [];
+  return content.split('\n')
+    .map(l => l.trim())
+    .filter(l => l.length > 12 && !l.startsWith('===') && !l.startsWith('###') && !l.startsWith('---') && !l.startsWith('//'));
+}
+
+// Fact normalize — comparison ke liye
+function qfNorm(s) {
+  return s.toLowerCase().replace(/[^a-z0-9\u0900-\u097f\s]/g, '').replace(/\s+/g,' ').trim();
+}
+
+// Unique key banao — content + type + source combination ke liye
+function qfMakeKey(sid, secid, tid, notesSource, qtype) {
+  return [sid, secid, tid, notesSource, qtype].join('_');
+}
+
+// Get or init progress for a key
+function qfGetProg(key) {
+  if (!S.quizFactProgress) S.quizFactProgress = {};
+  return S.quizFactProgress[key] || { coveredFacts: [], wrongFacts: [], totalKnown: 0 };
+}
+
+// Save progress
+function qfSaveProg(key, prog) {
+  if (!S.quizFactProgress) S.quizFactProgress = {};
+  S.quizFactProgress[key] = prog;
+  save();
+}
+
+// Content extract karo current quiz settings se (same logic as startQuiz but without generating)
+function qfExtractContent(sid, secid, tid, notesSource) {
+  let content = '';
+  const ae = S.exams.find(e => e.id == S.activeExamId);
+
+  if (notesSource === 'canvas' && tid !== 'all') {
+    S.subjects.forEach(function(subj) {
+      subj.sections.forEach(function(sec) {
+        sec.topics.forEach(function(t) {
+          if (t.id != tid) return;
+          if (t.studyCanvas && t.studyCanvas.slides && t.studyCanvas.slides.length) {
+            t.studyCanvas.slides.forEach(function(slide, si) {
+              var slideTitle = slide.title || ('Slide ' + (si+1));
+              content += '=== ' + slideTitle + ' ===\n';
+              (slide.textBlocks || []).forEach(function(blk) {
+                var txt = blk.html
+                  ? blk.html.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim()
+                  : (blk.text || '').trim();
+                if (txt) content += txt + '\n';
+              });
+            });
+          }
+        });
+      });
+    });
+  } else {
+    S.subjects.forEach(subj => {
+      if (sid !== 'all' && subj.id != sid) return;
+      subj.sections.forEach(sec => {
+        if (secid !== 'all' && sec.id != secid) return;
+        sec.topics.forEach(t => {
+          if (tid !== 'all' && t.id != tid) return;
+          if (ae && !ae.selectedTopicIds.includes(t.id) && tid === 'all') return;
+          const src = t.finalNotes
+            ? t.finalNotes.replace(/%%NEW%%|%%HIGHLIGHT%%|%%DATE%%.*?%%ENDNEW%%|%%ENDHIGHLIGHT%%/g, '')
+            : t.notes.map(n => n.content).join('\n\n');
+          if (src) content += src + '\n\n---\n\n';
+        });
+      });
+    });
+  }
+  return content;
+}
+
+// Quiz complete hone par fact progress update karo
+function qfUpdateProgress(cq, usedFacts) {
+  if (!cq._qfKey) return;
+  var prog = qfGetProg(cq._qfKey);
+  var covered = prog.coveredFacts || [];
+  var wrongF  = prog.wrongFacts  || [];
+
+  if (cq.qtype === 'weak') {
+    // Wrong type: wrong se correct hue to remove, still wrong to keep/add
+    cq.questions.forEach(function(q, i) {
+      var f = usedFacts[i];
+      if (!f) return;
+      var nf = qfNorm(f);
+      if (q.isCorrect) {
+        wrongF = wrongF.filter(w => qfNorm(w) !== nf);
+      } else {
+        if (!wrongF.find(w => qfNorm(w) === nf)) wrongF.push(f);
+      }
+    });
+  } else {
+    // New/Mixed/All: cover karo used facts
+    usedFacts.forEach(function(f, i) {
+      var nf = qfNorm(f);
+      if (!covered.find(c => qfNorm(c) === nf)) covered.push(f);
+      // Agar galat answer tha to wrong mein bhi dalo
+      var q = cq.questions[i];
+      if (q && !q.isCorrect) {
+        if (!wrongF.find(w => qfNorm(w) === nf)) wrongF.push(f);
+      } else if (q && q.isCorrect) {
+        wrongF = wrongF.filter(w => qfNorm(w) !== nf);
+      }
+    });
+  }
+
+  prog.coveredFacts = covered;
+  prog.wrongFacts   = wrongF;
+  var _total = cq._qfTotalFacts || prog.totalKnown || 0;
+  prog.totalKnown   = _total;
+  prog.lastUpdated  = new Date().toLocaleDateString('hi-IN');
+  // Rotation index update karo — 'all' type ke liye next quiz mein agle facts se start ho
+  if (cq.qtype === 'all' && _total > 0) {
+    var usedCount = (cq._qfAvailFacts||[]).slice(0, cq.questions.length).length;
+    prog.rotationIdx = ((prog.rotationIdx||0) + usedCount) % _total;
+  }
+
+  // Cycle complete check — allFacts se match karke dekhte hain
+  var _allFactNorms = (cq._qfAllFacts || []).map(qfNorm);
+  var _covMatchCount = covered.filter(function(c){ return _allFactNorms.includes(qfNorm(c)); }).length;
+  if (_total > 0 && _covMatchCount >= _total) {
+    showToast('🎉 Sabhi facts cover ho gaye! Progress reset ho rahi hai naye cycle ke liye.', 'success');
+    prog.coveredFacts = [];
+    prog.wrongFacts = [];
+    // totalKnown PRESERVE karo at reset time — isi se naye facts detect honge
+    // Agar next time allFacts.length > totalKnown to "new facts added" detect hoga
+    prog.totalKnown = _total;
+  }
+
+  qfSaveProg(cq._qfKey, prog);
+}
+
+// Pre-quiz popup dikhao — stats + question count selector
+function qfShowPreQuizPopup(params) {
+  // params: { sid, secid, tid, notesSource, qtype, onConfirm }
+  var content = qfExtractContent(params.sid, params.secid, params.tid, params.notesSource);
+  var allFacts = qfExtractFacts(content);
+  var key = qfMakeKey(params.sid, params.secid, params.tid, params.notesSource, params.qtype);
+  var prog = qfGetProg(key);
+  var covered = prog.coveredFacts || [];
+  var wrongF  = prog.wrongFacts || [];
+
+  // ── SMART NEW-FACTS DETECTION ──
+  // Covered facts me se jo current allFacts me match karte hain
+  var allFactNorms = allFacts.map(qfNorm);
+  var covNormsBase = covered.map(qfNorm);
+  var covCount = covered.filter(function(c){ return allFactNorms.includes(qfNorm(c)); }).length;
+  covCount = Math.min(covCount, allFacts.length);
+  var totalFacts = allFacts.length;
+
+  // Kya pehle se saare purane facts cover ho chuke the (cycle reset ho chuki thi)?
+  // Condition: coveredFacts empty hai (reset ke baad) LEKIN allFacts me naye facts hain
+  // jo covered me nahi the kabhi bhi — matlab content badha hai reset ke baad
+  var storedTotalKnown = prog.totalKnown || 0;  // Pichli baar kitne total facts the reset ke waqt
+  var cycleJustReset = (covered.length === 0) && (storedTotalKnown > 0);
+
+  // Naye facts = jo current allFacts me hain lekin covered me nahi (fresh uncovered)
+  var freshUncovered = allFacts.filter(function(f){ return !covNormsBase.includes(qfNorm(f)); });
+
+  // "New facts aaye hain reset ke baad" scenario:
+  // 1. Cycle reset ho chuki hai (covered empty, totalKnown > 0)
+  // 2. AND content badha hai (totalFacts > storedTotalKnown)
+  var newFactsAfterReset = cycleJustReset && (totalFacts > storedTotalKnown) && (totalFacts - storedTotalKnown > 0);
+  var addedFactsCount = newFactsAfterReset ? (totalFacts - storedTotalKnown) : 0;
+
+  // "Progress incomplete hai aur naye facts aaye" scenario:
+  // Pehle kuch facts covered hain, reset nahi hua, lekin totalFacts badh gaye
+  var newFactsDuringProgress = (!cycleJustReset) && (covCount > 0) && (freshUncovered.length > 0) && (totalFacts > storedTotalKnown) && (storedTotalKnown > 0);
+
+  // Filter facts based on type + scenario
+  var availableFacts = [];
+  if (params.qtype === 'weak') {
+    availableFacts = wrongF.length > 0 ? wrongF : allFacts;
+  } else if (params.qtype === 'new') {
+    if (cycleJustReset && !newFactsAfterReset) {
+      // Normal cycle restart — saare facts se shuru
+      availableFacts = allFacts;
+    } else {
+      availableFacts = freshUncovered.length > 0 ? freshUncovered : allFacts;
+    }
+  } else if (params.qtype === 'mixed') {
+    var uncovM = freshUncovered;
+    availableFacts = uncovM.concat(wrongF.filter(function(w){
+      return !uncovM.some(function(u){ return qfNorm(u)===qfNorm(w); });
+    }));
+    if (availableFacts.length === 0) availableFacts = allFacts;
+  } else {
+    // 'all' type: rotation index se start karo
+    var rotIdx = prog.rotationIdx || 0;
+    availableFacts = allFacts.slice(rotIdx).concat(allFacts.slice(0, rotIdx));
+  }
+
+  var wrongCount = wrongF.length;
+  var maxQ       = Math.max(1, availableFacts.length);
+  var defaultQ   = Math.min(10, maxQ);
+  var pct        = totalFacts > 0 ? Math.round((covCount / totalFacts) * 100) : 0;
+
+  var typeLabels = {
+    new:   { icon:'🆕', label:'Naya Content',  color:'#1565c0' },
+    weak:  { icon:'❌', label:'Weak/Wrong',    color:'#c62828' },
+    mixed: { icon:'🔀', label:'Mixed',         color:'#6a1b9a' },
+    all:   { icon:'📚', label:'Saare Facts',   color:'#2e7d32' }
+  };
+  var tl = typeLabels[params.qtype] || typeLabels.all;
+  var pColor = pct >= 80 ? '#4caf50' : pct >= 50 ? '#ff9800' : '#1565c0';
+
+  // ── SCENARIO BANNERS ──
+  var noFactsWarning = totalFacts === 0
+    ? '<div style="background:rgba(198,40,40,0.1);border:1px solid rgba(198,40,40,0.3);border-radius:10px;padding:10px 12px;font-size:0.77rem;color:#c62828;font-weight:700;margin-bottom:10px;">⚠️ Notes mein koi facts nahi mile! Pehle notes/canvas mein content likho.</div>' : '';
+
+  var weakWarning = params.qtype === 'weak' && wrongCount === 0
+    ? '<div style="background:rgba(255,152,0,0.1);border:1px solid rgba(255,152,0,0.3);border-radius:10px;padding:10px 12px;font-size:0.77rem;color:#e65100;font-weight:700;margin-bottom:10px;">⚠️ Abhi koi wrong facts nahi hain! Pehle kuch quizzes do jo galat ho. Saare facts se quiz hogi.</div>' : '';
+
+  // Normal cycle restart (no new facts added)
+  var normalCycleRestart = cycleJustReset && !newFactsAfterReset
+    ? '<div style="background:rgba(76,175,80,0.1);border:1px solid rgba(76,175,80,0.3);border-radius:10px;padding:10px 12px;font-size:0.77rem;color:#2e7d32;font-weight:700;margin-bottom:10px;">🎉 Pichli cycle complete! Ab naye cycle ke liye saare <strong>' + totalFacts + ' facts</strong> se shuru hoga.</div>' : '';
+
+  // Progress incomplete tha aur naye facts aa gaye — unhe automatically add kar diya
+  var newFactsMergedBanner = newFactsDuringProgress
+    ? '<div style="background:rgba(21,101,192,0.1);border:1px solid rgba(21,101,192,0.3);border-radius:10px;padding:10px 12px;font-size:0.77rem;color:#1565c0;font-weight:700;margin-bottom:10px;">✨ <strong>' + freshUncovered.length + ' naye facts</strong> detect hue! Inhe baki uncovered facts ke saath add kar diya gaya hai — aage ki quizzes me cover honge.</div>' : '';
+
+  // ── SPECIAL: New facts aaye AFTER full cycle reset ──
+  // Yahan 2-button choice popup dikhana hai — isliye alag function se handle karenge
+  if (newFactsAfterReset && params.qtype !== 'weak') {
+    // Sirf woh facts jo storedTotalKnown ke BAAD add hue — position se detect karo
+    // Purane facts: allFacts[0..storedTotalKnown-1], Naye facts: allFacts[storedTotalKnown..]
+    var onlyNewAvail = allFacts.slice(storedTotalKnown);
+    // Fallback: agar slice empty aa jaye (fact ordering change ho gayi) to freshUncovered use karo
+    if (onlyNewAvail.length === 0) onlyNewAvail = freshUncovered.length > 0 ? freshUncovered : allFacts.slice(-addedFactsCount);
+    var allAvailForRestart = allFacts;
+
+    _qfShowChoicePopup({
+      params: params,
+      key: key,
+      allFacts: allFacts,
+      onlyNewFacts: onlyNewAvail,
+      allFactsForRestart: allAvailForRestart,
+      addedCount: addedFactsCount,
+      totalFacts: totalFacts,
+      storedTotal: storedTotalKnown,
+      covCount: covCount,
+      wrongF: wrongF,
+      pct: pct,
+      tl: tl
+    });
+    return;
+  }
+
+  // ── Update totalKnown in prog so next time we can detect new facts ──
+  // Only update if we're not in a reset state
+  if (!cycleJustReset && totalFacts > 0) {
+    prog.totalKnown = totalFacts;
+    qfSaveProg(key, prog);
+  }
+
+  // Popup HTML banao (normal flow)
+  var overlay = document.createElement('div');
+  overlay.id = 'qfPrePopup';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+
+  overlay.innerHTML = '<div style="background:var(--surface,#fff);border-radius:18px;padding:20px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.3);max-height:90vh;overflow-y:auto;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">' +
+      '<div style="font-size:1rem;font-weight:900;color:var(--text,#1a2e44);">📊 Quiz Coverage Check</div>' +
+      '<button onclick="document.getElementById(\'qfPrePopup\').remove()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text2,#6b7f96);line-height:1;">✕</button>' +
+    '</div>' +
+
+    noFactsWarning + weakWarning + normalCycleRestart + newFactsMergedBanner +
+
+    '<div style="background:linear-gradient(135deg,rgba(21,101,192,0.07),rgba(76,175,80,0.05));border:1.5px solid rgba(21,101,192,0.2);border-radius:12px;padding:13px;margin-bottom:13px;">' +
+      '<div style="font-size:0.8rem;font-weight:800;color:' + tl.color + ';margin-bottom:10px;">' + tl.icon + ' ' + tl.label + ' — Facts Progress</div>' +
+      '<div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:10px;">' +
+        '<div style="flex:1;min-width:80px;background:rgba(21,101,192,0.08);border-radius:10px;padding:8px 10px;text-align:center;">' +
+          '<div style="font-size:1.2rem;font-weight:900;color:#1565c0;">' + totalFacts + '</div>' +
+          '<div style="font-size:0.65rem;color:var(--text2,#6b7f96);font-weight:600;">Total Facts</div>' +
+        '</div>' +
+        '<div style="flex:1;min-width:80px;background:rgba(76,175,80,0.08);border-radius:10px;padding:8px 10px;text-align:center;">' +
+          '<div style="font-size:1.2rem;font-weight:900;color:#2e7d32;">' + covCount + '</div>' +
+          '<div style="font-size:0.65rem;color:var(--text2,#6b7f96);font-weight:600;">Cover Ho Gaye</div>' +
+        '</div>' +
+        '<div style="flex:1;min-width:80px;background:rgba(255,152,0,0.08);border-radius:10px;padding:8px 10px;text-align:center;">' +
+          '<div style="font-size:1.2rem;font-weight:900;color:#e65100;">' + availableFacts.length + '</div>' +
+          '<div style="font-size:0.65rem;color:var(--text2,#6b7f96);font-weight:600;">' + (params.qtype==='weak'?'Wrong Facts':'Baki Facts') + '</div>' +
+        '</div>' +
+        (wrongCount > 0 && params.qtype !== 'weak' ? '<div style="flex:1;min-width:80px;background:rgba(198,40,40,0.08);border-radius:10px;padding:8px 10px;text-align:center;"><div style="font-size:1.2rem;font-weight:900;color:#c62828;">' + wrongCount + '</div><div style="font-size:0.65rem;color:var(--text2,#6b7f96);font-weight:600;">Wrong Facts</div></div>' : '') +
+      '</div>' +
+      '<div style="background:var(--surface2,#f5f7fa);border-radius:20px;height:10px;overflow:hidden;margin-bottom:6px;">' +
+        '<div style="height:100%;width:' + pct + '%;background:' + pColor + ';border-radius:20px;transition:width 0.4s;"></div>' +
+      '</div>' +
+      '<div style="font-size:0.72rem;color:var(--text2,#6b7f96);text-align:center;font-weight:600;">' + pct + '% area cover ho chuka hai</div>' +
+    '</div>' +
+
+    '<div style="background:var(--surface2,#f5f7fa);border-radius:12px;padding:13px;margin-bottom:14px;">' +
+      '<div style="font-size:0.82rem;font-weight:800;color:var(--text,#1a2e44);margin-bottom:10px;">🔢 Kitne Questions Chahiye?</div>' +
+      '<div style="font-size:0.72rem;color:var(--text2,#6b7f96);margin-bottom:8px;">Max <strong style="color:var(--accent,#1565c0);">' + maxQ + '</strong> questions ban sakte hain (' + availableFacts.length + ' available facts se)</div>' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">' +
+        '<span style="font-size:0.72rem;color:var(--text2,#6b7f96);">1</span>' +
+        '<input type="range" id="qfPopupSlider" min="1" max="' + maxQ + '" value="' + defaultQ + '" style="flex:1;accent-color:var(--accent,#1565c0);cursor:pointer;" oninput="document.getElementById(\'qfPopupNum\').value=this.value;document.getElementById(\'qfPopupDisp\').textContent=this.value">' +
+        '<span style="font-size:0.72rem;color:var(--text2,#6b7f96);">' + maxQ + '</span>' +
+        '<input type="number" id="qfPopupNum" min="1" max="' + maxQ + '" value="' + defaultQ + '" style="width:52px;padding:5px 7px;border:1.5px solid var(--border,#d0d7e0);border-radius:8px;font-size:0.85rem;font-weight:700;color:var(--accent,#1565c0);background:var(--surface,#fff);outline:none;text-align:center;" oninput="var v=Math.min(' + maxQ + ',Math.max(1,this.value||1));this.value=v;document.getElementById(\'qfPopupSlider\').value=v;document.getElementById(\'qfPopupDisp\').textContent=v">' +
+      '</div>' +
+      '<div style="display:flex;gap:5px;flex-wrap:wrap;">' +
+        [5,10,15,20,30].filter(n => n <= maxQ).map(n => '<button onclick="document.getElementById(\'qfPopupSlider\').value=' + n + ';document.getElementById(\'qfPopupNum\').value=' + n + ';document.getElementById(\'qfPopupDisp\').textContent=' + n + '" style="padding:5px 11px;border-radius:20px;border:1.5px solid var(--border,#d0d7e0);background:var(--surface,#fff);font-size:0.75rem;font-weight:700;cursor:pointer;color:var(--text,#1a2e44);">' + n + '</button>').join('') +
+        (maxQ > 0 ? '<button onclick="document.getElementById(\'qfPopupSlider\').value=' + maxQ + ';document.getElementById(\'qfPopupNum\').value=' + maxQ + ';document.getElementById(\'qfPopupDisp\').textContent=' + maxQ + '" style="padding:5px 11px;border-radius:20px;border:1.5px solid rgba(21,101,192,0.4);background:rgba(21,101,192,0.07);font-size:0.75rem;font-weight:700;cursor:pointer;color:#1565c0;">Max (' + maxQ + ')</button>' : '') +
+      '</div>' +
+    '</div>' +
+
+    '<div style="font-size:0.72rem;color:var(--text2,#6b7f96);background:rgba(21,101,192,0.05);border-radius:8px;padding:8px 10px;margin-bottom:14px;line-height:1.6;">' +
+      '💡 <strong>Smart Coverage:</strong> ' + (params.qtype === 'weak' ? 'Sirf galat facts se questions — weak areas strengthen honge.' : params.qtype === 'new' ? 'Sirf uncovered facts se naye questions — har quiz naya content cover karegi.' : params.qtype === 'mixed' ? 'Nayi + wrong facts dono se — best of both worlds.' : 'Saare facts se random questions — full revision mode.') +
+      (covCount > 0 ? ' Covered facts repeat nahi honge.' : '') +
+    '</div>' +
+
+    '<div style="display:flex;gap:8px;">' +
+      '<button onclick="document.getElementById(\'qfPrePopup\').remove()" style="flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--border,#d0d7e0);background:none;font-size:0.85rem;font-weight:700;cursor:pointer;color:var(--text2,#6b7f96);">✕ Cancel</button>' +
+      '<button onclick="qfConfirmQuiz()" style="flex:2;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-size:0.85rem;font-weight:800;cursor:pointer;">🚀 <span id="qfPopupDisp">' + defaultQ + '</span> Questions ki Quiz Shuru Karo!</button>' +
+    '</div>' +
+  '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Store params for confirm
+  window._qfPendingParams = { ...params, allFacts, availableFacts, key };
+}
+
+// ── CHOICE POPUP: Jab cycle reset ke baad naye facts aa jaate hain ──
+function _qfShowChoicePopup(cfg) {
+  var params       = cfg.params;
+  var key          = cfg.key;
+  var allFacts     = cfg.allFacts;
+  var onlyNewFacts = cfg.onlyNewFacts;     // sirf naye uncovered facts
+  var allForRestart= cfg.allFactsForRestart; // saare facts (fresh start)
+  var addedCount   = cfg.addedCount;
+  var totalFacts   = cfg.totalFacts;
+  var storedTotal  = cfg.storedTotal;
+  var covCount     = cfg.covCount;
+  var wrongF       = cfg.wrongF;
+  var pct          = cfg.pct;
+  var tl           = cfg.tl;
+
+  var maxNew  = Math.max(1, onlyNewFacts.length);
+  var maxAll  = Math.max(1, allForRestart.length);
+  var defNew  = Math.min(10, maxNew);
+  var defAll  = Math.min(10, maxAll);
+  var pColor  = pct >= 80 ? '#4caf50' : pct >= 50 ? '#ff9800' : '#1565c0';
+
+  var overlay = document.createElement('div');
+  overlay.id = 'qfPrePopup';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:99999;display:flex;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;';
+
+  // Active tab state — 'new' ya 'all'
+  overlay.innerHTML = '<div style="background:var(--surface,#fff);border-radius:18px;padding:20px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.35);max-height:92vh;overflow-y:auto;">' +
+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">' +
+      '<div style="font-size:1rem;font-weight:900;color:var(--text,#1a2e44);">✨ Naya Content Mila!</div>' +
+      '<button onclick="document.getElementById(\'qfPrePopup\').remove()" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--text2,#6b7f96);line-height:1;">✕</button>' +
+    '</div>' +
+
+    // Info banner
+    '<div style="background:linear-gradient(135deg,rgba(21,101,192,0.1),rgba(76,175,80,0.08));border:1.5px solid rgba(21,101,192,0.25);border-radius:12px;padding:12px 14px;margin-bottom:14px;">' +
+      '<div style="font-size:0.82rem;font-weight:800;color:#1565c0;margin-bottom:6px;">🎯 Pichla Cycle Complete + Naya Data Add Hua</div>' +
+      '<div style="font-size:0.75rem;color:var(--text2,#6b7f96);line-height:1.6;">' +
+        'Aapne pehle <strong style="color:#2e7d32;">' + storedTotal + ' facts</strong> ka pura practice kar liya tha. ' +
+        'Ab <strong style="color:#1565c0;">' + addedCount + ' naye facts</strong> content mein add hue hain. ' +
+        'Aap choose karo:' +
+      '</div>' +
+    '</div>' +
+
+    // Two choice cards
+    '<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">' +
+
+      // Choice A — Sirf naye facts
+      '<div id="qfChoiceA" onclick="_qfSelectChoice(\'new\')" style="border:2px solid #1565c0;border-radius:14px;padding:14px;cursor:pointer;background:rgba(21,101,192,0.06);transition:all 0.2s;">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+          '<div style="width:22px;height:22px;border-radius:50%;border:2px solid #1565c0;background:#1565c0;display:flex;align-items:center;justify-content:center;" id="qfRadioA"><div style="width:10px;height:10px;border-radius:50%;background:#fff;"></div></div>' +
+          '<div style="font-size:0.88rem;font-weight:900;color:#1565c0;">🆕 Sirf Naye Facts Practice Karo</div>' +
+        '</div>' +
+        '<div style="font-size:0.75rem;color:var(--text2,#6b7f96);line-height:1.6;padding-left:32px;">' +
+          'Sirf <strong style="color:#1565c0;">' + onlyNewFacts.length + ' naye facts</strong> se questions banenge. ' +
+          'Purane ' + storedTotal + ' facts dobara repeat nahi honge. Perfect agar purana sab याद hai!' +
+        '</div>' +
+        '<div style="margin-top:10px;padding-left:32px;">' +
+          '<div style="font-size:0.72rem;color:var(--text2,#6b7f96);margin-bottom:6px;">Kitne questions chahiye? (Max: ' + maxNew + ')</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<input type="range" id="qfSliderNew" min="1" max="' + maxNew + '" value="' + defNew + '" style="flex:1;accent-color:#1565c0;" oninput="document.getElementById(\'qfNumNew\').value=this.value;document.getElementById(\'qfDispA\').textContent=this.value">' +
+            '<input type="number" id="qfNumNew" min="1" max="' + maxNew + '" value="' + defNew + '" style="width:48px;padding:4px 6px;border:1.5px solid #1565c0;border-radius:8px;font-size:0.82rem;font-weight:700;color:#1565c0;text-align:center;" oninput="var v=Math.min(' + maxNew + ',Math.max(1,this.value||1));this.value=v;document.getElementById(\'qfSliderNew\').value=v;document.getElementById(\'qfDispA\').textContent=v">' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Choice B — Saare facts se fresh start
+      '<div id="qfChoiceB" onclick="_qfSelectChoice(\'all\')" style="border:2px solid var(--border,#d0d7e0);border-radius:14px;padding:14px;cursor:pointer;background:var(--surface2,#f5f7fa);transition:all 0.2s;">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">' +
+          '<div style="width:22px;height:22px;border-radius:50%;border:2px solid var(--border,#d0d7e0);background:var(--surface,#fff);display:flex;align-items:center;justify-content:center;" id="qfRadioB"><div style="width:10px;height:10px;border-radius:50%;background:transparent;"></div></div>' +
+          '<div style="font-size:0.88rem;font-weight:900;color:var(--text,#1a2e44);">🔄 Saare Facts Se Fresh Start</div>' +
+        '</div>' +
+        '<div style="font-size:0.75rem;color:var(--text2,#6b7f96);line-height:1.6;padding-left:32px;">' +
+          'Purane + naye dono milake <strong style="color:#2e7d32;">' + totalFacts + ' total facts</strong> se naya cycle shuru hoga. ' +
+          'Complete revision agar thoda repeat bhi karna hai.' +
+        '</div>' +
+        '<div style="margin-top:10px;padding-left:32px;">' +
+          '<div style="font-size:0.72rem;color:var(--text2,#6b7f96);margin-bottom:6px;">Kitne questions chahiye? (Max: ' + maxAll + ')</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;">' +
+            '<input type="range" id="qfSliderAll" min="1" max="' + maxAll + '" value="' + defAll + '" style="flex:1;accent-color:#2e7d32;" oninput="document.getElementById(\'qfNumAll\').value=this.value;document.getElementById(\'qfDispB\').textContent=this.value">' +
+            '<input type="number" id="qfNumAll" min="1" max="' + maxAll + '" value="' + defAll + '" style="width:48px;padding:4px 6px;border:1.5px solid #2e7d32;border-radius:8px;font-size:0.82rem;font-weight:700;color:#2e7d32;text-align:center;" oninput="var v=Math.min(' + maxAll + ',Math.max(1,this.value||1));this.value=v;document.getElementById(\'qfSliderAll\').value=v;document.getElementById(\'qfDispB\').textContent=v">' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div style="display:flex;gap:8px;">' +
+      '<button onclick="document.getElementById(\'qfPrePopup\').remove()" style="flex:1;padding:12px;border-radius:12px;border:1.5px solid var(--border,#d0d7e0);background:none;font-size:0.85rem;font-weight:700;cursor:pointer;color:var(--text2,#6b7f96);">✕ Cancel</button>' +
+      '<button onclick="_qfChoiceConfirm()" style="flex:2;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,#1565c0,#1976d2);color:#fff;font-size:0.88rem;font-weight:800;cursor:pointer;">🚀 <span id="qfDispA">' + defNew + '</span> Questions Shuru Karo!</button>' +
+    '</div>' +
+  '</div>';
+
+  document.body.appendChild(overlay);
+
+  // Store for choice confirm
+  window._qfChoiceCfg = {
+    params: params, key: key,
+    allFacts: allFacts,
+    onlyNewFacts: onlyNewFacts,
+    allForRestart: allForRestart,
+    selectedChoice: 'new'  // default
+  };
+}
+
+// Toggle selection between two choices in choice popup
+function _qfSelectChoice(choice) {
+  window._qfChoiceCfg.selectedChoice = choice;
+  var isNew = choice === 'new';
+  // Card A styling
+  var cardA = document.getElementById('qfChoiceA');
+  var cardB = document.getElementById('qfChoiceB');
+  var radioA = document.getElementById('qfRadioA');
+  var radioB = document.getElementById('qfRadioB');
+  if(cardA) { cardA.style.borderColor = isNew ? '#1565c0' : 'var(--border,#d0d7e0)'; cardA.style.background = isNew ? 'rgba(21,101,192,0.06)' : 'var(--surface2,#f5f7fa)'; }
+  if(cardB) { cardB.style.borderColor = !isNew ? '#2e7d32' : 'var(--border,#d0d7e0)'; cardB.style.background = !isNew ? 'rgba(76,175,80,0.06)' : 'var(--surface2,#f5f7fa)'; }
+  if(radioA) { radioA.style.background = isNew ? '#1565c0' : 'var(--surface,#fff)'; radioA.style.borderColor = isNew ? '#1565c0' : 'var(--border,#d0d7e0)'; radioA.querySelector('div').style.background = isNew ? '#fff' : 'transparent'; }
+  if(radioB) { radioB.style.background = !isNew ? '#2e7d32' : 'var(--surface,#fff)'; radioB.style.borderColor = !isNew ? '#2e7d32' : 'var(--border,#d0d7e0)'; radioB.querySelector('div').style.background = !isNew ? '#fff' : 'transparent'; }
+  // Update confirm button display count
+  var dispEl = document.getElementById(isNew ? 'qfDispA' : 'qfDispB');
+  var countEl = document.getElementById(isNew ? 'qfNumNew' : 'qfNumAll');
+  var mainDisp = isNew ? document.getElementById('qfDispA') : document.getElementById('qfDispB');
+  // Sync the button text
+  var btn = document.querySelector('#qfPrePopup button:last-child');
+  if(btn && countEl) btn.innerHTML = '🚀 ' + countEl.value + ' Questions Shuru Karo!';
+  // Also keep live as user types — attach listeners
+  ['qfNumNew','qfNumAll','qfSliderNew','qfSliderAll'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && !el._qfSynced) {
+      el._qfSynced = true;
+      el.addEventListener('input', function(){
+        var cfg = window._qfChoiceCfg;
+        if(!cfg) return;
+        var active = cfg.selectedChoice;
+        var val = document.getElementById(active==='new'?'qfNumNew':'qfNumAll').value;
+        var btn2 = document.querySelector('#qfPrePopup button:last-child');
+        if(btn2) btn2.innerHTML = '🚀 ' + val + ' Questions Shuru Karo!';
+      });
+    }
+  });
+}
+
+// Confirm choice popup
+function _qfChoiceConfirm() {
+  var cfg = window._qfChoiceCfg;
+  if(!cfg) return;
+  var popup = document.getElementById('qfPrePopup');
+  var choice = cfg.selectedChoice;
+  var isNew = choice === 'new';
+  var count = parseInt(document.getElementById(isNew ? 'qfNumNew' : 'qfNumAll').value) || 10;
+  var availableFacts = isNew ? cfg.onlyNewFacts : cfg.allForRestart;
+  if(popup) popup.remove();
+
+  // If user chose "all" restart — reset progress so fresh cycle starts
+  if(!isNew) {
+    var prog = qfGetProg(cfg.key);
+    prog.coveredFacts = [];
+    prog.wrongFacts = [];
+    prog.rotationIdx = 0;
+    prog.totalKnown = cfg.allFacts.length;
+    qfSaveProg(cfg.key, prog);
+  } else {
+    // Sirf naye facts — totalKnown update karo taaki next time detect ho sake
+    var prog2 = qfGetProg(cfg.key);
+    prog2.totalKnown = cfg.allFacts.length;
+    qfSaveProg(cfg.key, prog2);
+  }
+
+  // Update sliders
+  var slider = document.getElementById('questionCount');
+  var numInp = document.getElementById('qCountNum');
+  var disp   = document.getElementById('qCountDisplay');
+  if(slider){ slider.value=count; slider.max=Math.max(slider.max,count); }
+  if(numInp){ numInp.value=count; numInp.max=Math.max(numInp.max,count); }
+  if(disp)  disp.textContent=count;
+
+  window._qfContext = { ...cfg.params, allFacts: cfg.allFacts, availableFacts: availableFacts, key: cfg.key, confirmedCount: count };
+  startQuizActual();
+}
+
+// Confirm button press — update sliders and start actual quiz
+function qfConfirmQuiz() {
+  var popup = document.getElementById('qfPrePopup');
+  var count = parseInt(document.getElementById('qfPopupNum').value) || 10;
+  if (popup) popup.remove();
+
+  // Update main quiz sliders
+  var slider = document.getElementById('questionCount');
+  var numInp = document.getElementById('qCountNum');
+  var disp   = document.getElementById('qCountDisplay');
+  if (slider) { slider.value = count; slider.max = Math.max(slider.max, count); }
+  if (numInp) { numInp.value = count; numInp.max = Math.max(numInp.max, count); }
+  if (disp)   disp.textContent = count;
+
+  // Store context for startQuiz to use
+  window._qfContext = window._qfPendingParams;
+  window._qfContext.confirmedCount = count;
+
+  // Actually start quiz
+  startQuizActual();
+}
+
+// Reset fact progress for a key
+function qfResetProgress(key, label) {
+  if (!confirm((label || 'Is area') + ' ka fact progress reset karna hai? Covered facts phir se quiz mein aayenge.')) return;
+  if (!S.quizFactProgress) S.quizFactProgress = {};
+  delete S.quizFactProgress[key];
+  save();
+  showToast('Fact progress reset ho gaya! 🔄', 'success');
+}
+
+// Topic View modal se direct quiz start karne ke liye
+function startQuizForTopic(sid, secid, tid) {
+  showPage('quiz', document.querySelector('[data-page=quiz]'));
+  setTimeout(function() {
+    var ss = document.getElementById('quizSubject');
+    if(ss) { ss.value = String(sid); updateQuizSections(); }
+    setTimeout(function() {
+      var secSel = document.getElementById('quizSection');
+      if(secSel) { secSel.value = String(secid); updateQuizTopics(); }
+      setTimeout(function() {
+        var ts = document.getElementById('quizTopic');
+        if(ts) { ts.value = String(tid); updateQuizSourceVisibility(); updateHlProgress(); }
+        var qtype = (document.getElementById('quizType')||{}).value || 'new';
+        var notesSource = (document.getElementById('quizNotesSource')||{}).value || 'raw';
+        qfShowPreQuizPopup({ sid: String(sid), secid: String(secid), tid: String(tid), notesSource, qtype });
+      }, 100);
+    }, 100);
+  }, 300);
 }
 
 async function startQuiz(){
@@ -8255,133 +8952,220 @@ async function startQuiz(){
   const sid=document.getElementById('quizSubject').value;
   const secid=document.getElementById('quizSection').value;
   const tid=document.getElementById('quizTopic').value;
-  const count=parseInt(document.getElementById('questionCount').value)||10;
   const qtype=document.getElementById('quizType').value;
+  const notesSource=(document.getElementById('quizNotesSource')?document.getElementById('quizNotesSource').value:'raw')||'raw';
+  qfShowPreQuizPopup({ sid, secid, tid, notesSource, qtype });
+}
+
+async function startQuizActual(){
+  if(!S.apiKey){showToast('Pehle API Key daalo!','error');return;}
+  const _ctx=window._qfContext||{};
+  const sid   =_ctx.sid   ||document.getElementById('quizSubject').value;
+  const secid =_ctx.secid ||document.getElementById('quizSection').value;
+  const tid   =_ctx.tid   ||document.getElementById('quizTopic').value;
+  const qtype =_ctx.qtype ||document.getElementById('quizType').value;
   const ae=S.exams.find(e=>e.id==S.activeExamId);
+  const notesSource=_ctx.notesSource||(document.getElementById('quizNotesSource')?document.getElementById('quizNotesSource').value:'raw')||'raw';
+  const _countEl=document.getElementById('questionCount');
+  const count=_ctx.confirmedCount||Math.max(1,parseInt(_countEl?_countEl.value:10)||10);
+
+  // ── Fact Coverage Context ──
+  if(!S.quizFactProgress)S.quizFactProgress={};
+  const _qfKey=qfMakeKey(sid,secid,tid,notesSource,qtype);
+  const _qfProg=qfGetProg(_qfKey);
+  const _qfAllFacts=(_ctx.allFacts)||[];
+  const _qfAvailFacts=(_ctx.availableFacts)||_qfAllFacts;
+  const _qfCovered=_qfProg.coveredFacts||[];
+  const _qfWrong=_qfProg.wrongFacts||[];
+
+  // ── Highlight Progress Setup ──
+  if(!S.hlQuizProgress)S.hlQuizProgress={};
+  const _hlKey=(tid&&tid!=='all')?(tid+'_'+qtype):null;
+  const _hlProg=_hlKey?(S.hlQuizProgress[_hlKey]||{coveredIds:[],wrongIds:[]}):{coveredIds:[],wrongIds:[]};
+  const _allHls=(tid&&tid!=='all')?hlGetTopicHighlights(tid):[];
+  const _coveredIds=_hlProg.coveredIds||[];
+  const _wrongIds=_hlProg.wrongIds||[];
+  const _uncoveredHls=_allHls.filter(h=>_coveredIds.indexOf(h.id)===-1);
+  const _wrongHls=_allHls.filter(h=>_wrongIds.indexOf(h.id)!==-1);
+  const hasHls=_allHls.length>0&&tid!=='all';
 
   // ---- Collect content ----
   let content=''; let label='All';
-  S.subjects.forEach(subj=>{
-    if(sid!=='all'&&subj.id!=sid)return;
-    subj.sections.forEach(sec=>{
-      if(secid!=='all'&&sec.id!=secid)return;
-      sec.topics.forEach(t=>{
-        if(tid!=='all'&&t.id!=tid)return;
-        if(ae&&!ae.selectedTopicIds.includes(t.id)&&tid==='all')return;
-        const src=t.finalNotes
-          ? t.finalNotes.replace(/%%NEW%%|%%HIGHLIGHT%%|%%DATE%%.*?%%ENDNEW%%|%%ENDHIGHLIGHT%%/g,'')
-          : t.notes.map(n=>n.content).join('\n\n');
-        if(src)content+=`### ${subj.name} > ${sec.name} > ${t.name}\n${src}\n\n---\n\n`;
+
+  if(notesSource==='canvas'&&tid!=='all'){
+    var canvasTopic=null; var canvasText='';
+    S.subjects.forEach(function(subj){
+      subj.sections.forEach(function(sec){
+        sec.topics.forEach(function(t){
+          if(t.id!=tid)return;
+          canvasTopic=t; label=t.name;
+        });
       });
     });
-  });
-
-  if(!content){showToast('Selected area mein notes nahi hain!','error');return;}
-  if(content.length>14000)content=content.substring(0,14000);
-
-  label=tid!=='all'
-    ? document.getElementById('quizTopic').options[document.getElementById('quizTopic').selectedIndex].text
-    : sid!=='all'
-      ? document.getElementById('quizSubject').options[document.getElementById('quizSubject').selectedIndex].text
-      : ae?ae.name:'Saare Topics';
-
-  // ---- Filter history to same topic ----
-  const topicHistory = S.quizHistory.filter(h=>{
-    if(tid!=='all') return h.tid==tid;
-    if(secid!=='all') return h.secid==secid;
-    if(sid!=='all') return h.sid==sid;
-    return true;
-  });
-
-  // ---- Already covered questions (same topic only) ----
-  const coveredQs = topicHistory
-    .flatMap(h=>h.questions.map(q=>q.question))
-    .slice(0, 30); // last 30 questions of this topic
-
-  // ---- Wrong questions (same topic only) ----
-  const wrongQs = topicHistory
-    .flatMap(h=>h.questions.filter(q=>!q.isCorrect))
-    .slice(0, 20);
-
-  // ---- Wrong answers with full detail for weak mode ----
-  const wrongDetail = wrongQs.map(q=>
-    `Q: ${q.question}\nSahi jawab: ${q.options?.[q.correct]||''}\nExplanation: ${q.explanation||''}`
-  ).join('\n\n');
-
-  // ---- Build smart prompt based on quiz type ----
-  const examCtx = ae
-    ? `\nEXAM: ${ae.name}\nSYLLABUS: ${(ae.syllabus||'').substring(0,1000)}\nPYQ PATTERN: ${(ae.pyq||'').substring(0,600)}`
-    : '';
-
-  let taskInstruction = '';
-  let coverageInstruction = '';
-  let focusInstruction = '';
-
-  if(qtype==='weak'){
-    if(!wrongQs.length){
-      showToast('Is topic mein koi galat jawab nahi! Pehle quiz do.','error');
+    if(canvasTopic&&canvasTopic.studyCanvas&&canvasTopic.studyCanvas.slides&&canvasTopic.studyCanvas.slides.length){
+      var lines=[];
+      canvasTopic.studyCanvas.slides.forEach(function(slide,si){
+        var slideTitle=slide.title||('Slide '+(si+1));
+        lines.push('=== '+slideTitle+' ===');
+        (slide.textBlocks||[]).forEach(function(blk){
+          var txt=blk.html
+            ?blk.html.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim()
+            :(blk.text||'').trim();
+          if(txt)lines.push(txt);
+        });
+      });
+      canvasText=lines.filter(function(l){return l.trim();}).join('\n');
+    }
+    if(!canvasText||canvasText.trim().length<30){
+      showToast('⚠️ Canvas mein notes nahi hain! Pehle Canvas par notes likhkar Save karo.','error');
       return;
     }
-    taskInstruction = `TASK: SIRF IN GALAT QUESTIONS KE TOPICS SE ${count} NAYE MCQ BANAO:
-Ye questions is student ne galat kiye hain:
-${wrongDetail}
-
-IMPORTANT: Same questions mat dena! Un topics ke NAYE angles se questions banao.
-Jaise: agar "Sindhu Ghati ki Lipi" galat hua to us se related aur naye facts puchho.`;
-
-    focusInstruction = `\nFOCUS: Student ke weak areas cover karo strictly.`;
-
-  } else if(qtype==='new'){
-    taskInstruction = `TASK: ${count} BILKUL NAYE MCQ BANAO jo pehle ki quizzes mein nahi aaye.`;
-
-    if(coveredQs.length > 0){
-      coverageInstruction = `\n⚠️ YEH TOPICS/QUESTIONS PEHLE AA CHUKE HAIN -- INSE BILKUL ALAG CONTENT SE PUCHHO:
-${coveredQs.map((q,i)=>`${i+1}. ${q}`).join('\n')}
-
-RULE: Upar likhe questions se milte-julte ya same topic angle se mat puchho.
-NAYE facts, naye events, naye dates, naye personalities cover karo notes se.`;
-    } else {
-      coverageInstruction = `\nPehli quiz hai -- notes ke sabse important facts se shuru karo.`;
-    }
-
-  } else if(qtype==='mixed'){
-    taskInstruction = `TASK: ${count} MCQ banao -- 50% naye content se, 50% jo pehle galat hue unke topics se.`;
-
-    if(coveredQs.length > 0){
-      coverageInstruction = `\nPEHLE AA CHUKE QUESTIONS (inse alag rakho):
-${coveredQs.slice(0,15).map((q,i)=>`${i+1}. ${q}`).join('\n')}`;
-    }
-    if(wrongQs.length > 0){
-      focusInstruction = `\nIN TOPICS PE FOCUS KARO (student yahan weak hai):
-${wrongQs.slice(0,8).map(q=>`- ${q.question} → Sahi: ${q.options?.[q.correct]||''}`).join('\n')}`;
-    }
-
-  } else { // 'all'
-    taskInstruction = `TASK: ${count} MCQ banao -- notes ke HAR SECTION se variety mein questions lao.`;
-    coverageInstruction = coveredQs.length > 0
-      ? `\nPehli priority: naye facts jo pehle nahi aaye. Covered:\n${coveredQs.slice(0,10).map((q,i)=>`${i+1}. ${q}`).join('\n')}`
-      : '\nNotes ke sabse important facts cover karo.';
+    content=canvasText; label=label+' (Canvas)';
+  } else {
+    S.subjects.forEach(subj=>{
+      if(sid!=='all'&&subj.id!=sid)return;
+      subj.sections.forEach(sec=>{
+        if(secid!=='all'&&sec.id!=secid)return;
+        sec.topics.forEach(t=>{
+          if(tid!=='all'&&t.id!=tid)return;
+          if(ae&&!ae.selectedTopicIds.includes(t.id)&&tid==='all')return;
+          // Highlights-based content (focused)
+          const topicHls=hlGetTopicHighlights(String(t.id));
+          if(topicHls.length>0&&tid!=='all'){
+            let hlsToUse=[];
+            const tKey=String(t.id);
+            if(qtype==='new'){
+              const cov=(S.hlQuizProgress[tKey+'_new']||{coveredIds:[]}).coveredIds||[];
+              hlsToUse=topicHls.filter(h=>cov.indexOf(h.id)===-1);
+            } else if(qtype==='weak'){
+              const wIds=(S.hlQuizProgress[tKey+'_weak']||{wrongIds:[]}).wrongIds||[];
+              hlsToUse=topicHls.filter(h=>wIds.indexOf(h.id)!==-1);
+              if(!hlsToUse.length)hlsToUse=topicHls;
+            } else if(qtype==='mixed'){
+              const covM=(S.hlQuizProgress[tKey+'_new']||{coveredIds:[]}).coveredIds||[];
+              const wIdsM=(S.hlQuizProgress[tKey+'_weak']||{wrongIds:[]}).wrongIds||[];
+              const uncov=topicHls.filter(h=>covM.indexOf(h.id)===-1);
+              const wrng=topicHls.filter(h=>wIdsM.indexOf(h.id)!==-1);
+              hlsToUse=[...uncov.slice(0,Math.ceil(count/2)),...wrng.slice(0,Math.floor(count/2))];
+              if(!hlsToUse.length)hlsToUse=topicHls;
+            } else {
+              hlsToUse=topicHls;
+            }
+            if(hlsToUse.length>0){
+              content+=`### ${subj.name} > ${sec.name} > ${t.name} — HIGHLIGHTED FACTS:\n`;
+              hlsToUse.forEach((h,i)=>{content+=`${i+1}. ${h.text}\n`;});
+              content+='\n---\n\n';
+              return;
+            }
+          }
+          // Fallback: raw notes
+          const src=t.finalNotes
+            ?t.finalNotes.replace(/%%NEW%%|%%HIGHLIGHT%%|%%DATE%%.*?%%ENDNEW%%|%%ENDHIGHLIGHT%%/g,'')
+            :t.notes.map(n=>n.content).join('\n\n');
+          if(src)content+=`### ${subj.name} > ${sec.name} > ${t.name}\n${src}\n\n---\n\n`;
+        });
+      });
+    });
   }
 
-  // Reported questions -- avoid these patterns
-  const reportedCtx=S.reportedQuestions&&S.reportedQuestions.length>0
-    ?`\n\n⚠️ IN QUESTIONS KO MAT BANANA (Student ne report kiye hain):\n${S.reportedQuestions.slice(0,10).map(r=>`- "${r.question}" (Reason: ${r.reasonLabel})`).join('\n')}`
-    :'';
+  if(!content){showToast('Selected area mein notes nahi hain!','error');return;}
+  const _quizModel=S.model||'meta-llama/llama-4-scout-17b-16e-instruct';
+  const _contentLimit=_quizModel.includes('8b')?4000:14000;
+  if(content.length>_contentLimit)content=content.substring(0,_contentLimit);
 
-  // Quiz Director direction inject karo
-  const directionCtx = window._quizDirection
-    ? `
+  if(notesSource!=='canvas'){
+    label=tid!=='all'
+      ?document.getElementById('quizTopic').options[document.getElementById('quizTopic').selectedIndex].text
+      :sid!=='all'
+        ?document.getElementById('quizSubject').options[document.getElementById('quizSubject').selectedIndex].text
+        :ae?ae.name:'Saare Topics';
+  }
 
-🎯 USER KI KHAAS DIRECTION (YAHI FOLLOW KARO STRICTLY):
-${window._quizDirection}
-Is direction ke hisaab se questions ka type, difficulty aur style decide karo.`
-    : '';
+  // History-based context
+  const topicHistory=S.quizHistory.filter(h=>{
+    if(tid!=='all')return h.tid==tid;
+    if(secid!=='all')return h.secid==secid;
+    if(sid!=='all')return h.sid==sid;
+    return true;
+  });
+  const coveredQs=topicHistory.flatMap(h=>h.questions.map(q=>q.question)).slice(0,20);
+  const wrongQs=topicHistory.flatMap(h=>h.questions.filter(q=>!q.isCorrect)).slice(0,15);
+  const wrongDetail=wrongQs.map(q=>`Q: ${q.question}\nSahi jawab: ${q.options?.[q.correct]||''}\nExplanation: ${q.explanation||''}`).join('\n\n');
 
-  const prompt = `Tu ek EXPERT MCQ question maker aur examiner hai. Tujhe SMART, EDUCATIONAL questions banana hai.
+  // ── Fact Coverage Prompt Context — STRICT fact assignment ──
+  let factCoverCtx='';
+  // Popup se jo availableFacts aaye, unka pehla slice hi USE karna hai
+  const _factsForThisQuiz = _qfAvailFacts.slice(0, count);
+  if(_qfAllFacts.length>0){
+    if(qtype==='new'){
+      if(_qfCovered.length>0){
+        factCoverCtx=`\n\n🚫 COVERED FACTS — IN SE BILKUL QUESTION MAT BANAO (${_qfCovered.length} facts already covered):\n${_qfCovered.slice(0,40).map((f,i)=>`SKIP-${i+1}. ${f}`).join('\n')}\n\n✅ SIRF IN ${_factsForThisQuiz.length} FACTS SE QUESTIONS BANAO (ek fact = ek question, exactly):\n${_factsForThisQuiz.map((f,i)=>`FACT-${i+1}. ${f}`).join('\n')}\n\nHar FACT- number ke liye EXACTLY ek question — total ${count} questions.`;
+      } else {
+        factCoverCtx=`\n\n✅ IN ${_factsForThisQuiz.length} FACTS SE QUESTIONS BANAO (ek fact = ek question):\n${_factsForThisQuiz.map((f,i)=>`FACT-${i+1}. ${f}`).join('\n')}`;
+      }
+    } else if(qtype==='weak'&&_qfWrong.length>0){
+      factCoverCtx=`\n\n❌ WEAK FACTS — INHI SE QUESTIONS BANAO (student galat tha inpe):\n${_factsForThisQuiz.map((f,i)=>`WEAK-${i+1}. ${f}`).join('\n')}\n\nHar WEAK- fact se ek naya angle wala question — same question mat dena.`;
+    } else if(qtype==='mixed'){
+      const _halfNew=Math.ceil(count/2);
+      const _halfWeak=Math.floor(count/2);
+      const covNormsM2=_qfCovered.map(qfNorm);
+      const uncovFacts2=_qfAllFacts.filter(f=>!covNormsM2.includes(qfNorm(f))).slice(0,_halfNew);
+      const weakFacts2=_qfWrong.slice(0,_halfWeak);
+      factCoverCtx=`\n\n✅ MIXED QUIZ FACTS:\nNaye facts (inse ${uncovFacts2.length} questions banao):\n${uncovFacts2.map((f,i)=>`NEW-${i+1}. ${f}`).join('\n')}\n\nWeak facts (inse ${weakFacts2.length} questions banao):\n${weakFacts2.map((f,i)=>`WEAK-${i+1}. ${f}`).join('\n')}`;
+    } else if(qtype==='all'){
+      factCoverCtx=`\n\n✅ IN ${_factsForThisQuiz.length} FACTS SE QUESTIONS BANAO (rotation order — ek fact = ek question):\n${_factsForThisQuiz.map((f,i)=>`FACT-${i+1}. ${f}`).join('\n')}\n\nYeh facts pehle ki quizzes se alag hain. Har FACT- se strictly ek question.`;
+    }
+  }
+
+  // Highlight context for prompt
+  let hlPromptCtx='';
+  if(hasHls){
+    if(qtype==='new'){
+      const remaining=_uncoveredHls.length;
+      hlPromptCtx=`\n\n📌 HIGHLIGHT PROGRESS: ${_coveredIds.length}/${_allHls.length} cover ho chuke.\nSIRF IN ${Math.min(count,remaining)} UNCOVERED HIGHLIGHTS SE QUESTIONS BANAO:\n${_uncoveredHls.slice(0,count).map((h,i)=>`${i+1}. ${h.text}`).join('\n')}\nHar highlight se ek question — yahi ${count} highlights cover karne hain.`;
+    } else if(qtype==='weak'){
+      hlPromptCtx=`\n\n📌 WEAK HIGHLIGHTS (${_wrongHls.length}): In par student galat tha:\n${_wrongHls.slice(0,count).map((h,i)=>`${i+1}. ${h.text}`).join('\n')}`;
+    } else if(qtype==='mixed'){
+      hlPromptCtx=`\n\n📌 MIXED: ${Math.ceil(count/2)} uncovered highlights + ${Math.floor(count/2)} weak highlights se questions banao.`;
+    }
+  }
+
+  let taskInstruction='',coverageInstruction='',focusInstruction='';
+  if(qtype==='weak'){
+    if(!hasHls&&!wrongQs.length&&!_qfWrong.length){showToast('Koi galat jawab nahi! Pehle quiz do.','error');return;}
+    if(hasHls&&!_wrongHls.length){showToast('⚠️ Abhi tak koi weak highlight nahi! Pehle kuch quizzes karo.','error');return;}
+    taskInstruction=`TASK: WEAK AREAS SE ${count} NAYE MCQ BANAO.\n${hasHls?'Weak highlights upar diye hain.':(_qfWrong.length>0?'Weak facts upar diye hain.':('Galat questions:\n'+wrongDetail))}\nSame questions mat dena — naye angles se.`;
+    focusInstruction='\nFOCUS: Student ke weak points strictly cover karo.';
+  } else if(qtype==='new'){
+    taskInstruction=`TASK: EXACTLY ${count} MCQ BANAO — SIRF naye uncovered facts se. Ek fact = ek question, strictly.`;
+    if(hasHls){coverageInstruction=hlPromptCtx;}
+    else if(factCoverCtx){coverageInstruction=factCoverCtx;}
+    else if(coveredQs.length>0){coverageInstruction=`\n⚠️ YEH PEHLE AA CHUKE HAIN — INSE ALAG CONTENT SE PUCHHO:\n${coveredQs.map((q,i)=>`${i+1}. ${q}`).join('\n')}`;}
+    else{coverageInstruction='\nPehli quiz — sabse important facts se shuru karo.';}
+  } else if(qtype==='mixed'){
+    taskInstruction=`TASK: ${count} MCQ — 50% naye content se, 50% weak topics se.`;
+    if(hasHls){coverageInstruction=hlPromptCtx;}
+    else{
+      if(factCoverCtx){coverageInstruction=factCoverCtx;}
+      else if(coveredQs.length>0)coverageInstruction=`\nPehle aaye (inse alag):\n${coveredQs.slice(0,10).map((q,i)=>`${i+1}. ${q}`).join('\n')}`;
+      if(wrongQs.length>0)focusInstruction=`\nWeak:\n${wrongQs.slice(0,6).map(q=>`- ${q.question} → ${q.options?.[q.correct]||''}`).join('\n')}`;
+    }
+  } else {
+    taskInstruction=`TASK: ${count} MCQ — notes ke HAR section se variety mein.`;
+    coverageInstruction=coveredQs.length>0?`\nPehle aaye (inse alag):\n${coveredQs.slice(0,8).map((q,i)=>`${i+1}. ${q}`).join('\n')}`:'';  
+  }
+
+  const examCtx=ae?`\nEXAM: ${ae.name}\nSYLLABUS: ${(ae.syllabus||'').substring(0,600)}\nPYQ: ${(ae.pyq||'').substring(0,300)}`:'';
+  const reportedCtx=S.reportedQuestions&&S.reportedQuestions.length>0?`\n\n⚠️ YEH MAT BANANA:\n${S.reportedQuestions.slice(0,8).map(r=>`- "${r.question}" (${r.reasonLabel})`).join('\n')}`:'';
+  const directionCtx=window._quizDirection?`\n\n🎯 DIRECTION:\n${window._quizDirection}`:'';
+
+  const prompt=`Tu EXPERT MCQ question maker hai. EDUCATIONAL questions banana hai.
 ${examCtx}
 
-NOTES (INHI SE QUESTIONS BANANA HAI -- web se bhi verified facts add kar skte hai):
+CONTENT (INHI SE QUESTIONS BANANA HAI):
 ${content}
+${hasHls&&(qtype==='new'||qtype==='weak'||qtype==='mixed')?hlPromptCtx:''}
+${!hasHls?factCoverCtx:''}
 ${reportedCtx}
 ${directionCtx}
 
@@ -8390,18 +9174,18 @@ ${coverageInstruction}
 ${focusInstruction}
 
 STRICT RULES:
-1. Notes ke content se questions banao -- important extra facts web knowledge se bhi add kar sakte ho explanation mein
-2. Har question ALAG fact ya concept pe hona chahiye
-3. Ek hi fact ko baar baar mat puchho
-4. 4 options -- 1 sahi, 3 galat but BELIEVABLE aur EDUCATIONAL (har galat option se bhi kuch sikhne mile -- jaise related galat facts jo confuse karte hain)
-5. OPTIONS SHUFFLE KARO -- correct answer kabhi bhi A, B, C ya D ho sakta hai -- A pe hi correct mat rakho
-6. Explanation mein: (a) kyun sahi hai clearly, (b) galat options kyun galat hain, (c) 1-2 important related facts jo yaad rakhne chahiye
+1. Sirf diye content se questions banao
+2. Har question BILKUL ALAG fact/concept pe — ek fact se sirf ek question
+3. 4 options: 1 sahi, 3 believable galat
+4. Options shuffle karo — correct A/B/C/D kuch bhi ho
+5. Explanation: kyun sahi, kyun galat, related facts
+6. EXACTLY ${count} questions — zyada ya kam NAHI
 7. Hindi mein likho
 8. JSON ke alawa KUCH MAT LIKHO
-9. Har question unique angle se puchho -- ek hi fact ke alag pehlu cover karo
+9. Agar FACT- numbered list di gayi hai to SIRF unhi se questions banao — covered/SKIP facts se BILKUL nahi
 
-RESPONSE FORMAT -- SIRF YEH JSON:
-{"questions":[{"question":"...","options":["...","...","...","..."],"correct":0,"explanation":"...","topic":"${label}","hint":"ek line ka short hint jo answer reveal na kare"}]}`;
+RESPONSE FORMAT:
+{"questions":[{"question":"...","options":["...","...","...","..."],"correct":0,"explanation":"...","topic":"${label}","hint":"short hint","sourceFact":"FACT-N ya WEAK-N ya NEW-N — jo number diya tha wahi likho"}]}`;
 
   document.getElementById('quizSetup').style.display='none';
   document.getElementById('quizLoading').classList.add('show');
@@ -8409,25 +9193,24 @@ RESPONSE FORMAT -- SIRF YEH JSON:
   document.getElementById('quizResults').style.display='none';
 
   try{
-    const text=await callGroq(prompt,4500);
+    const text=await callGroq(prompt,5000);
     const clean=text.replace(/```json\n?/g,'').replace(/```\n?/g,'').trim();
     const parsed=JSON.parse(clean);
     if(!parsed.questions?.length)throw new Error('Questions nahi mile');
 
     const quizId='q_'+Date.now();
-    const quizName=label+' · '+new Date().toLocaleDateString('hi-IN');
-
-    // Add questions to vault
-    addToVault(parsed.questions, quizId, quizName, label, sid, secid, tid);
+    const quizName=label+' \u00b7 '+new Date().toLocaleDateString('hi-IN');
+    addToVault(parsed.questions,quizId,quizName,label,sid,secid,tid);
 
     window._cq={
       questions:parsed.questions,
       current:0,score:0,label,
-      examId:S.activeExamId,
-      examName:ae?.name||'Free Mode',
-      qid:quizId,
-      quizName,
-      sid,secid,tid,qtype
+      examId:S.activeExamId,examName:ae?.name||'Free Mode',
+      qid:quizId,quizName,sid,secid,tid,qtype,
+      _hlKey,_hlProg:JSON.parse(JSON.stringify(_hlProg)),
+      _allHls,_uncoveredHls,_wrongHls,_hasHls:hasHls,
+      _qfKey,_qfAllFacts,_qfAvailFacts,_qfCovered,_qfWrong,
+      _qfTotalFacts:_qfAllFacts.length
     };
     document.getElementById('quizLoading').classList.remove('show');
     document.getElementById('quizActive').style.display='block';
@@ -8438,7 +9221,6 @@ RESPONSE FORMAT -- SIRF YEH JSON:
     showToast('Error: '+e.message,'error');
   }
 }
-
 function showQ(idx){
   const cq=window._cq; const q=cq.questions[idx]; const tot=cq.questions.length;
   document.getElementById('quizProgressText').textContent=`Q ${idx+1}/${tot}`;
@@ -8615,6 +9397,36 @@ function showResults(){
   if(S.pausedQuiz&&S.pausedQuiz.cq&&S.pausedQuiz.cq.qid===cq.qid){S.pausedQuiz=null;}
   // Sync vault answers with results
   syncVaultWithResults(cq);
+  // ── Update Highlight Quiz Progress ──
+  hlUpdateProgress(cq);
+  // ── Update Fact Coverage Progress ──
+  if(cq._qfKey){
+    var _availF=cq._qfAvailFacts||[];
+    var _usedSourceFacts=[];
+    // AI ne sourceFact mein "FACT-N", "WEAK-N", "NEW-N" format diya hai
+    // Us index se actual fact identify karo
+    cq.questions.forEach(function(q,qi){
+      var sf=q.sourceFact||'';
+      var match=sf.match(/(?:FACT|WEAK|NEW|SKIP)-(\d+)/i);
+      if(match){
+        var idx=parseInt(match[1])-1; // 1-based to 0-based
+        if(idx>=0&&idx<_availF.length) _usedSourceFacts.push(_availF[idx]);
+      }
+    });
+    // Fallback: agar AI ne sourceFact nahi diya properly
+    if(_usedSourceFacts.length<cq.questions.length){
+      var needed=cq.questions.length-_usedSourceFacts.length;
+      var alreadyUsedNorms=_usedSourceFacts.map(qfNorm);
+      _availF.forEach(function(f){
+        if(_usedSourceFacts.length>=cq.questions.length) return;
+        if(!alreadyUsedNorms.includes(qfNorm(f))){
+          _usedSourceFacts.push(f);
+          alreadyUsedNorms.push(qfNorm(f));
+        }
+      });
+    }
+    if(_usedSourceFacts.length>0) qfUpdateProgress(cq,_usedSourceFacts);
+  }
   save(); updateHistBadge();
   const wrong=cq.questions.filter(q=>!q.isCorrect);
   const right=cq.questions.filter(q=>q.isCorrect);
@@ -8648,8 +9460,8 @@ function showResults(){
         <button class="btn btn-xs btn-outline" onclick="markResQ('${cq.qid}',${qIdx},'doubt')">🤔 Doubt</button>
         <button class="save-status-btn ${isSaved?'saved':'unsaved'}" id="rsave-${cq.qid}-${qIdx}" onclick="toggleResultSave('${cq.qid}',${qIdx},'${qKey}',this)">${isSaved?'📌 Saved ✓':'📌 Save'}</button>
         <button class="wrong-status-btn ${isWronged?'wronged':'not-wronged'}" id="rwrong-${cq.qid}-${qIdx}" onclick="toggleResultWrong('${cq.qid}',${qIdx},'${qKey}',this)">${isWronged?'✓ Wronged':'❌ Mark'}</button>
-        <button class="btn btn-xs" style="background:rgba(27,94,32,0.1);color:var(--accent);border:1px solid rgba(27,94,32,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
-        <button class="btn btn-xs btn-report-q" onclick="openReportModalFromResult('${cq.qid}',${qIdx})">🚩 Report</button>
+        <button class="btn btn-xs" style="background:rgba(21,101,192,0.1);color:var(--accent);border:1px solid rgba(21,101,192,0.2);border-radius:8px;" onclick="openAiChatQuestion('${q.question.replace(/'/g,"\\'").replace(/\n/g,' ')}','${(q.options[q.correct]||'').replace(/'/g,"\\'")}','${(q.explanation||'').replace(/'/g,"\\'").substring(0,100).replace(/\n/g,' ')}')">🤖 Chat</button>
+        <button class="btn btn-xs btn-report-q" onclick="openReportModalFromResult('${cq.qid}',${qIdx})">��� Report</button>
       </div>
     </div>`;
   };
@@ -8863,6 +9675,544 @@ function toggleWrongQ(idx){
   }
 }
 
+// ==================== FIREBASE REALTIME SYNC ====================
+async function saveTopicToFirebase(tid, subjId, secId){
+  if(!_db || !_currentUser) return;
+  try{
+    var uid = _currentUser.uid;
+    // Find topic
+    var t = null;
+    var foundSubj = null, foundSec = null;
+    (S.subjects||[]).forEach(function(sub){
+      sub.sections.forEach(function(sec){
+        sec.topics.forEach(function(tp){
+          if(String(tp.id) === String(tid)){ t=tp; foundSubj=sub; foundSec=sec; }
+        });
+      });
+    });
+    if(!t) return;
+
+    var wid = _genWriteId();
+    _myTopicWriteIds[String(tid)] = wid;
+
+    var topicData = _cleanTopic(t);
+    topicData.writeId = wid;
+
+    await _db.collection('users').doc(uid).collection('topics').doc(String(tid)).set({
+      topic:    topicData,
+      subjId:   subjId || (foundSubj ? foundSubj.id : ''),
+      secId:    secId  || (foundSec  ? foundSec.id  : ''),
+      updatedAt: Date.now(),
+      writeId:  wid
+    }, {merge:true});
+
+    // Also update subject shell (in case structure changed)
+    if(foundSubj){
+      await _db.collection('users').doc(uid).collection('subjects').doc(String(foundSubj.id)).set({
+        shell:     _buildSubjShell(foundSubj),
+        updatedAt: Date.now()
+      }, {merge:true});
+    }
+
+    setSyncStatus('synced');
+  }catch(e){
+    console.warn('Topic sync error:', e.message);
+    setSyncStatus('error');
+  }
+}
+
+// ══════════════════════════════════════════
+// ⚡ META SAVE — stats, quiz, exams, etc.
+// ════════════��════════════════════��════════
+// Firestore ke liye undefined values clean karo — undefined Firestore crash karta hai
+function _fsClean(obj) {
+  if (obj === null || obj === undefined) return null;
+  if (Array.isArray(obj)) {
+    return obj.map(function(item) { return _fsClean(item); }).filter(function(item) { return item !== undefined; });
+  }
+  if (typeof obj === 'object' && !(obj instanceof Date)) {
+    var cleaned = {};
+    Object.keys(obj).forEach(function(k) {
+      var v = obj[k];
+      if (v !== undefined) {
+        cleaned[k] = _fsClean(v);
+      }
+    });
+    return cleaned;
+  }
+  return obj;
+}
+
+async function saveMetaToFirebase(){
+  if(!_db || !_currentUser) return;
+  try{
+    var uid = _currentUser.uid;
+    var wid = _genWriteId();
+    _myWriteId = wid;
+    _lastSaveTime = Date.now();
+
+    await _db.collection('users').doc(uid).set({
+      activeExamId:      S.activeExamId||'',
+      model:             S.model||'meta-llama/llama-4-scout-17b-16e-instruct',
+      stats:             _fsClean(S.stats),
+      quizHistory:       _fsClean((S.quizHistory||[]).slice(0,60)),
+      savedQuestions:    S.savedQuestions||[],
+      wrongedQuestions:  S.wrongedQuestions||[],
+      reportedQuestions: _fsClean(S.reportedQuestions||[]),
+      pausedQuiz:        _fsClean(S.pausedQuiz||null),
+      exams:             _fsClean(S.exams||[]),
+      quizFactProgress:  _fsClean(S.quizFactProgress||{}),
+      hlQuizProgress:    _fsClean(S.hlQuizProgress||{}),
+      subjectIds:        (S.subjects||[]).map(function(s){ return s.id; }),
+      topicFormat:       'v2',
+      lastSync:          firebase.firestore.FieldValue.serverTimestamp(),
+      writeId:           wid
+    }, {merge:true});
+  }catch(e){
+    console.warn('Meta sync error:', e.message);
+  }
+}
+
+// ══════════════════════════════════════════
+// ⚡ FULL SAVE — initial login / syncNow
+// ══���═══════════════════════════════════════
+async function saveToFirebase(){
+  if(!_db || !_currentUser) return;
+  setSyncStatus('syncing');
+  try{
+    var uid = _currentUser.uid;
+    var allOps = [];
+
+    // Meta
+    var wid = _genWriteId();
+    _myWriteId = wid;
+    _lastSaveTime = Date.now();
+    allOps.push({
+      ref: _db.collection('users').doc(uid),
+      data: {
+        activeExamId:      S.activeExamId||'',
+        model:             S.model||'meta-llama/llama-4-scout-17b-16e-instruct',
+        stats:             _fsClean(S.stats),
+        quizHistory:       _fsClean((S.quizHistory||[]).slice(0,60)),
+        savedQuestions:    S.savedQuestions||[],
+        wrongedQuestions:  S.wrongedQuestions||[],
+        reportedQuestions: _fsClean(S.reportedQuestions||[]),
+        pausedQuiz:        _fsClean(S.pausedQuiz||null),
+        exams:             _fsClean(S.exams||[]),
+        quizFactProgress:  _fsClean(S.quizFactProgress||{}),
+        hlQuizProgress:    _fsClean(S.hlQuizProgress||{}),
+        subjectIds:        (S.subjects||[]).map(function(s){ return s.id; }),
+        topicFormat:       'v2',
+        lastSync:          firebase.firestore.FieldValue.serverTimestamp(),
+        writeId:           wid
+      }
+    });
+
+    // Subject shells + topics
+    (S.subjects||[]).forEach(function(subj){
+      allOps.push({
+        ref: _db.collection('users').doc(uid).collection('subjects').doc(String(subj.id)),
+        data: { shell: _buildSubjShell(subj), updatedAt: Date.now() }
+      });
+      (subj.sections||[]).forEach(function(sec){
+        (sec.topics||[]).forEach(function(t){
+          var twid = _genWriteId();
+          _myTopicWriteIds[String(t.id)] = twid;
+          var td = _cleanTopic(t);
+          td.writeId = twid;
+          allOps.push({
+            ref: _db.collection('users').doc(uid).collection('topics').doc(String(t.id)),
+            data: { topic: td, subjId: subj.id, secId: sec.id, updatedAt: Date.now(), writeId: twid }
+          });
+        });
+      });
+    });
+
+    // Batch commit in chunks of 499
+    for(var i=0; i<allOps.length; i+=499){
+      var chunk = allOps.slice(i, i+499);
+      var batch = _db.batch();
+      chunk.forEach(function(op){ batch.set(op.ref, op.data, {merge:true}); });
+      await batch.commit();
+    }
+
+    // After full save, re-attach topic listeners for any new topics
+    _attachTopicListeners();
+
+    setSyncStatus('synced');
+  }catch(e){
+    console.error('Firebase full save error:', e);
+    setSyncStatus('error');
+    showToast('Sync error — data local mein safe hai', 'error');
+  }
+}
+
+async function loadFromFirebase(){
+  if(!_db || !_currentUser) return;
+
+  if(_justRestored){
+    _justRestored = false;
+    setSyncStatus('syncing');
+    await saveToFirebase();
+    setSyncStatus('synced');
+    showToast('Restore data cloud pe upload ho gaya! ✅☁️', 'success');
+    return;
+  }
+
+  setSyncStatus('syncing');
+  try{
+    const uid = _currentUser.uid;
+    const localTopicCount = (S.subjects||[]).reduce(
+      (a,s)=>a+s.sections.reduce((b,sec)=>b+sec.topics.length,0), 0);
+
+    const metaDoc = await _db.collection('users').doc(uid).get();
+    if(!metaDoc.exists){
+      // Pehli baar — local upload karo
+      if(localTopicCount > 0){ await saveToFirebase(); showToast('Data cloud pe save ho gaya! ☁️','success'); }
+      setSyncStatus('synced'); return;
+    }
+
+    const meta = metaDoc.data();
+    const isV2 = meta.topicFormat === 'v2';
+    const subjectIds = meta.subjectIds || [];
+
+    var cloudTopicCount = 0;
+    var loadedSubjects = null;
+
+    if(isV2 && subjectIds.length > 0){
+      // ── New per-topic format ──
+      // Load subject shells
+      const shellDocs = await Promise.all(
+        subjectIds.map(id =>
+          _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get()
+        )
+      );
+
+      // Load all topics
+      const topicDocs = await _db.collection('users').doc(uid).collection('topics').get();
+      var topicMap = {};
+      topicDocs.forEach(function(d){
+        var td = d.data();
+        if(td && td.topic) topicMap[String(td.topic.id)] = { topic: td.topic, subjId: td.subjId, secId: td.secId };
+      });
+
+      // Reassemble subjects from shells + topics
+      loadedSubjects = shellDocs
+        .filter(function(d){ return d.exists; })
+        .map(function(d){
+          var shell = d.data().shell;
+          if(!shell) return null;
+          shell.sections = (shell.sectionMeta||[]).map(function(sm){
+            sm.topics = (sm.topicIds||[]).map(function(tid){
+              var td = topicMap[String(tid)];
+              return td ? td.topic : null;
+            }).filter(Boolean);
+            delete sm.topicIds;
+            return sm;
+          });
+          delete shell.sectionMeta;
+          return shell;
+        }).filter(Boolean);
+
+      cloudTopicCount = loadedSubjects.reduce(
+        (a,s)=>a+s.sections.reduce((b,sec)=>b+sec.topics.length,0), 0);
+
+    } else if(!isV2 && subjectIds.length > 0){
+      // ── v1 per-subject format ─��
+      const subjDocs = await Promise.all(
+        subjectIds.map(id =>
+          _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get()
+        )
+      );
+      loadedSubjects = subjDocs.filter(function(d){ return d.exists; })
+        .map(function(d){ return d.data().data; }).filter(Boolean);
+      cloudTopicCount = loadedSubjects.reduce(
+        (a,s)=>a+s.sections.reduce((b,sec)=>b+sec.topics.length,0), 0);
+
+    } else if(meta.subjects && meta.subjects.length > 0){
+      // ── Legacy: single doc format ──
+      loadedSubjects = meta.subjects;
+      cloudTopicCount = loadedSubjects.reduce(
+        (a,s)=>a+s.sections.reduce((b,sec)=>b+sec.topics.length,0), 0);
+    }
+
+    // Local zyada → upload
+    if(!loadedSubjects || cloudTopicCount === 0 || localTopicCount > cloudTopicCount){
+      await saveToFirebase();
+      showToast('Local data cloud pe sync ho gaya! ☁️ (' + localTopicCount + ' topics)', 'success');
+      setSyncStatus('synced'); return;
+    }
+
+    // Cloud data load + local editor HTML merge
+    var localEditorData = {};
+    (S.subjects||[]).forEach(function(sub){ sub.sections.forEach(function(sec){ sec.topics.forEach(function(t){
+      if(t.finalNotesHTML) localEditorData['fn_'+t.id] = t.finalNotesHTML;
+      if(t.smartNotesHTML) localEditorData['sn_'+t.id] = t.smartNotesHTML;
+      if(t.masterNotesHTML) localEditorData['mn_'+t.id] = t.masterNotesHTML;
+      (t.notes||[]).forEach(function(n){
+        if(n.editorRichHTML) localEditorData['n_'+n.id] = { richHTML:n.editorRichHTML, highlights:n.editorHighlights||[] };
+      });
+    }); }); });
+
+    S.subjects          = loadedSubjects;
+    S.exams             = meta.exams||[];
+    S.activeExamId      = meta.activeExamId||'';
+    S.quizHistory       = meta.quizHistory||[];
+    S.stats             = meta.stats||{total:0,correct:0,wrong:0,topicStats:{}};
+    S.savedQuestions    = meta.savedQuestions||[];
+    S.wrongedQuestions  = meta.wrongedQuestions||[];
+    S.reportedQuestions = meta.reportedQuestions||[];
+    S.pausedQuiz        = meta.pausedQuiz||null;
+    S.model             = meta.model||'meta-llama/llama-4-scout-17b-16e-instruct';
+    S.quizFactProgress  = meta.quizFactProgress||{};
+    S.hlQuizProgress    = meta.hlQuizProgress||{};
+
+    S.subjects.forEach(function(sub){ sub.sections.forEach(function(sec){ sec.topics.forEach(function(t){
+      if(!t.highlights) t.highlights=[];
+      if(!t.savedFacts) t.savedFacts=[];
+      if(!t.notes) t.notes=[];
+      delete t.finalNotesCanvasPNG; delete t.smartNotesCanvasPNG; delete t.masterNotesCanvasPNG;
+      if(localEditorData['fn_'+t.id]) t.finalNotesHTML  = localEditorData['fn_'+t.id];
+      if(localEditorData['sn_'+t.id]) t.smartNotesHTML  = localEditorData['sn_'+t.id];
+      if(localEditorData['mn_'+t.id]) t.masterNotesHTML = localEditorData['mn_'+t.id];
+      t.notes.forEach(function(n){
+        if(!n.editorHighlights) n.editorHighlights=[];
+        if(n.editorRichHTML===undefined) n.editorRichHTML=null;
+        delete n.canvasPNG;
+        var ld = localEditorData['n_'+n.id];
+        if(ld && ld.richHTML){ n.editorRichHTML=ld.richHTML; n.editorHighlights=ld.highlights||[]; }
+      });
+    }); }); });
+
+    try{ localStorage.setItem('epp5', JSON.stringify(S)); }catch(e){}
+    renderExamSwitcher(); renderLibrarySelects(); renderLibraryTree();
+    renderExamsList(); updateQuizSelects(); renderStats(); updateModePill();
+    updateHistBadge(); updateSavedBadge(); updateVaultBadge(); checkPausedQuiz();
+    showToast('Cloud se data load ho gaya! ☁️ (' + cloudTopicCount + ' topics)', 'success');
+    setSyncStatus('synced');
+
+    // quizVault alag collection se load karo (permanent storage)
+    _loadQuizVaultFromFirebase();
+
+    // Agar purana format tha to naye format mein re-save karo
+    if(!isV2){ setTimeout(function(){ saveToFirebase(); }, 2000); }
+
+  }catch(e){
+    console.error('Firebase load error:', e);
+    setSyncStatus('error');
+    if(e.message && e.message.includes('offline')){
+      showToast('Offline — local data use ho raha hai','success');
+      setSyncStatus('synced');
+    } else {
+      showToast('Sync error: '+e.message,'error');
+    }
+  }
+}
+
+async function syncNow(){
+  if(!_currentUser){ showToast('Pehle login karo!','error'); return; }
+  closeModal('userMenuModal');
+  await saveToFirebase();
+  showToast('Data cloud pe save ho gaya! ☁️✅','success');
+}
+
+// ✅ PULL FROM CLOUD — dusri device ke latest notes force-fetch karo
+async function pullFromCloud(){
+  if(!_db || !_currentUser){ showToast('Pehle login karo!','error'); return; }
+  closeModal('userMenuModal');
+  showToast('☁️ Cloud se latest notes la rahe hain...', 'info');
+  try {
+    var uid = _currentUser.uid;
+    var metaDoc = await _db.collection('users').doc(uid).get();
+    if(!metaDoc.exists){ showToast('Cloud par koi data nahi mila.','error'); return; }
+    var meta = metaDoc.data();
+    var subjectIds = meta.subjectIds || [];
+    if(!subjectIds.length){ showToast('Cloud par koi subject nahi mila.','error'); return; }
+
+    var shellDocs = await Promise.all(
+      subjectIds.map(function(id){
+        return _db.collection('users').doc(uid).collection('subjects').doc(String(id)).get();
+      })
+    );
+    var topicDocs = await _db.collection('users').doc(uid).collection('topics').get();
+    var topicMap = {};
+    topicDocs.forEach(function(d){
+      var td = d.data();
+      if(td && td.topic) topicMap[String(td.topic.id)] = td.topic;
+    });
+    var newSubjects = shellDocs
+      .filter(function(d){ return d.exists; })
+      .map(function(d){
+        var shell = d.data().shell;
+        if(!shell) return null;
+        shell.sections = (shell.sectionMeta||[]).map(function(sm){
+          sm.topics = (sm.topicIds||[]).map(function(tid){
+            return topicMap[String(tid)] || null;
+          }).filter(Boolean);
+          delete sm.topicIds;
+          return sm;
+        });
+        delete shell.sectionMeta;
+        return shell;
+      }).filter(Boolean);
+
+    if(!newSubjects.length){ showToast('Cloud data load nahi hua.','error'); return; }
+
+    // Directly update S — koi comparison nahi, cloud ka data final hai
+    S.subjects          = newSubjects;
+    S.exams             = meta.exams || S.exams || [];
+    S.activeExamId      = meta.activeExamId || S.activeExamId || '';
+    S.quizHistory       = meta.quizHistory || S.quizHistory || [];
+    S.stats             = meta.stats || S.stats || {total:0,correct:0,wrong:0,topicStats:{}};
+    S.savedQuestions    = meta.savedQuestions || S.savedQuestions || [];
+    S.wrongedQuestions  = meta.wrongedQuestions || S.wrongedQuestions || [];
+    S.reportedQuestions = meta.reportedQuestions || S.reportedQuestions || [];
+    S.pausedQuiz        = meta.pausedQuiz || null;
+    S.quizFactProgress  = meta.quizFactProgress || S.quizFactProgress || {};
+    S.hlQuizProgress    = meta.hlQuizProgress || S.hlQuizProgress || {};
+
+    save(); // localStorage update karo
+    renderSubjects();
+    // quizVault bhi refresh karo
+    _loadQuizVaultFromFirebase();
+    showToast('✅ Latest notes aa gaye! Dusri device ke changes sync ho gaye.', 'success');
+  } catch(e) {
+    console.error('Pull error:', e);
+    showToast('❌ Cloud se data nahi aaya: ' + e.message, 'error');
+  }
+}
+
+// ── REALTIME LISTENER — dusri device pe save hone par auto reload ──
+// ══════════════════════════════════════════════════════════════════════
+// ⚡ META LISTENER — stats, quiz, exams changes detect karo
+// ══════════════════════════════════════════════════════════════════════
+function _attachRealtimeListener(){
+  if(!_db || !_currentUser) return;
+  if(_realtimeListener){ _realtimeListener(); _realtimeListener = null; }
+  if(_listenerRetryTimer){ clearTimeout(_listenerRetryTimer); _listenerRetryTimer = null; }
+
+  var uid = _currentUser.uid;
+  var _firstMeta = true;
+
+  _realtimeListener = _db.collection('users').doc(uid).onSnapshot(
+    { includeMetadataChanges: false },
+    function(doc){
+      if(!doc.exists) return;
+      var data = doc.data();
+      var incomingWid = data.writeId || '';
+
+      if(_firstMeta){
+        _firstMeta = false;
+        _knownMetaWriteId = incomingWid;
+        // Attach per-topic listeners after meta loads
+        _attachTopicListeners();
+        return;
+      }
+
+      if(!incomingWid || incomingWid === _knownMetaWriteId) return;
+      if(incomingWid === _myWriteId){ _knownMetaWriteId = incomingWid; return; }
+
+      _knownMetaWriteId = incomingWid;
+
+      // Meta changed from another device — silently update meta fields only
+      _applyMetaUpdate(data);
+    },
+    function(err){
+      console.log('Meta listener dropped, reconnecting in 3s:', err.code || err.message);
+      _realtimeListener = null;
+      _listenerRetryTimer = setTimeout(function(){
+        if(_currentUser) _attachRealtimeListener();
+      }, 3000);
+    }
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════
+// ⚡ TOPIC LISTENERS — har topic ka apna listener
+// Yeh sabse fast path hai — topic change hote hi 100-300ms mein aata hai
+// ══════════════════════════════════════════════════════════════════════
+function _attachTopicListeners(){
+  if(!_db || !_currentUser) return;
+  var uid = _currentUser.uid;
+
+  // Find all current topic IDs
+  var allTids = [];
+  (S.subjects||[]).forEach(function(sub){
+    sub.sections.forEach(function(sec){
+      sec.topics.forEach(function(t){ allTids.push(String(t.id)); });
+    });
+  });
+
+  // Detach listeners for topics no longer in data
+  Object.keys(_topicListeners).forEach(function(tid){
+    if(allTids.indexOf(tid) === -1){
+      _topicListeners[tid]();
+      delete _topicListeners[tid];
+      delete _knownTopicWriteIds[tid];
+    }
+  });
+
+  // Attach listeners for new topics
+  allTids.forEach(function(tid){
+    if(_topicListeners[tid]) return; // Already listening
+
+    var _firstSnap = true;
+
+    var unsubscribe = _db.collection('users').doc(uid).collection('topics').doc(tid).onSnapshot(
+      { includeMetadataChanges: false },
+      function(doc){
+        if(!doc.exists) return;
+        var data = doc.data();
+        var incomingWid = data.writeId || '';
+
+        if(_firstSnap){
+          _firstSnap = false;
+          _knownTopicWriteIds[tid] = incomingWid;
+          return;
+        }
+
+        if(!incomingWid || incomingWid === _knownTopicWriteIds[tid]) return;
+
+        // Hamari apni echo — ignore karo
+        if(incomingWid === (_myTopicWriteIds[tid] || '')) {
+          _knownTopicWriteIds[tid] = incomingWid;
+          return;
+        }
+
+        _knownTopicWriteIds[tid] = incomingWid;
+
+        // Dusri device ne yeh topic update kiya — silently apply!
+        _applyTopicUpdate(tid, data.topic);
+      },
+      function(err){
+        console.log('Topic listener dropped tid=' + tid + ', reconnect 3s');
+        delete _topicListeners[tid];
+        setTimeout(function(){
+          if(_currentUser && !_topicListeners[tid]) _attachSingleTopicListener(tid);
+        }, 3000);
+      }
+    );
+
+    _topicListeners[tid] = unsubscribe;
+  });
+}
+
+function _attachSingleTopicListener(tid){
+  if(!_db || !_currentUser) return;
+  var uid = _currentUser.uid;
+  var _firstSnap = true;
+
+  var unsubscribe = _db.collection('users').doc(uid).collection('topics').doc(String(tid)).onSnapshot(
+    { includeMetadataChanges: false },
+    function(doc){
+      if(!doc.exists) return;
+      var data = doc.data();
+      var incomingWid = data.writeId || '';
+      if(_firstSnap){ _firstSnap = false; _knownTopicWriteIds[String(tid)] = incomingWid; return; }
+      if(!incomingWid || incomingWid === _knownTopicWriteIds[String(tid)]) return;
+      if(incomingWid === (_myTopicWriteIds[String(tid)] || '')){ _knownTopicWriteIds[String(tid)] = incomingWid; return; }
+      _knownTopicWriteIds[
+
 // ==================== QUESTION VAULT ====================
 function addToVault(questions, quizId, quizName, label, sid, secid, tid){
   if(!S.questionVault)S.questionVault=[];
@@ -8878,6 +10228,59 @@ function addToVault(questions, quizId, quizName, label, sid, secid, tid){
   updateVaultBadge();
   save();
 }
+
+
+// ── Ek quiz ko Firebase quizVault sub-collection mein save karo ──
+async function _saveQuizToFirebaseVault(entry){
+  if(!_db || !_currentUser) return;
+  try{
+    var uid = _currentUser.uid;
+    await _db.collection('users').doc(uid).collection('quizVault').doc(entry.quizId).set(
+      _fsClean(entry)
+    );
+  }catch(e){
+    console.warn('quizVault save error:', e.message);
+  }
+}
+
+// ── Firebase se saari quizzes load karo (app start / login par) ──
+async function _loadQuizVaultFromFirebase(){
+  if(!_db || !_currentUser) return;
+  try{
+    var uid = _currentUser.uid;
+    var snap = await _db.collection('users').doc(uid).collection('quizVault')
+                        .orderBy('dateRaw','desc')
+                        .limit(500)
+                        .get();
+    if(snap.empty) return;
+    var loaded = [];
+    snap.forEach(function(d){ loaded.push(d.data()); });
+    // Local RAM update — Firebase data authoritative hai
+    S.questionVault = loaded;
+    updateVaultBadge();
+    try{ localStorage.setItem('epp5', JSON.stringify(S)); }catch(e){}
+  }catch(e){
+    console.warn('quizVault load error:', e.message);
+  }
+}
+
+// ── Vault se ek quiz delete karo (Firebase + local) ──
+async function deleteFromVault(quizId){
+  if(!confirm('Yeh quiz vault se delete karni hai?')) return;
+  S.questionVault = (S.questionVault||[]).filter(function(v){ return v.quizId !== quizId; });
+  updateVaultBadge();
+  save();
+  renderVaultPage && renderVaultPage();
+  if(_db && _currentUser){
+    try{
+      await _db.collection('users').doc(_currentUser.uid).collection('quizVault').doc(quizId).delete();
+      showToast('Quiz delete ho gayi ✅','success');
+    }catch(e){
+      console.warn('quizVault delete error:', e.message);
+    }
+  }
+}
+
 
 function updateVaultQFlag(qKey, flag, val){
   if(!S.questionVault)return;
